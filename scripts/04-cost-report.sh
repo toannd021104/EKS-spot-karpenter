@@ -141,4 +141,4 @@ for key in "${!hours_by_key[@]}"; do
 done
 
 info "Wrote cost CSVs (run $RUN_ID, window $WINDOW). All figures are estimates at list prices; Spot is estimated (no data feed)."
-info "Next: python3 demo/scripts/fill_results.py"
+info "Next: python3 scripts/fill_results.py"

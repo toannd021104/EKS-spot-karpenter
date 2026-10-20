@@ -16,7 +16,7 @@
         "cluster": {"type": ["string", "null"]},
         "region": {"type": "string"},
         "date_utc": {"type": ["string", "null"]},
-        "synthetic": {"type": "boolean", "description": "true only for SYNTHETIC-* fixtures; such a file may never live under demo/results"},
+        "synthetic": {"type": "boolean", "description": "true only for SYNTHETIC-* fixtures; such a file may never live under results/"},
         "layout": {"enum": ["one-cluster", "two-cluster", null]},
         "kubernetes": {"type": "string"},
         "karpenter": {"type": "string"},

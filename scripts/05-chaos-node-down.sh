@@ -187,4 +187,4 @@ for s in "${SCALERS_ARR[@]}"; do
 done
 info "Chaos run $RUN_ID finished (mode differs across scalers? then slide 12 carries the footnote 'mode khác nhau')."
 if ((worst != 0)); then exit "$worst"; fi
-info "Next: python3 demo/scripts/fill_results.py"
+info "Next: python3 scripts/fill_results.py"

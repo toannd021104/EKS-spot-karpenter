@@ -1,5 +1,5 @@
 # Input validation contract. Runs offline: mock provider, no credentials.
-#   terraform -chdir=demo/terraform test
+#   terraform -chdir=terraform test
 
 mock_provider "aws" {
   mock_data "aws_availability_zones" {

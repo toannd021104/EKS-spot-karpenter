@@ -7,16 +7,15 @@ set -uo pipefail
 # shellcheck source=lib_sandbox.sh
 source "$(dirname "${BASH_SOURCE[0]}")/lib_sandbox.sh"
 
-CHART="$REAL_DEMO_ROOT/k8s/boutique"
-PROJECT_ROOT=$(dirname "$REAL_DEMO_ROOT")
-PY="$PROJECT_ROOT/deck/.venv/bin/python"
+CHART="$REAL_REPO_ROOT/kubernetes/boutique"
+PY="$REAL_REPO_ROOT/presentation/.venv/bin/python"
 [[ -x "$PY" ]] || PY=python3
 command -v helm >/dev/null || {
   echo "helm is required" >&2
   exit 1
 }
 "$PY" -c 'import yaml' 2>/dev/null || {
-  echo "PyYAML is required (deck/.venv or system python3)" >&2
+  echo "PyYAML is required (presentation/.venv or system python3)" >&2
   exit 1
 }
 

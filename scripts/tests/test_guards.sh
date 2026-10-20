@@ -73,12 +73,12 @@ guard_rc() { # guard_rc ENV... : sources common.sh and calls require_demo_cluste
   : >"$STUB_LOG"
   env -i "PATH=$SB/stub:$SB/tools" "HOME=$SB" "STUB_LOG=$STUB_LOG" "STUB_DATA=$SB/data" \
     "CLUSTER_NAME=finops-spot-demo" "EXPECTED_AWS_ACCOUNT_ID=${SYNTH_ACCOUNT}" "KUBE_CONTEXT=finops-spot-demo" "$@" \
-    "$SB/tools/bash" -c 'source "$1"; validate_env 1; require_demo_cluster; kc get nodes >/dev/null' _ "$SB/demo/scripts/lib/common.sh" \
+    "$SB/tools/bash" -c 'source "$1"; validate_env 1; require_demo_cluster; kc get nodes >/dev/null' _ "$SB/scripts/lib/common.sh" \
     >"$SB/out.txt" 2>&1 || rc=$?
   printf '%s' "$rc"
 }
 assert_eq "valid demo cluster passes" 0 "$(guard_rc)"
-if grep -q -- "--kubeconfig $SB/demo/.kube/config --context finops-spot-demo get nodes" "$STUB_LOG"; then ok "kc passes explicit --kubeconfig and --context"; else bad "kc did not pass --kubeconfig/--context"; fi
+if grep -q -- "--kubeconfig $SB/.kube/config --context finops-spot-demo get nodes" "$STUB_LOG"; then ok "kc passes explicit --kubeconfig and --context"; else bad "kc did not pass --kubeconfig/--context"; fi
 
 write_kubeconfig_json "$SYNTH_ARN" finops-spot-demo
 assert_eq "context pointing at the synthetic frt-outbound-proxy ARN -> 2" 2 "$(guard_rc)"
@@ -86,24 +86,24 @@ write_kubeconfig_json "arn:aws:eks:ap-southeast-1:${SYNTH_OTHER_ACCOUNT}:cluster
 assert_eq "right cluster name, other account -> 2" 2 "$(guard_rc)"
 write_kubeconfig_json "arn:aws:eks:ap-southeast-1:${SYNTH_ACCOUNT}:cluster/finops-spot-demo" finops-spot-demo
 assert_eq "restored valid kubeconfig passes again" 0 "$(guard_rc)"
-chmod 644 "$SB/demo/.kube/config"
+chmod 644 "$SB/.kube/config"
 assert_eq "kubeconfig mode 644 -> 2" 2 "$(guard_rc)"
-chmod 600 "$SB/demo/.kube/config"
+chmod 600 "$SB/.kube/config"
 assert_eq "cluster without the Project tag -> 2" 2 "$(guard_rc STUB_PROJECT_TAG=other)"
 assert_eq "endpoint differs from kubeconfig server -> 2" 2 "$(guard_rc STUB_ENDPOINT=https://elsewhere.example)"
-mv "$SB/demo/.kube/config" "$SB/demo/.kube/config.bak"
+mv "$SB/.kube/config" "$SB/.kube/config.bak"
 assert_eq "missing demo kubeconfig -> 2" 2 "$(guard_rc)"
-mv "$SB/demo/.kube/config.bak" "$SB/demo/.kube/config"
+mv "$SB/.kube/config.bak" "$SB/.kube/config"
 
 rc=0
 : >"$STUB_LOG"
 env -i "PATH=$SB/stub:$SB/tools" "HOME=$SB" "STUB_LOG=$STUB_LOG" "STUB_DATA=$SB/data" "CLUSTER_NAME=finops-spot-demo" \
   "EXPECTED_AWS_ACCOUNT_ID=${SYNTH_ACCOUNT}" "KUBE_CONTEXT=finops-spot-demo" \
-  "$SB/tools/bash" -c 'source "$1"; kc get nodes' _ "$SB/demo/scripts/lib/common.sh" >"$SB/out.txt" 2>&1 || rc=$?
+  "$SB/tools/bash" -c 'source "$1"; kc get nodes' _ "$SB/scripts/lib/common.sh" >"$SB/out.txt" 2>&1 || rc=$?
 assert_eq "kc before require_demo_cluster is refused (2)" 2 "$rc"
 assert_eq "kc before the guard did not call kubectl" 0 "$(calls)"
 
-out=$(env -i "PATH=$SB/stub:$SB/tools" "KUBECONFIG=$HOME/.kube/config" "$SB/tools/bash" -c 'source "$1"; printf "%s" "$KUBECONFIG"' _ "$SB/demo/scripts/lib/common.sh" 2>/dev/null)
+out=$(env -i "PATH=$SB/stub:$SB/tools" "KUBECONFIG=$HOME/.kube/config" "$SB/tools/bash" -c 'source "$1"; printf "%s" "$KUBECONFIG"' _ "$SB/scripts/lib/common.sh" 2>/dev/null)
 assert_eq "common.sh forces KUBECONFIG=/dev/null" "/dev/null" "$out"
 
 finish

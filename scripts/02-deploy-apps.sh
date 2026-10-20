@@ -157,7 +157,7 @@ platform() {
 
   local s
   for s in "${SCALERS_ARR[@]}"; do
-    SCALER="$s" render_tpl "$K8S_DIR/scaletest/inflate.yaml.tpl" SCALER >"$tmp_dir/inflate-$s.yaml"
+    SCALER="$s" render_tpl "$K8S_DIR/benchmark/scaletest/inflate.yaml.tpl" SCALER >"$tmp_dir/inflate-$s.yaml"
     apply_rendered "$tmp_dir/inflate-$s.yaml"
   done
 
@@ -186,7 +186,7 @@ apps() {
       -f "$K8S_DIR/boutique/values-common.yaml" -f "$K8S_DIR/boutique/values-$s.yaml" --wait --timeout 10m
     run_mut kc label namespace "boutique-$s" "finops.demo/scaler=$s" --overwrite
   done
-  apply_rendered "$K8S_DIR/probe/probe.yaml.tpl"
+  apply_rendered "$K8S_DIR/benchmark/probe/probe.yaml.tpl"
   if ! is_dry; then assert_isolation; fi
   print_cost_warning
   info "Apps ready. Let them run for the cost window (30-60 min) before 04-cost-report.sh; chaos: 05-chaos-node-down.sh."
@@ -197,7 +197,7 @@ apps_down() {
   for s in "${SCALERS_ARR[@]}"; do
     run_mut hc uninstall "boutique-$s" --namespace "boutique-$s" --ignore-not-found
   done
-  run_mut kc delete -f "$K8S_DIR/probe/probe.yaml.tpl" --ignore-not-found
+  run_mut kc delete -f "$K8S_DIR/benchmark/probe/probe.yaml.tpl" --ignore-not-found
   info "Boutique and probe removed; the pools drain to 0 nodes within a few minutes. Then 03 can be re-run."
 }
 

@@ -287,7 +287,7 @@ def main(argv=None):
         if summary["meta"]["synthetic"] and not under(out, Path("/tmp")):
             raise InputError(f"synthetic data (run_id SYNTHETIC-*) may only be written below /tmp, not {out}")
         if summary["meta"]["synthetic"] and under(out, RESULTS_DIR):
-            raise InputError("synthetic data can never be written under demo/results")
+            raise InputError("synthetic data can never be written under results/")
     except InputError as exc:
         print(f"fill_results.py: {exc}", file=sys.stderr)
         return 1

@@ -1,5 +1,5 @@
 # Custom NodeClass support for EKS Auto Mode. Built-in node pools are disabled, so the built-in
-# `default` NodeClass does not exist and the NodeClass in k8s/automode needs its own node role
+# `default` NodeClass does not exist and the NodeClass in kubernetes/automode needs its own node role
 # plus an EC2 access entry (AWS docs: "Create node class access entry").
 
 data "aws_iam_policy_document" "automode_node_assume" {

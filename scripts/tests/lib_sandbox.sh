@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Shared test helper: builds a throw-away copy of demo/scripts under a temp dir and puts STUB aws / kubectl / helm /
+# Shared test helper: builds a throw-away copy of scripts/ under a temp dir and puts STUB aws / kubectl / helm /
 # terraform on PATH. The PATH contains ONLY the stub dir and a dir of symlinks to harmless utilities, so a missing stub
 # fails the test instead of falling through to a real binary. Nothing here talks to AWS or a cluster.
 # shellcheck shell=bash
@@ -7,7 +7,7 @@
 
 TESTS_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 REAL_SCRIPTS_DIR=$(dirname "$TESTS_DIR")
-REAL_DEMO_ROOT=$(dirname "$REAL_SCRIPTS_DIR")
+REAL_REPO_ROOT=$(dirname "$REAL_SCRIPTS_DIR")
 
 PASS=0
 FAIL=0
@@ -28,12 +28,12 @@ SYNTH_OTHER_ACCOUNT=000000000002
 
 make_sandbox() {
   SB=$(mktemp -d)
-  mkdir -p "$SB/demo/scripts/lib" "$SB/demo/results/templates" "$SB/demo/.kube" "$SB/demo/terraform" \
+  mkdir -p "$SB/scripts/lib" "$SB/results/templates" "$SB/.kube" "$SB/terraform" \
     "$SB/stub" "$SB/tools" "$SB/data"
-  cp "$REAL_SCRIPTS_DIR"/lib/common.sh "$SB/demo/scripts/lib/"
-  cp "$REAL_SCRIPTS_DIR"/0*.sh "$SB/demo/scripts/"
-  cp "$REAL_DEMO_ROOT"/results/pricing-snapshot-ap-southeast-1.json "$SB/demo/results/"
-  cp "$REAL_DEMO_ROOT"/results/templates/*.csv "$SB/demo/results/templates/"
+  cp "$REAL_SCRIPTS_DIR"/lib/common.sh "$SB/scripts/lib/"
+  cp "$REAL_SCRIPTS_DIR"/0*.sh "$SB/scripts/"
+  cp "$REAL_REPO_ROOT"/results/pricing-snapshot-ap-southeast-1.json "$SB/results/"
+  cp "$REAL_REPO_ROOT"/results/templates/*.csv "$SB/results/templates/"
   local t p
   for t in bash env dirname basename cat date jq sed grep awk tee sort head tail tr wc realpath mkdir chmod stat \
     sleep cut rm mktemp touch uniq cp seq xargs envsubst readlink ls; do
@@ -50,9 +50,9 @@ make_sandbox() {
   printf '{"items":[]}' >"$SB/data/nodes.json"
   printf '{"items":[]}' >"$SB/data/pods.json"
   printf '{"items":[{"metadata":{"name":"nodepools.karpenter.sh","resourceVersion":"11"}},{"metadata":{"name":"nodeclaims.karpenter.sh","resourceVersion":"12"}}]}' >"$SB/data/crd.json"
-  printf '{"nodepools.karpenter.sh":"11","nodeclaims.karpenter.sh":"12"}' >"$SB/demo/.kube/crd-resourceversions-finops-spot-demo.json"
-  printf 'apiVersion: v1\nkind: Config\n' >"$SB/demo/.kube/config"
-  chmod 600 "$SB/demo/.kube/config"
+  printf '{"nodepools.karpenter.sh":"11","nodeclaims.karpenter.sh":"12"}' >"$SB/.kube/crd-resourceversions-finops-spot-demo.json"
+  printf 'apiVersion: v1\nkind: Config\n' >"$SB/.kube/config"
+  chmod 600 "$SB/.kube/config"
 }
 
 write_kubeconfig_json() { # write_kubeconfig_json CLUSTER_ARN CONTEXT_NAME
@@ -110,7 +110,7 @@ run_script() {
   shift
   : >"$STUB_LOG"
   env -i "PATH=$SB/stub:$SB/tools" "HOME=$SB" "STUB_LOG=$STUB_LOG" "STUB_DATA=$SB/data" "$@" \
-    "$SB/tools/bash" "$SB/demo/scripts/$name" </dev/null >"$SB/out.txt" 2>&1
+    "$SB/tools/bash" "$SB/scripts/$name" </dev/null >"$SB/out.txt" 2>&1
 }
 
 cleanup_sandbox() { [[ -n "${SB:-}" && -d "$SB" ]] && rm -rf "$SB"; }

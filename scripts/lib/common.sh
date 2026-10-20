@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # lib/common.sh: sourced by 01..06. The single choke point for every safety rule (design 7.1).
 #   - the only file allowed to contain a literal kubectl / helm invocation (lint.sh enforces this);
-#   - never reads the ambient kubeconfig; only $DEMO_ROOT/.kube/config (created by 01-up.sh);
+#   - never reads the ambient kubeconfig; only $REPO_ROOT/.kube/config (created by 01-up.sh);
 #   - refuses any cluster/account that is not the demo one (allow-list) or that matches DENY_CONTEXT_REGEX.
 # Exit codes: 0 ok, 2 guard refused, 3 missing tool/version, 4 user declined / no tty, 5 timeout or bad state,
 # 6 AWS/Kubernetes call failed.
@@ -19,12 +19,12 @@ export AWS_PAGER=""
 
 LIB_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 SCRIPTS_DIR=$(dirname "$LIB_DIR")
-DEMO_ROOT=$(dirname "$SCRIPTS_DIR")
-RESULTS_DIR="$DEMO_ROOT/results"
-TF_DIR="$DEMO_ROOT/terraform"
-K8S_DIR="$DEMO_ROOT/k8s"
-OPENCOST_DIR="$DEMO_ROOT/opencost"
-STATE_DIR="$DEMO_ROOT/.kube"
+REPO_ROOT=$(dirname "$SCRIPTS_DIR")
+RESULTS_DIR="$REPO_ROOT/results"
+TF_DIR="$REPO_ROOT/terraform"
+K8S_DIR="$REPO_ROOT/kubernetes"
+OPENCOST_DIR="$K8S_DIR/opencost"
+STATE_DIR="$REPO_ROOT/.kube"
 DEMO_KUBECONFIG="$STATE_DIR/config"
 PRICING_FILE="$RESULTS_DIR/pricing-snapshot-ap-southeast-1.json"
 LOG_DIR="$RESULTS_DIR/logs"
@@ -392,5 +392,5 @@ gate_coexistence() { # gate_coexistence SCALER...: returns 5 on failure (callers
 }
 two_cluster_fallback_hint() {
   warn "FALLBACK: run Auto Mode in a second cluster (second Terraform workspace, cluster_name=finops-spot-demo-am,"
-  warn "enabled_scalers=[\"automode\"]; first cluster [\"ca\",\"karpenter\"]). About +\$0.37/h. See demo/README.md."
+  warn "enabled_scalers=[\"automode\"]; first cluster [\"ca\",\"karpenter\"]). About +\$0.37/h. See docs/runbook.md."
 }

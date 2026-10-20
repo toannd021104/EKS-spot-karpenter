@@ -1,6 +1,6 @@
-# Demo: Spot + Karpenter FinOps (EKS, OpenCost)
+# Runbook: Karpenter vs Cluster Autoscaler vs EKS Auto Mode trên Spot (EKS, OpenCost)
 
-> **Trạng thái: chưa chạy thử trên cluster thật.** Mọi thứ trong thư mục này mới chỉ được lint và test offline (terraform validate/test, helm lint/template, kubeconform, shellcheck, test với stub). Chưa có số đo nào. Mọi ô benchmark/chi phí là placeholder (`Đo: ___`, `Ước tính (...): $___/giờ`, `TARGET: ___ s (điền sau khi đo)`) cho đến khi bạn chạy buổi rehearsal.
+> **Trạng thái: chưa chạy thử trên cluster thật.** Mọi thứ trong repo này mới chỉ được lint và test offline (terraform validate/test, helm lint/template, kubeconform, shellcheck, test với stub). Chưa có số đo nào. Mọi ô benchmark/chi phí là placeholder (`Đo: ___`, `Ước tính (...): $___/giờ`, `TARGET: ___ s (điền sau khi đo)`) cho đến khi bạn chạy buổi rehearsal.
 
 ```
 +--------------------------------------------------------------------------+
@@ -14,7 +14,7 @@
 |  Tất cả là "ước tính theo giá list" (2026-10-20), chưa phải hóa đơn.      |
 |                                                                          |
 |  Destroy:  CLUSTER_NAME=... EXPECTED_AWS_ACCOUNT_ID=... KUBE_CONTEXT=... \ |
-|            bash demo/scripts/06-down.sh                                  |
+|            bash scripts/06-down.sh                                  |
 +--------------------------------------------------------------------------+
 ```
 
@@ -24,7 +24,7 @@ Khuyến nghị đặt AWS Budget cảnh báo khoảng $10 (project này không 
 
 - Các script chỉ chạy với cluster `finops-spot-demo*` (regex `^finops-spot-demo(-[a-z0-9-]{1,20})?$`). Cluster `boutique-dev-eks` và `frt-outbound-proxy` bị từ chối theo tên (`DENY_CONTEXT_REGEX`, chỉ có thể THÊM pattern).
 - Bắt buộc đặt `CLUSTER_NAME` và `EXPECTED_AWS_ACCOUNT_ID` rõ ràng; script 02-06 còn cần `KUBE_CONTEXT` trùng `CLUSTER_NAME`. Thiếu hoặc sai thì thoát mã 2 và chưa gọi công cụ nào.
-- Script chỉ dùng kubeconfig riêng `demo/.kube/config` (`KUBECONFIG=/dev/null` cho mọi lời gọi khác). Không bao giờ sửa `~/.kube/config`.
+- Script chỉ dùng kubeconfig riêng `.kube/config` (`KUBECONFIG=/dev/null` cho mọi lời gọi khác). Không bao giờ sửa `~/.kube/config`.
 - `01-up.sh` và `06-down.sh` bắt gõ xác nhận từ `/dev/tty`. Không có biến môi trường hay cờ nào bỏ qua được; không có terminal thì thoát mã 4. Người thật phải gõ.
 - Mọi script in cảnh báo chi phí trước khi làm việc. `DRY_RUN=1` chỉ in việc sẽ làm.
 - Account id không bao giờ được ghi vào repo; truyền bằng biến môi trường lúc chạy.
@@ -50,7 +50,7 @@ Biến môi trường:
 | `KUBE_CONTEXT` | bằng `CLUSTER_NAME` (cho 02-06) |
 | `AWS_REGION` | mặc định `ap-southeast-1` |
 
-Chuẩn bị: `cp demo/terraform/terraform.tfvars.example demo/terraform/terraform.tfvars`, điền `endpoint_public_access_cidrs` bằng IP `/32` của bạn và `owner`. Giá trị mẫu `000000000000` là giả.
+Chuẩn bị: `cp terraform/terraform.tfvars.example terraform/terraform.tfvars`, điền `endpoint_public_access_cidrs` bằng IP `/32` của bạn và `owner`. Giá trị mẫu `000000000000` là giả.
 
 ## Quyết định: MỘT cluster, ba node pool cô lập
 
@@ -97,14 +97,14 @@ export AWS_REGION=ap-southeast-1
 | Mốc | Việc | Ước tính |
 |---|---|---|
 | R-24h | Kiểm quota Spot/On-Demand, `terraform plan` thử | 15 phút |
-| R+0:00 | `bash demo/scripts/01-up.sh` (gõ xác nhận) | ~15 phút |
-| R+0:20 | đặt `KUBE_CONTEXT` (lệnh có trong output `kubeconfig_command` của Terraform), `PHASE=platform bash demo/scripts/02-deploy-apps.sh`, cổng coexistence | ~15 phút |
-| R+0:35 | `bash demo/scripts/03-benchmark-scaleup.sh` trên pool rỗng | 45-60 phút |
-| R+1:35 | `PHASE=apps bash demo/scripts/02-deploy-apps.sh` | ~10 phút |
+| R+0:00 | `bash scripts/01-up.sh` (gõ xác nhận) | ~15 phút |
+| R+0:20 | đặt `KUBE_CONTEXT` (lệnh có trong output `kubeconfig_command` của Terraform), `PHASE=platform bash scripts/02-deploy-apps.sh`, cổng coexistence | ~15 phút |
+| R+0:35 | `bash scripts/03-benchmark-scaleup.sh` trên pool rỗng | 45-60 phút |
+| R+1:35 | `PHASE=apps bash scripts/02-deploy-apps.sh` | ~10 phút |
 | R+1:45 | chờ cửa sổ chi phí 60 phút, quay màn hình OpenCost UI | 60 phút |
-| R+2:45 | `bash demo/scripts/04-cost-report.sh`, rồi `bash demo/scripts/05-chaos-node-down.sh` | 30-45 phút |
-| sau đó | quay video/chụp màn hình dự phòng; `python3 demo/scripts/fill_results.py`; dựng lại deck | 30 phút |
-| cuối | `bash demo/scripts/06-down.sh` (gõ xác nhận hai lần) | ~15 phút |
+| R+2:45 | `bash scripts/04-cost-report.sh`, rồi `bash scripts/05-chaos-node-down.sh` | 30-45 phút |
+| sau đó | quay video/chụp màn hình dự phòng; `python3 scripts/fill_results.py`; dựng lại deck | 30 phút |
+| cuối | `bash scripts/06-down.sh` (gõ xác nhận hai lần) | ~15 phút |
 
 Tổng khoảng 5 giờ, ước tính $3.5-4.5. Thứ tự quan trọng: `03` phải chạy TRƯỚC khi có pod Boutique (pod Boutique giữ node sống nên pool không còn rỗng). Chạy lại `03` sau khi đã deploy app thì phải `PHASE=apps-down` trước.
 
@@ -115,8 +115,8 @@ T-120 phút `01-up.sh`; T-100 `02 PHASE=platform`; T-85 `02 PHASE=apps`; T-0 bu�
 ## Đưa kết quả vào deck
 
 ```bash
-python3 demo/scripts/fill_results.py          # CSV thô -> demo/results/summary.json + RESULTS.md
-cd deck && . .venv/bin/activate
+python3 scripts/fill_results.py          # CSV thô -> results/summary.json + RESULTS.md
+cd presentation && . .venv/bin/activate
 python build_deck.py && ./render.sh && python verify_deck.py
 ```
 
@@ -139,13 +139,13 @@ Quay trước (đừng chỉ dựa vào live): scale-up của từng scaler (`ku
 ## Kiểm tra offline
 
 ```bash
-bash demo/scripts/lint.sh          # shellcheck, terraform fmt/validate/test, helm, kubeconform, yamllint, grep bí mật
-bash demo/scripts/tests/test_guards.sh
-python3 demo/scripts/tests/test_confirm_pty.py
-bash demo/scripts/tests/test_benchmark_preflight.sh
-bash demo/scripts/tests/test_chart.sh
-python3 demo/scripts/tests/test_fill_results.py
-terraform -chdir=demo/terraform test
+bash scripts/lint.sh          # shellcheck, terraform fmt/validate/test, helm, kubeconform, yamllint, grep bí mật
+bash scripts/tests/test_guards.sh
+python3 scripts/tests/test_confirm_pty.py
+bash scripts/tests/test_benchmark_preflight.sh
+bash scripts/tests/test_chart.sh
+python3 scripts/tests/test_fill_results.py
+terraform -chdir=terraform test
 ```
 
-Danh sách việc chưa kiểm chứng được offline nằm trong `demo/verification.md`.
+Danh sách việc chưa kiểm chứng được offline nằm trong `docs/verification.md`.

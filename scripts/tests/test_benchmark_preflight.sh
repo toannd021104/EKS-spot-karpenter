@@ -50,9 +50,9 @@ assert_eq "REPS=11 -> 2" 2 "$(rc_of "${ENV_OK[@]}" REPS=11)"
 no_scale "formula violations"
 
 echo "== coexistence gate (a): shared CRD changed since the platform phase -> 5"
-printf '{"nodepools.karpenter.sh":"11","nodeclaims.karpenter.sh":"99"}' >"$SB/demo/.kube/crd-resourceversions-finops-spot-demo.json"
+printf '{"nodepools.karpenter.sh":"11","nodeclaims.karpenter.sh":"99"}' >"$SB/.kube/crd-resourceversions-finops-spot-demo.json"
 assert_eq "CRD resourceVersion drift -> 5" 5 "$(rc_of "${ENV_OK[@]}" SCALERS=karpenter,automode)"
-rm -f "$SB/demo/.kube/crd-resourceversions-finops-spot-demo.json"
+rm -f "$SB/.kube/crd-resourceversions-finops-spot-demo.json"
 assert_eq "no recorded CRD versions (platform phase not run) -> 5" 5 "$(rc_of "${ENV_OK[@]}" SCALERS=karpenter,automode)"
 no_scale "gate failures"
 
