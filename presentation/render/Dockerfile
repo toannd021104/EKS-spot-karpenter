@@ -1,5 +1,5 @@
 # Render image for the deck: pptx -> pdf (LibreOffice) -> png (poppler).
-# Build: docker build -t finops-deck-render deck/render
+# Build: docker build -t finops-deck-render presentation/render
 FROM debian:bookworm-slim
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \

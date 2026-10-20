@@ -1,8 +1,8 @@
 # Kịch bản nói: Spot + Karpenter, Uptime cao, chi phí thấp
 
-Diễn giả: Lê Kiến Troup, Platform Architect, Enops. Khán giả: sinh viên đại học. Tổng thời lượng 15:00 (chưa tính Q&A). Tốc độ nói khoảng 135 từ mỗi phút.
+Diễn giả: Nguyễn Đức Toàn, Technical Cloud Engineer, Keyloop. Khán giả: sinh viên đại học. Tổng thời lượng 15:00 (chưa tính Q&A). Tốc độ nói khoảng 135 từ mỗi phút.
 
-Quy ước dữ liệu: mọi con số đo (giây, phần trăm lỗi) hiện là chỗ trống `Đo: ___` cho đến khi chạy demo thật và điền bằng `fill_results.py`. Mọi số tiền là **ước tính** theo giá list (OpenCost và bảng giá AWS ngày 2026-10-20), không phải số đo. Khi nói trên sân khấu, chỉ đọc số có trong `demo/results/summary.json`.
+Quy ước dữ liệu: mọi con số đo (giây, phần trăm lỗi) hiện là chỗ trống `Đo: ___` cho đến khi chạy demo thật và điền bằng `fill_results.py`. Mọi số tiền là **ước tính** theo giá list (OpenCost và bảng giá AWS ngày 2026-10-20), không phải số đo. Khi nói trên sân khấu, chỉ đọc số có trong `results/summary.json`.
 
 Khối `<!-- notes:slide-NN -->` bên dưới được `build_deck.py` đọc làm ghi chú diễn giả của slide NN. Không sửa tên khối.
 
@@ -13,7 +13,7 @@ Khối `<!-- notes:slide-NN -->` bên dưới được `build_deck.py` đọc l�
 **Thời gian:** 0:30
 
 **Lời thoại:**
-Chào các bạn. Mình là Kiến, Platform Architect ở Enops. Hôm nay mình có 15 phút để kể một câu chuyện rất thực tế: làm sao để hệ thống chạy gần như không bao giờ sập, mà hóa đơn cloud vẫn nhẹ. Chìa khóa là hai thứ: Spot Instance và Karpenter. Mình sẽ giải thích bằng ví dụ đời thường, rồi cho các bạn xem số liệu từ một demo nhỏ.
+Chào các bạn. Mình là Toàn, Technical Cloud Engineer ở Keyloop. Hôm nay mình có 15 phút để kể một câu chuyện rất thực tế: làm sao để hệ thống chạy gần như không bao giờ sập, mà hóa đơn cloud vẫn nhẹ. Chìa khóa là hai thứ: Spot Instance và Karpenter. Mình sẽ giải thích bằng ví dụ đời thường, rồi cho các bạn xem số liệu từ một demo nhỏ.
 
 **Cue demo:** Không có. Đứng ở slide tiêu đề, nhìn khán giả, không mở terminal.
 
@@ -21,7 +21,7 @@ Chào các bạn. Mình là Kiến, Platform Architect ở Enops. Hôm nay mình
 
 <!-- notes:slide-01 -->
 Mở bài ngắn, 30 giây. Giới thiệu bản thân và chủ đề, nói rõ đây là bài cho người mới nên sẽ dùng ví dụ đời thường. Hứa trước ba phần: Spot là gì, ba cách thêm node cho EKS, và cách đo chi phí bằng OpenCost.
-Nguồn: thông tin diễn giả do chính diễn giả cung cấp (Lê Kiến Troup, Platform Architect, Enops). Layout slide dùng Title Slide của Template - Remake.pptx; footer "Amazon Web Services, Inc. or its Affiliates." nằm trong layout mẫu, chưa thay (quyết định của diễn giả).
+Nguồn: thông tin diễn giả do chính diễn giả cung cấp (Nguyễn Đức Toàn, Technical Cloud Engineer, Keyloop). Đây là bài chia sẻ cá nhân, quan điểm là của diễn giả. Layout slide dùng Title Slide của Template - Remake.pptx; footer "Amazon Web Services, Inc. or its Affiliates." nằm trong layout mẫu, chưa thay (quyết định của diễn giả).
 <!-- /notes:slide-01 -->
 
 ---
@@ -31,15 +31,15 @@ Nguồn: thông tin diễn giả do chính diễn giả cung cấp (Lê Kiến T
 **Thời gian:** 1:00
 
 **Lời thoại:**
-Trong kinh nghiệm của mình, chi phí cloud thường chiếm khoảng 10 đến 20 phần trăm chi phí vận hành của một công ty công nghệ. Nghe thì nhỏ, nhưng nó là khoản tăng nhanh nhất và dễ cắt nhất mà không đụng đến lương hay sản phẩm. Câu hỏi mình muốn trả lời hôm nay là: có thể đạt gần 100 phần trăm uptime mà không đốt tiền không? Mình chia bài thành bốn phần: Spot, cách thêm node, demo đo đạc, và những cái bẫy.
+Với nhiều công ty công nghệ, hóa đơn cloud là một khoản lớn và có thể tăng rất nhanh nếu không ai theo dõi. Đó là lý do có hẳn một thực hành gọi là FinOps: đo chi phí, rồi tối ưu mà không đụng đến sản phẩm. [Toàn: thêm kinh nghiệm thực tế tại Keyloop nếu có] Câu hỏi mình muốn trả lời hôm nay là: có thể đạt gần 100 phần trăm uptime mà không đốt tiền không? Mình chia bài thành bốn phần: Spot, cách thêm node, demo đo đạc, và những cái bẫy.
 
 **Cue demo:** Không có. Chỉ tay vào bốn thẻ chương trình ở dưới slide khi nhắc từng phần.
 
-**Dự phòng:** Nếu bị hỏi nguồn con số 10 đến 20 phần trăm, nói đó là kinh nghiệm của diễn giả, không phải số thống kê của ngành.
+**Dự phòng:** Nếu bị hỏi con số cụ thể về tỷ trọng chi phí cloud, nói bài này không đưa con số thống kê; xem báo cáo State of FinOps của FinOps Foundation.
 
 <!-- notes:slide-02 -->
-Con số "10-20% chi phí vận hành" là kinh nghiệm của diễn giả khi làm việc tại Enops, không phải thống kê công bố. Nếu cần nguồn công khai, thay bằng báo cáo State of FinOps của FinOps Foundation (cần kiểm tra lại số liệu trước khi dùng).
-Nguồn: kinh nghiệm của diễn giả tại Enops; thay bằng báo cáo FinOps Foundation nếu có.
+Slide không đưa con số tỷ trọng chi phí cloud vì chưa có nguồn công khai đã kiểm chứng. Nếu muốn thêm số, lấy từ báo cáo State of FinOps của FinOps Foundation và kiểm tra lại số liệu trước khi dùng.
+Nguồn: khái niệm FinOps theo https://www.finops.org/introduction/what-is-finops/ .
 Câu hỏi dẫn dắt của cả bài: có thể giữ uptime gần 100% mà không đốt tiền không. Bốn thẻ agenda: Spot, 3 cách thêm node, đo bằng OpenCost, bài học.
 <!-- /notes:slide-02 -->
 
@@ -58,7 +58,7 @@ Hãy tưởng tượng một kho hàng có 100 ô. Hôm nay khách chỉ thuê 7
 
 <!-- notes:slide-03 -->
 Ẩn dụ kho hàng 100 ô: 70 ô bán đủ giá, 30 ô giảm giá nhưng có thể bị thu hồi. Spot là dung lượng EC2 dư của AWS, cảnh báo gián đoạn trước 2 phút.
-Nguồn: trang AWS EC2 Spot Instances (mức giảm điển hình 50-70%, tối đa khoảng 90%) và tài liệu Spot Instance interruptions (cảnh báo 2 phút). Số "54-67% (ap-southeast-1, 2026-10-20)" lấy từ snapshot giá list trong demo/results/pricing-snapshot-ap-southeast-1.json, là giá niêm yết đọc một lần, không phải cam kết; giá Spot đổi theo AZ và theo phút.
+Nguồn: trang AWS EC2 Spot Instances (mức giảm điển hình 50-70%, tối đa khoảng 90%) và tài liệu Spot Instance interruptions (cảnh báo 2 phút). Số "54-67% (ap-southeast-1, 2026-10-20)" lấy từ snapshot giá list trong results/pricing-snapshot-ap-southeast-1.json, là giá niêm yết đọc một lần, không phải cam kết; giá Spot đổi theo AZ và theo phút.
 <!-- /notes:slide-03 -->
 
 ---
@@ -77,7 +77,7 @@ Không phải thứ gì cũng nên chạy Spot. Hợp là những thứ chịu �
 <!-- notes:slide-04 -->
 Hợp với Spot: ứng dụng web không giữ trạng thái, worker xử lý hàng đợi, batch, CI. Không hợp: cơ sở dữ liệu một bản, công việc dài không có checkpoint.
 Luật Murphy: cái gì có thể hỏng thì sẽ hỏng; thử chủ động bằng cách rút dây điện (chính là bài demo 2 ở slide 12). Giải thích thêm khi hỏi đáp: kiểm tra bằng cách chủ động kill node chứ không chờ sự cố thật.
-Nguồn: kinh nghiệm vận hành của diễn giả; hướng dẫn "Spot best practices" của AWS (linh hoạt nhiều loại instance, xử lý gián đoạn).
+Nguồn: hướng dẫn "Best practices for Amazon EC2 Spot" của AWS, https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-best-practices.html (linh hoạt nhiều loại instance và AZ, chuẩn bị cho gián đoạn; Spot phù hợp workload stateless, chịu lỗi).
 <!-- /notes:slide-04 -->
 
 ---
@@ -134,7 +134,7 @@ Karpenter có hai mảnh cấu hình. NodePool nói: được dùng loại máy 
 <!-- notes:slide-07 -->
 Karpenter v1: NodePool (yêu cầu về instance, capacity type spot và on-demand, giới hạn CPU, consolidation) và EC2NodeClass (AMI, subnet, role). Bốn bước: quan sát Pod Pending, chọn instance, gọi EC2 Fleet, bind Pod. Consolidation tắt hoặc thay node dư; consolidateAfter 30s là giá trị chọn cho demo, không phải mặc định.
 Gián đoạn Spot: sự kiện EventBridge đi vào hàng đợi SQS, Karpenter nghe và drain node.
-Nguồn: tài liệu karpenter.sh (NodePools, NodeClasses, Disruption, Interruption) phiên bản 1.14.x. Đoạn YAML trên slide là rút gọn từ demo/k8s/karpenter/nodepool.yaml.tpl.
+Nguồn: tài liệu karpenter.sh (NodePools, NodeClasses, Disruption, Interruption) phiên bản 1.14.x. Đoạn YAML trên slide là rút gọn từ kubernetes/karpenter/nodepool.yaml.tpl.
 <!-- /notes:slide-07 -->
 
 ---
@@ -153,7 +153,7 @@ Nguồn: tài liệu karpenter.sh (NodePools, NodeClasses, Disruption, Interrupt
 <!-- notes:slide-08 -->
 Kiến trúc demo: một cluster EKS 1.35, hai node hệ thống On-Demand, ba pool node (ca, karpenter, automode) mỗi pool có nhãn và taint scaler=X, ba namespace boutique-ca, boutique-karpenter, boutique-automode, cùng OpenCost và một Prometheus nhỏ. Lý do một cluster: cùng VPC, cùng thời điểm giá Spot, tiết kiệm thời gian và tiền.
 Đánh đổi (nói thật): dùng chung control plane và CRD giữa Karpenter tự cài và Auto Mode; AWS khuyên chọn một trong hai ở production, đây là cấu hình chỉ dành cho demo. Nếu cổng go/no-go khi tổng duyệt không qua, chuyển sang hai cluster và ghi chú "2 cluster" trên slide.
-Nguồn: design.md mục 3.1; tài liệu AWS về chạy Karpenter cùng EKS Auto Mode. Cấu hình chưa chạy thử trên cluster thật tại thời điểm viết kịch bản.
+Nguồn: docs/decisions.md (quyết định một cluster); tài liệu AWS về chạy Karpenter cùng EKS Auto Mode. Cấu hình chưa chạy thử trên cluster thật tại thời điểm viết kịch bản.
 <!-- /notes:slide-08 -->
 
 ---
@@ -210,7 +210,7 @@ Thí nghiệm một: tạo bốn Pod cần mỗi cái một CPU trong pool đang
 <!-- notes:slide-11 -->
 Thí nghiệm scale-up: REPLICAS=4 Pod pause, mỗi Pod 1 vCPU, 1 GiB, pool bắt đầu từ 0 node và chưa có Pod Boutique. Mốc thời gian lấy từ đối tượng API server (creationTimestamp của Pod, thời điểm Ready của node), không lấy từ đồng hồ laptop. Hiển thị trung vị của 3 lần; min-max nằm trong ghi chú sau khi có số.
 Slide dùng biểu đồ cột nếu có số đo, nếu không dùng ba thẻ "TARGET: ___ s (điền sau khi đo)". Không bao giờ đưa số từ dữ liệu giả của fixture kiểm thử lên deck chính.
-Nguồn: demo/results/summary.json do fill_results.py sinh từ scaleup-*.csv; thiết kế đo ở design.md mục 3.2. Tại thời điểm viết, chưa có số đo thật.
+Nguồn: results/summary.json do fill_results.py sinh từ scaleup-*.csv; kịch bản đo ở docs/runbook.md. Tại thời điểm viết, chưa có số đo thật.
 <!-- /notes:slide-11 -->
 
 ---
@@ -229,7 +229,7 @@ Thí nghiệm hai: rút dây điện thật. Khi ứng dụng đang chạy, mộ
 <!-- notes:slide-12 -->
 Thí nghiệm chaos: tắt một node Spot (hoặc dùng FIS nếu bật, hoặc drain) trong khi probe gửi yêu cầu vào frontend. Đo recovery_s từ lúc kill đến khi Pod sẵn sàng trên node thay thế và tỷ lệ yêu cầu lỗi trong cửa sổ đo. Thời điểm kill lấy từ đồng hồ máy chạy script nên sai số khoảng 2 giây.
 Chế độ thực tế (terminate, fis, drain) được ghi lại trong CSV và nên nói rõ khi trình bày. Các thẻ hiện là placeholder cho đến khi có hàng kind=observed.
-Nguồn: demo/results/chaos-*.csv và summary.json; thiết kế ở design.md mục 7.6.
+Nguồn: results/chaos-*.csv và summary.json; kịch bản đo ở docs/runbook.md.
 <!-- /notes:slide-12 -->
 
 ---
@@ -239,7 +239,7 @@ Nguồn: demo/results/chaos-*.csv và summary.json; thiết kế ở design.md m
 **Thời gian:** 1:00
 
 **Lời thoại:**
-Sáu bài học từ thực tế. Một, rải nhiều vùng sẵn sàng. Hai, cho phép nhiều loại máy, đừng khóa một loại. Ba, đặt PodDisruptionBudget. Bốn, topology spread để Pod không dồn một chỗ. Năm, luôn có phương án dự phòng On-Demand. Sáu, coi chừng cạn IP: một subnet /24 chỉ có 256 địa chỉ và AWS giữ lại 5. Mình từng gặp sự cố hơn 10 node Spot bị thu hồi cùng một lúc trong một vùng. Hệ thống sống sót vì đã rải nhiều vùng và có dự phòng.
+Sáu bài học từ thực tế. Một, rải nhiều vùng sẵn sàng. Hai, cho phép nhiều loại máy, đừng khóa một loại. Ba, đặt PodDisruptionBudget. Bốn, topology spread để Pod không dồn một chỗ. Năm, luôn có phương án dự phòng On-Demand. Sáu, coi chừng cạn IP: một subnet /24 chỉ có 256 địa chỉ và AWS giữ lại 5. Một số công ty từng gặp cảnh nhiều node Spot bị thu hồi cùng một lúc trong một vùng; hệ thống nào đã rải nhiều vùng và có dự phòng thì vẫn sống sót. [Toàn: thêm kinh nghiệm thực tế tại Keyloop nếu có]
 
 **Cue demo:** Không có.
 
@@ -247,7 +247,7 @@ Sáu bài học từ thực tế. Một, rải nhiều vùng sẵn sàng. Hai, c
 
 <!-- notes:slide-13 -->
 Sáu mục: multi-AZ, đa dạng instance type, PDB, topology spread, fallback sang On-Demand, giám sát IP của subnet. Multi-region tốn kém hơn nhiều (trả hai hạ tầng và đồng bộ dữ liệu) nên chỉ cân nhắc khi cần.
-Sự cố "10+ node mất cùng lúc" là trải nghiệm thật của diễn giả tại Enops; nguồn: kinh nghiệm của diễn giả (chưa có postmortem công khai). "/24 = 256 địa chỉ, AWS giữ 5" theo tài liệu AWS VPC "Subnet CIDR blocks".
+Việc nhiều node Spot có thể bị thu hồi cùng lúc là rủi ro có thật: AWS nói rõ Spot có thể bị thu hồi khi nhu cầu On-Demand tăng đột biến và khuyên linh hoạt về loại máy và AZ (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-best-practices.html). Slide không kể sự cố cụ thể của công ty nào. Lưu ý từ cùng tài liệu: chuyển sang On-Demand khi Spot bị gián đoạn có thể kéo thêm gián đoạn cho các Spot khác, nên fallback chỉ là lớp dự phòng, không thay cho đa dạng loại máy và AZ. "/24 = 256 địa chỉ, AWS giữ 5" theo tài liệu AWS VPC "Subnet CIDR blocks".
 Cắt bớt khi thiếu giờ: giữ multi-AZ, đa dạng instance và fallback.
 <!-- /notes:slide-13 -->
 
@@ -266,7 +266,7 @@ Ba điều mang về. Một, Spot giảm chi phí đáng kể nhưng bạn phả
 
 <!-- notes:slide-14 -->
 Ba ý mang về: thiết kế chịu gián đoạn, đo trước khi kết luận, đo chi phí trước khi tối ưu. Tài nguyên: opencost.io, karpenter.sh, tài liệu AWS EKS Auto Mode, finops.org.
-Cần diễn giả xác nhận trước khi nói: câu "sản phẩm của Enops dùng Spot cho 100% production" chỉ có trong đề bài, chưa có nguồn kiểm chứng và chưa chắc được phép công bố. Nếu chưa xác nhận thì bỏ câu này; nội dung đề bài truncated nên phần cuối của bài nói gốc chưa có.
+Không nói rằng công ty nào (kể cả Keyloop) dùng Spot cho production, trừ khi diễn giả tự xác nhận và được phép công bố. Phần này là chỗ có thể thêm kinh nghiệm cá nhân: [Toàn: thêm kinh nghiệm thực tế tại Keyloop nếu có].
 Nhắc nhớ: xóa cluster demo bằng 06-down.sh ngay sau buổi nói; cluster rảnh tốn khoảng 0.38 USD mỗi giờ (ước tính theo giá list ngày 2026-10-20).
 <!-- /notes:slide-14 -->
 
@@ -287,7 +287,7 @@ Thứ tự bỏ, từ trước ra sau:
 - [ ] Video quay lúc tổng duyệt: scale-up của ba cách, tắt node, giao diện OpenCost.
 - [ ] `RESULTS.md` và `summary.json` đã được điền bằng `fill_results.py`; deck đã build lại và `verify_deck.py` chạy sạch.
 - [ ] Đọc lại các hàng 2 và 3 của slide 10 so với số thật; ô chưa có số vẫn là "Đo: ___".
-- [ ] Xác nhận với ban tổ chức: câu "Enops dùng Spot 100% production" và footer AWS/FCJ của template.
+- [ ] Xác nhận với ban tổ chức: footer AWS/FCJ của template. Điền hoặc xóa các chỗ `[Toàn: ...]` trong kịch bản.
 - [ ] Nhắc bản thân: chạy `06-down.sh` sau buổi nói (cluster tốn khoảng 0.38 USD mỗi giờ khi rảnh, ước tính).
 
 ---

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Tests for the synthetic-data guard and the verifier (design AC15, AC17).
+"""Tests for the synthetic-data guard and the verifier.
 
-Run: deck/.venv/bin/python -m unittest discover deck/tests
-Every deck built here goes to a temp dir under /tmp; nothing is written to deck/ or demo/results/.
+Run: presentation/.venv/bin/python -m unittest discover presentation/tests
+Every deck built here goes to a temp dir under /tmp; nothing is written to presentation/ or results/.
 """
 import contextlib
 import io
@@ -20,8 +20,8 @@ import build_deck  # noqa: E402
 import verify_deck  # noqa: E402
 from pptx import Presentation  # noqa: E402
 
-SYNTHETIC = ROOT / "demo" / "scripts" / "tests" / "fixtures" / "SYNTHETIC-summary.json"
-EMPTY = ROOT / "demo" / "results" / "summary.json"
+SYNTHETIC = ROOT / "scripts" / "tests" / "fixtures" / "SYNTHETIC-summary.json"
+EMPTY = ROOT / "results" / "summary.json"
 
 
 def run_build(*args):
@@ -61,7 +61,7 @@ class SyntheticGuard(unittest.TestCase):
         self.assertFalse(out.exists())
 
     def test_synthetic_refused_for_results_dir(self):
-        out = ROOT / "demo" / "results" / "should-not-exist.pptx"
+        out = ROOT / "results" / "should-not-exist.pptx"
         code, _ = run_build("--results", str(SYNTHETIC), "--out", str(out))
         self.assertNotEqual(code, 0)
         self.assertFalse(out.exists())

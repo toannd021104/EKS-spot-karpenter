@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Verify deck/karpenter-spot-finops.pptx against the rules of design.md 10.4.
+"""Verify presentation/karpenter-spot-finops.pptx against the deck rules (14 slides, notes, layouts, fonts, contrast, numbers, placeholders).
 
 Usage:
-  deck/.venv/bin/python deck/verify_deck.py [--deck PATH] [--results PATH] [--allow-synthetic]
+  presentation/.venv/bin/python presentation/verify_deck.py [--deck PATH] [--results PATH] [--allow-synthetic]
 
 Rules (each failure prints '[FAIL] slide N: ...'):
   * exactly 14 slides, size 12192000x6858000, layouts only Title Slide / Contents / Section slide
@@ -32,7 +32,7 @@ from pptx.util import Emu
 DECK_DIR = Path(__file__).resolve().parent
 ROOT = DECK_DIR.parent
 DEFAULT_DECK = DECK_DIR / "karpenter-spot-finops.pptx"
-DEFAULT_RESULTS = ROOT / "demo" / "results" / "summary.json"
+DEFAULT_RESULTS = ROOT / "results" / "summary.json"
 
 EXPECTED_SLIDES = 14
 SLIDE_W, SLIDE_H = 12192000, 6858000

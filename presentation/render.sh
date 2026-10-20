@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Render a .pptx to PNG previews with LibreOffice inside Docker.
-# Usage: bash deck/render.sh [PPTX] [OUT_DIR]
-#   PPTX    default: deck/karpenter-spot-finops.pptx
-#   OUT_DIR default: deck/preview   (files slide-NN.png)
+# Usage: bash presentation/render.sh [PPTX] [OUT_DIR]
+#   PPTX    default: presentation/karpenter-spot-finops.pptx
+#   OUT_DIR default: presentation/preview   (files slide-NN.png)
 set -euo pipefail
 IFS=$'\n\t'
 

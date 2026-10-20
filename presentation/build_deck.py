@@ -2,10 +2,10 @@
 """Build the 14-slide Vietnamese deck 'Spot + Karpenter' from Template - Remake.pptx.
 
 Usage:
-  deck/.venv/bin/python deck/build_deck.py [--results PATH] [--out PATH]
+  presentation/.venv/bin/python presentation/build_deck.py [--results PATH] [--out PATH]
 
-* Speaker notes come from deck/script.md blocks '<!-- notes:slide-NN -->'.
-* Numbers come only from --results (demo/results/summary.json). A metric with n == 0
+* Speaker notes come from presentation/script.md blocks '<!-- notes:slide-NN -->'.
+* Numbers come only from --results (results/summary.json). A metric with n == 0
   is rendered as a placeholder ('Đo: ___', 'TARGET: ___ s (điền sau khi đo)',
   'Ước tính (OpenCost, giá list): $___/giờ'); each cell follows its own metric's n.
 * A summary with meta.synthetic=true is refused unless --out is under /tmp; in that case
@@ -33,16 +33,16 @@ from lxml import etree
 
 DECK_DIR = Path(__file__).resolve().parent
 ROOT = DECK_DIR.parent
-DEFAULT_TEMPLATE = ROOT / "Template - Remake.pptx"
+DEFAULT_TEMPLATE = DECK_DIR / "template" / "Template - Remake.pptx"
 DEFAULT_SCRIPT = DECK_DIR / "script.md"
-DEFAULT_RESULTS = ROOT / "demo" / "results" / "summary.json"
+DEFAULT_RESULTS = ROOT / "results" / "summary.json"
 DEFAULT_OUT = DECK_DIR / "karpenter-spot-finops.pptx"
 
 FONT = "Arial"
 MONO = "Courier New"
 ALLOWED_LAYOUTS = ("Title Slide", "Contents", "Section slide")
 
-# Palette (design 10.3)
+# Palette
 BG = "08041B"
 WHITE = "FFFFFF"
 SOFT = "E6E4F5"
@@ -63,7 +63,7 @@ PH_MEASURE = "Đo: ___"
 PH_TARGET = "TARGET: ___ s (điền sau khi đo)"
 PH_COST = "Ước tính (OpenCost, giá list): $___/giờ"
 
-# Slide 10 qualitative text: architecture facts only (design 10.2)
+# Slide 10 qualitative text: architecture facts only
 TABLE_ARCH = {
     "cost": {
         "ca": "Node group có kích thước instance cố định. ",
@@ -508,16 +508,16 @@ def s01(slide, spec, ctx):
                     geom=(0.5, 1.7, 6.9, 1.6), anchor="b")
     set_placeholder(ph_by_idx(slide, 16), "Talk 15 phút về FinOps trên EKS", 22, ORANGE,
                     geom=(0.5, 3.45, 6.9, 0.5))
-    set_placeholder(ph_by_idx(slide, 13), "Lê Kiến Troup", 24, WHITE, True, geom=(0.5, 4.56, 6.9, 0.45))
-    set_placeholder(ph_by_idx(slide, 14), "Platform Architect, Enops", 20, SOFT, geom=(0.5, 4.96, 6.9, 0.4))
+    set_placeholder(ph_by_idx(slide, 13), "Nguyễn Đức Toàn", 24, WHITE, True, geom=(0.5, 4.56, 6.9, 0.45))
+    set_placeholder(ph_by_idx(slide, 14), "Technical Cloud Engineer, Keyloop", 20, SOFT, geom=(0.5, 4.96, 6.9, 0.4))
     drop_unused_placeholders(slide, {13, 14, 15, 16})
 
 
 def s02(slide, spec, ctx):
     contents_header(slide, spec)
     add_text(slide, "s02-bignumber", 0.5, 1.9, 4.6, 3.1,
-             [("10-20%", {"size": 80, "bold": True, "color": ORANGE}),
-              ("chi phí vận hành là tiền cloud (kinh nghiệm diễn giả)", {"size": 20})],
+             [("FinOps", {"size": 64, "bold": True, "color": ORANGE}),
+              ("hóa đơn cloud tăng rất nhanh nếu không ai đo", {"size": 20})],
              fill=CARD, line=ORANGE, align="c", anchor="m", round_=True)
     add_text(slide, "s02-question", 5.4, 1.9, 7.4, 3.1,
              ["~100% uptime", "mà không đốt tiền?"], size=40, bold=True, color=WHITE, fill=CARD,
@@ -526,7 +526,7 @@ def s02(slide, spec, ctx):
     for i, (label, col) in enumerate(chips):
         add_text(slide, f"s02-chip-{i + 1}", 0.5 + i * 3.1, 5.25, 2.95, 0.75, label, size=20, color=DARK,
                  bold=True, fill=col, anchor="m", align="c", round_=True)
-    footnote(slide, "s02-footnote", "Nguồn: kinh nghiệm của diễn giả tại Enops (không phải thống kê công bố)",
+    footnote(slide, "s02-footnote", "Nguồn: khái niệm FinOps, finops.org",
              y=6.15, h=0.4)
 
 
@@ -772,9 +772,9 @@ def s13(slide, spec, ctx):
                  [(t, {"size": 22, "bold": True, "color": col}), (sub, {"size": 20})],
                  fill=CARD, line=col, anchor="m", round_=True, margin=0.15)
     add_text(slide, "s13-banner", 0.5, 5.4, 12.3, 0.7,
-             "Từng có 10+ node Spot mất cùng lúc: nhờ nhiều AZ và dự phòng mà hệ thống vẫn sống.", size=20,
+             "Nhiều node Spot có thể bị thu hồi cùng lúc: nhiều AZ và dự phòng giúp hệ thống vẫn sống.", size=20,
              color=DARK, bold=True, fill=ORANGE, anchor="m", align="c", round_=True)
-    footnote(slide, "s13-footnote", "Nguồn: kinh nghiệm của diễn giả (sự cố thật); tài liệu AWS VPC (subnet CIDR)",
+    footnote(slide, "s13-footnote", "Nguồn: AWS Spot best practices; tài liệu AWS VPC (subnet CIDR)",
              y=6.15, h=0.4)
 
 
@@ -830,8 +830,8 @@ def build(template, script, summary, out, synthetic):
         slide.notes_slide.notes_text_frame.text = notes[spec["n"]]
     cp = prs.core_properties
     cp.title = "Spot + Karpenter: Uptime cao, chi phí thấp"
-    cp.author = "Lê Kiến Troup"
-    cp.last_modified_by = "Lê Kiến Troup"
+    cp.author = "Nguyễn Đức Toàn"
+    cp.last_modified_by = "Nguyễn Đức Toàn"
     cp.subject = "FinOps trên EKS: Spot, Karpenter, OpenCost"
     cp.keywords = "Spot, Karpenter, EKS Auto Mode, OpenCost, FinOps"
     cp.created = cp.modified = datetime.datetime(2026, 10, 20, 0, 0, 0)
@@ -848,7 +848,7 @@ def is_under_tmp(path):
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--results", type=Path, default=DEFAULT_RESULTS,
-                    help="summary.json (default demo/results/summary.json; absent file = placeholders)")
+                    help="summary.json (default results/summary.json; absent file = placeholders)")
     ap.add_argument("--out", type=Path, default=DEFAULT_OUT)
     ap.add_argument("--template", type=Path, default=DEFAULT_TEMPLATE)
     ap.add_argument("--script", type=Path, default=DEFAULT_SCRIPT)
