@@ -134,7 +134,7 @@ if grep -nE '(^|[^[:alnum:]_./-])(kubectl|helm) ' "$REPO_ROOT"/scripts/0*.sh | g
   fail "kubectl/helm used outside lib/common.sh (use kc()/hc())"
 else pass "kubectl/helm only inside lib/common.sh (scripts use kc()/hc())"; fi
 
-# ---------------------------------------------------------------- 8. aws subcommand allow-list (design 19)
+# ---------------------------------------------------------------- 8. aws subcommand allow-list
 ALLOWED='^(sts get-caller-identity|service-quotas get-service-quota|pricing get-products|ec2 describe-[a-z-]+|ec2 terminate-instances|ec2 create-tags|ec2 delete-tags|eks describe-[a-z-]+|eks update-kubeconfig|autoscaling describe-[a-z-]+|elbv2 describe-[a-z-]+|resourcegroupstaggingapi get-resources|fis start-experiment)$'
 bad_aws=0
 while IFS= read -r sub; do

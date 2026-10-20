@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# 05-chaos-node-down.sh: remove ONE worker node per scaler and time the recovery (design 7.6).
+# 05-chaos-node-down.sh: remove ONE worker node per scaler and time the recovery.
 # Runs with Boutique present (after 02 PHASE=apps). Hard cap: 1 victim per scaler per run.
 # Required env: CLUSTER_NAME, EXPECTED_AWS_ACCOUNT_ID, KUBE_CONTEXT (= CLUSTER_NAME).
 # Optional: SCALERS, MODE=terminate|fis|drain (default terminate), ALLOW_SINGLE_NODE=1, DRY_RUN=1.

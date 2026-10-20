@@ -79,10 +79,10 @@ platform_preflight() {
     aws autoscaling describe-tags --region "$AWS_REGION" \
       --filters "Name=tag-key,Values=k8s.io/cluster-autoscaler/${CLUSTER_NAME}" \
       --query 'Tags[].ResourceId' --output text | grep -qF -- "$asg" ||
-      die 5 "Cluster Autoscaler discovery tag is missing on ASG $asg. Fix: aws_autoscaling_group_tag in Terraform, or pass --nodes explicitly (design 4.4)."
+      die 5 "Cluster Autoscaler discovery tag is missing on ASG $asg. Fix: aws_autoscaling_group_tag in Terraform, or pass --nodes explicitly."
   fi
   if has_scaler automode; then
-    # Auto Mode owns the shared CRDs; they must exist before Karpenter is installed (design 3.1 item 8).
+    # Auto Mode owns the shared CRDs; they must exist before Karpenter is installed.
     kc get crd nodepools.karpenter.sh nodeclaims.karpenter.sh >/dev/null ||
       die 5 "Shared CRDs nodepools/nodeclaims.karpenter.sh are absent: Auto Mode must be enabled before the Karpenter install."
   fi
@@ -166,7 +166,7 @@ platform() {
   info "Platform ready. No Boutique pod exists and all pools are at 0 nodes: run 03-benchmark-scaleup.sh next, then PHASE=apps."
 }
 
-assert_isolation() { # design 3.1 item 7
+assert_isolation() { # every pod must land on its own scaler pool
   local bad
   bad=$(kc get pods -A -o json | jq -r '
     .items[] | select(.metadata.namespace | test("^(boutique|scaletest)-"))

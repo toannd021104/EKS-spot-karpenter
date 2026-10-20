@@ -2,7 +2,7 @@
 
 Ghi lại lệnh đã chạy, kết quả, sai lệch so với design và các mục không kiểm chứng được offline.
 Đường dẫn trong file này theo bố cục repo hiện tại (`terraform/`, `kubernetes/`, `scripts/`, `results/`, `presentation/`); log được viết khi còn là `demo/` và `deck/`.
-Ngày máy: 2026-10-20. Không có lệnh nào trong file này gọi AWS, `kubectl`, `terraform apply/destroy`, `eksctl`, hay `helm install/upgrade`.
+Ngày máy: 2026-10-20. (`design.md` và `impl-plan.md` nhắc trong log là tài liệu làm việc cục bộ, không có trong repo.) Không có lệnh nào trong file này gọi AWS, `kubectl`, `terraform apply/destroy`, `eksctl`, hay `helm install/upgrade`.
 
 ## FEAT-001: nền tảng, Terraform, Helm chart, manifest, OpenCost values
 

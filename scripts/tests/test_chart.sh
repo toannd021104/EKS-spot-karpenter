@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Chart assertions (design AC7): helm lint + helm template (offline, no cluster) for each scaler, then checks on the render:
+# Chart assertions: helm lint + helm template (offline, no cluster) for each scaler, then checks on the render:
 # no ECR URL, no Redis, no ExternalSecret, every Deployment has the scaler nodeSelector + toleration + label,
 # 3 PDBs (services with replicas >= 2), cartservice has 1 replica and no PDB, scheduling.scaler is required.
 set -uo pipefail

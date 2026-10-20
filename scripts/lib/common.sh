@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# lib/common.sh: sourced by 01..06. The single choke point for every safety rule (design 7.1).
+# lib/common.sh: sourced by 01..06. The single choke point for every safety rule.
 #   - the only file allowed to contain a literal kubectl / helm invocation (lint.sh enforces this);
 #   - never reads the ambient kubeconfig; only $REPO_ROOT/.kube/config (created by 01-up.sh);
 #   - refuses any cluster/account that is not the demo one (allow-list) or that matches DENY_CONTEXT_REGEX.
@@ -148,7 +148,7 @@ validate_out_dir() {
   OUT_DIR=$resolved
 }
 
-# Capacity formula (design 3.2): REPLICAS x 1 vCPU + steady_pool_vcpu <= pool_limit; steady is asserted 0 by the
+# Capacity formula: REPLICAS x 1 vCPU + steady_pool_vcpu <= pool_limit; steady is asserted 0 by the
 # preflight (no node, no Boutique pod). CA additionally needs REPLICAS <= ca_max_size.
 check_capacity_formula() { # check_capacity_formula SCALER
   local scaler=$1 steady=0 ca_max
@@ -347,7 +347,7 @@ get_spot_quota() { # prints the integer Spot (standard) vCPU quota
   printf '%s' "${q%.*}"
 }
 
-# Coexistence gate (design 3.1): (a) shared CRDs unchanged since 02 PHASE=platform, (b) pools Ready.
+# Coexistence gate: (a) shared CRDs unchanged since 02 PHASE=platform, (b) pools Ready.
 crd_versions() {
   kc get crd nodepools.karpenter.sh nodeclaims.karpenter.sh -o json |
     jq -S -c '[.items[] | {(.metadata.name): .metadata.resourceVersion}] | add'

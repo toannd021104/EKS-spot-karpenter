@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# 03-benchmark-scaleup.sh preflight (design AC14): stub kubectl / aws output only, PREFLIGHT_ONLY=1 so nothing is scaled.
+# 03-benchmark-scaleup.sh preflight: stub kubectl / aws output only, PREFLIGHT_ONLY=1 so nothing is scaled.
 #  exit 5: the pool has nodes, or a pod other than inflate targets the pool (Boutique present), or the coexistence gate fails
 #  exit 2: REPLICAS violates the capacity formula (or is out of range), or the Spot quota is too small
 set -uo pipefail

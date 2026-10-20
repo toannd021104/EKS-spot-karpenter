@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""fill_results.py: raw CSVs -> results/summary.json + results/RESULTS.md (design 7.8 and 8). Python stdlib only.
+"""fill_results.py: raw CSVs -> results/summary.json + results/RESULTS.md. Python stdlib only.
 
 Rules that make "no invented numbers" enforceable:
   * a metric with n == 0 is null (never 0, never a guess); n counts outcome=ok rows with rep >= 1 (rep 0 is the cold start);

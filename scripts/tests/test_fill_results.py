@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Tests for fill_results.py (design AC11). stdlib only; fixtures are SYNTHETIC-* and never leave /tmp."""
+"""Tests for fill_results.py. stdlib only; fixtures are SYNTHETIC-* and never leave /tmp."""
 import csv
 import json
 import shutil

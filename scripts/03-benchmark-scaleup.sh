@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# 03-benchmark-scaleup.sh: time node scale-up per scaler with the 'inflate' workload (design 3.2, 7.4).
+# 03-benchmark-scaleup.sh: time node scale-up per scaler with the 'inflate' workload.
 # Runs between 02 PHASE=platform and 02 PHASE=apps: the pools must be empty and no Boutique pod may exist.
 # Required env: CLUSTER_NAME, EXPECTED_AWS_ACCOUNT_ID, KUBE_CONTEXT (= CLUSTER_NAME).
 # Optional: SCALERS (default ca,karpenter,automode), REPS 1-10 (default 3; plus one cold rep=0), REPLICAS 1-4 (default 4),

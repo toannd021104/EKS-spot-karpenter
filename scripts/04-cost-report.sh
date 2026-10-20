@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# 04-cost-report.sh: export OpenCost allocation per scaler + an independent list-price model (design 4.5, 7.5, 9).
+# 04-cost-report.sh: export OpenCost allocation per scaler + an independent list-price model.
 # Every dollar figure is kind=estimate ("ước tính theo giá list"); nothing here is ever called measured.
 # Run after 02 PHASE=apps once Boutique has been up for at least the window (30-60 min).
 # Required env: CLUSTER_NAME, EXPECTED_AWS_ACCOUNT_ID, KUBE_CONTEXT (= CLUSTER_NAME).
@@ -32,7 +32,7 @@ kc -n opencost port-forward svc/opencost "${pf_port}:9003" >/dev/null 2>&1 &
 pf_pid=$!
 trap 'kill "$pf_pid" 2>/dev/null || true' EXIT
 
-# The OpenCost API call lives in one function: parameter names are "to verify at rehearsal" (design 4.5).
+# The OpenCost API call lives in one function: parameter names are "to verify at rehearsal".
 opencost_allocation() { # opencost_allocation AGGREGATE
   curl -fsS --max-time 60 --get "http://127.0.0.1:${pf_port}/allocation" \
     --data-urlencode "window=${WINDOW}" --data-urlencode "aggregate=$1" \

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# 06-down.sh: DESTROY the demo cluster and everything the autoscalers created (design 7.7).
+# 06-down.sh: DESTROY the demo cluster and everything the autoscalers created.
 # Order matters: Karpenter / Auto Mode create EC2 outside Terraform, so they are drained first.
 # Required env: CLUSTER_NAME, EXPECTED_AWS_ACCOUNT_ID, KUBE_CONTEXT (= CLUSTER_NAME).
 # Needs a terminal: two typed confirmations read /dev/tty (exit 4 otherwise; no env var or flag bypasses them).

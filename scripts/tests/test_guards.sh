@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Guard tests (design AC9): stub binaries only, no AWS, no cluster, no real account id.
+# Guard tests: stub binaries only, no AWS, no cluster, no real account id.
 #  - unset/invalid env exits 2 BEFORE any aws / kubectl / helm / terraform call
 #  - the unrelated frt-outbound-proxy ARN (synthetic account 000000000002) is refused
 #  - 01 and 06 exit 4 on a non-tty stdin before any terraform apply / destroy

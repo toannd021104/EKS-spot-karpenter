@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""pty test for confirm_by_typing (design 7.1, AC9): the typed confirmation reads /dev/tty and has no bypass.
+"""pty test for confirm_by_typing: the typed confirmation reads /dev/tty and has no bypass.
 
 Runs a tiny bash driver that sources lib/common.sh and calls confirm_by_typing, under a real pseudo-terminal
 (so /dev/tty exists) and with closed stdin. Only bash and coreutils are used: no AWS, no cluster, no stub needed.
