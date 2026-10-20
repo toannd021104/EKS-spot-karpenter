@@ -1,0 +1,10 @@
+.kube/
+terraform/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+tfplan
+terraform.tfvars
+results/logs/
+results/raw/*
+!results/raw/.gitkeep

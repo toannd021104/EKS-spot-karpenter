@@ -1,0 +1,16 @@
+# Copy to terraform.tfvars (gitignored) and edit. 01-up.sh passes expected_aws_account_id itself
+# from EXPECTED_AWS_ACCOUNT_ID, so it does not have to be written here; the value below is synthetic.
+expected_aws_account_id = "000000000000"
+
+region       = "ap-southeast-1"
+cluster_name = "finops-spot-demo"
+
+# Your own public IP as /32. Wide ranges are rejected unless allow_open_endpoint = true.
+endpoint_public_access_cidrs = ["203.0.113.10/32"]
+
+# enabled_scalers = ["ca", "karpenter", "automode"]
+# admin_principal_arns = []
+owner = "your-name"
+
+# Optional AWS Fault Injection Service templates (off by default).
+# enable_fis = false
