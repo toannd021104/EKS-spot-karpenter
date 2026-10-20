@@ -1,0 +1,4 @@
+run_id,scaler,window,namespace,cpu_core_hours,ram_gib_hours,cost_usd,cost_per_hour_usd,monthly_estimate_usd,basis,idle_shared,source,kind
+SYNTHETIC-cost-0,ca,60m,boutique-ca,1.5,6.0,0.5,0.5,365.0,opencost_estimate,true,opencost_allocation_namespace,estimate
+SYNTHETIC-cost-1,ca,60m,boutique-ca,1.5,6.0,0.12,0.12,87.6,opencost_estimate,true,opencost_allocation_namespace,estimate
+SYNTHETIC-cost-1,ca,60m,label:scaler=ca,1.5,6.0,0.13,0.13,94.9,opencost_estimate,true,opencost_allocation_label,estimate

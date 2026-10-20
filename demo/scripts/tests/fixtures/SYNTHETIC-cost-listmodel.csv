@@ -1,0 +1,3 @@
+run_id,scaler,instance_type,capacity_type,node_hours,unit_price_usd_per_hour,price_source,price_date,cost_usd,automode_fee_usd,label,kind
+SYNTHETIC-cost-1,ca,m5.large,spot,2.0,0.05,spot_market_snapshot,2000-01-01,0.1,,ước tính theo giá list,estimate
+SYNTHETIC-cost-1,ca,c5.large,on-demand,1.0,0.098,list_snapshot,2000-01-01,0.098,,ước tính theo giá list,estimate

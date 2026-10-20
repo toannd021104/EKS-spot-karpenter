@@ -1,0 +1,4 @@
+run_id,scaler,rep,replicas,t0_utc,node_ready_utc,first_running_utc,all_running_utc,node_provision_s,first_pod_running_s,all_pods_running_s,nodes_created,instance_types,capacity_types,zones,ami_id,scaledown_s,outcome,notes,kind
+SYNTHETIC-bench-1,karpenter,0,4,2000-01-01T00:00:00Z,,,,90,95,99,1,m5.large,spot,ap-southeast-1a,ami-00000000synthetic,120,ok,"cold start, excluded",observed
+SYNTHETIC-bench-1,karpenter,1,4,2000-01-01T00:00:00Z,,,,31,40,50,1,m5.large,spot,ap-southeast-1a,ami-00000000synthetic,120,ok,,observed
+SYNTHETIC-bench-1,karpenter,2,4,2000-01-01T00:00:00Z,,,,40,50,60,1,m5.large,spot,ap-southeast-1a,ami-00000000synthetic,120,ok,,observed

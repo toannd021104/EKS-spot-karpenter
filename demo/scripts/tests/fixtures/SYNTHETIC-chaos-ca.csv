@@ -1,0 +1,4 @@
+run_id,scaler,rep,mode,victim_node,victim_instance_id,victim_capacity_type,t_kill_utc,replacement_node_ready_utc,all_pods_ready_utc,recovery_s,window_start_epoch,window_end_epoch,probe_log,pods_rescheduled,outcome,notes,kind
+SYNTHETIC-chaos-1,ca,1,terminate,ip-10-0-0-1.synthetic,i-00000000synthetic,spot,2000-01-01T01:00:00Z,,,90,1000,1019,raw/SYNTHETIC-probe-ca-1.log,5,ok,,observed
+SYNTHETIC-chaos-2,ca,2,terminate,ip-10-0-0-1.synthetic,i-00000000synthetic,spot,2000-01-01T01:00:00Z,,,110,2000,2009,raw/SYNTHETIC-probe-ca-2.log,5,ok,,observed
+SYNTHETIC-chaos-3,ca,3,terminate,ip-10-0-0-1.synthetic,i-00000000synthetic,spot,2000-01-01T01:00:00Z,,,,3000,3009,raw/SYNTHETIC-probe-ca-3.log,5,timeout,,observed

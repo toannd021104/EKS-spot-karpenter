@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/finops-spot-demo/summary.schema.json",
+  "title": "finops-spot-demo results summary (written by scripts/fill_results.py)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "meta", "scalers"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "meta": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["cluster", "region", "date_utc", "synthetic", "layout", "kubernetes", "karpenter", "cluster_autoscaler",
+                   "opencost", "ca_config", "ca_capacity_rebalance", "replicas", "reps", "note"],
+      "properties": {
+        "cluster": {"type": ["string", "null"]},
+        "region": {"type": "string"},
+        "date_utc": {"type": ["string", "null"]},
+        "synthetic": {"type": "boolean", "description": "true only for SYNTHETIC-* fixtures; such a file may never live under demo/results"},
+        "layout": {"enum": ["one-cluster", "two-cluster", null]},
+        "kubernetes": {"type": "string"},
+        "karpenter": {"type": "string"},
+        "cluster_autoscaler": {"type": "string"},
+        "opencost": {"type": "string"},
+        "ca_config": {"type": "string"},
+        "ca_capacity_rebalance": {"type": ["boolean", "string", "null"]},
+        "replicas": {"type": "integer", "minimum": 1, "maximum": 4},
+        "reps": {"type": "integer", "minimum": 1, "maximum": 10},
+        "note": {"type": "string"}
+      }
+    },
+    "scalers": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ca", "karpenter", "automode"],
+      "properties": {
+        "ca": {"$ref": "#/$defs/scaler"},
+        "karpenter": {"$ref": "#/$defs/scaler"},
+        "automode": {"$ref": "#/$defs/scaler"}
+      }
+    }
+  },
+  "$defs": {
+    "number_or_null": {"type": ["number", "null"]},
+    "metric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["median", "min", "max", "n"],
+      "properties": {
+        "median": {"type": ["number", "null"]},
+        "min": {"type": ["number", "null"]},
+        "max": {"type": ["number", "null"]},
+        "n": {"type": "integer", "minimum": 0, "description": "outcome=ok rows with rep >= 1; n == 0 means every number is null"}
+      }
+    },
+    "scaler": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "scaleup", "cost", "chaos"],
+      "properties": {
+        "status": {"enum": ["TARGET", "PARTIAL", "MEASURED"], "description": "derived from scaleup and chaos only; cost never contributes"},
+        "scaleup": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["node_provision_s", "all_pods_running_s"],
+          "properties": {
+            "node_provision_s": {"$ref": "#/$defs/metric"},
+            "all_pods_running_s": {"$ref": "#/$defs/metric"}
+          }
+        },
+        "cost": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "opencost_per_hour_usd", "listmodel_per_hour_usd", "monthly_estimate_usd"],
+          "properties": {
+            "kind": {"const": "estimate", "description": "every dollar figure is an estimate at list prices, never measured"},
+            "opencost_per_hour_usd": {"$ref": "#/$defs/number_or_null"},
+            "listmodel_per_hour_usd": {"$ref": "#/$defs/number_or_null"},
+            "monthly_estimate_usd": {"$ref": "#/$defs/number_or_null"}
+          }
+        },
+        "chaos": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode", "recovery_s", "probe_total", "probe_failed", "probe_failed_pct"],
+          "properties": {
+            "mode": {"enum": ["terminate", "fis", "drain", "mixed", null]},
+            "recovery_s": {"$ref": "#/$defs/metric"},
+            "probe_total": {"type": ["integer", "null"], "minimum": 0},
+            "probe_failed": {"type": ["integer", "null"], "minimum": 0},
+            "probe_failed_pct": {"type": ["number", "null"], "minimum": 0, "maximum": 100}
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "meta": {
+    "cluster": null,
+    "region": "ap-southeast-1",
+    "date_utc": null,
+    "synthetic": true,
+    "layout": null,
+    "kubernetes": "1.35",
+    "karpenter": "1.14.2",
+    "cluster_autoscaler": "1.35.0",
+    "opencost": "1.121.3",
+    "ca_config": "tuned",
+    "ca_capacity_rebalance": null,
+    "replicas": 4,
+    "reps": 3,
+    "note": "n nhỏ, 1 region, 1 buổi; không phải benchmark thống kê"
+  },
+  "scalers": {
+    "ca": {
+      "status": "MEASURED",
+      "scaleup": {
+        "node_provision_s": {
+          "median": 70,
+          "min": 60,
+          "max": 80,
+          "n": 3
+        },
+        "all_pods_running_s": {
+          "median": 90,
+          "min": 80,
+          "max": 100,
+          "n": 3
+        }
+      },
+      "cost": {
+        "kind": "estimate",
+        "opencost_per_hour_usd": 0.12,
+        "listmodel_per_hour_usd": 0.198,
+        "monthly_estimate_usd": 87.6
+      },
+      "chaos": {
+        "mode": "terminate",
+        "recovery_s": {
+          "median": 100,
+          "min": 90,
+          "max": 110,
+          "n": 2
+        },
+        "probe_total": 30,
+        "probe_failed": 7,
+        "probe_failed_pct": 23.33
+      }
+    },
+    "karpenter": {
+      "status": "PARTIAL",
+      "scaleup": {
+        "node_provision_s": {
+          "median": 35.5,
+          "min": 31,
+          "max": 40,
+          "n": 2
+        },
+        "all_pods_running_s": {
+          "median": 55,
+          "min": 50,
+          "max": 60,
+          "n": 2
+        }
+      },
+      "cost": {
+        "kind": "estimate",
+        "opencost_per_hour_usd": 0.09,
+        "listmodel_per_hour_usd": null,
+        "monthly_estimate_usd": 65.7
+      },
+      "chaos": {
+        "mode": null,
+        "recovery_s": {
+          "median": null,
+          "min": null,
+          "max": null,
+          "n": 0
+        },
+        "probe_total": null,
+        "probe_failed": null,
+        "probe_failed_pct": null
+      }
+    },
+    "automode": {
+      "status": "TARGET",
+      "scaleup": {
+        "node_provision_s": {
+          "median": null,
+          "min": null,
+          "max": null,
+          "n": 0
+        },
+        "all_pods_running_s": {
+          "median": null,
+          "min": null,
+          "max": null,
+          "n": 0
+        }
+      },
+      "cost": {
+        "kind": "estimate",
+        "opencost_per_hour_usd": null,
+        "listmodel_per_hour_usd": null,
+        "monthly_estimate_usd": null
+      },
+      "chaos": {
+        "mode": null,
+        "recovery_s": {
+          "median": null,
+          "min": null,
+          "max": null,
+          "n": 0
+        },
+        "probe_total": null,
+        "probe_failed": null,
+        "probe_failed_pct": null
+      }
+    }
+  }
+}

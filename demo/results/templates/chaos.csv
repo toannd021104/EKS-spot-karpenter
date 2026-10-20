@@ -1,0 +1,1 @@
+run_id,scaler,rep,mode,victim_node,victim_instance_id,victim_capacity_type,t_kill_utc,replacement_node_ready_utc,all_pods_ready_utc,recovery_s,window_start_epoch,window_end_epoch,probe_log,pods_rescheduled,outcome,notes,kind

@@ -1,0 +1,1 @@
+run_id,scaler,rep,replicas,t0_utc,node_ready_utc,first_running_utc,all_running_utc,node_provision_s,first_pod_running_s,all_pods_running_s,nodes_created,instance_types,capacity_types,zones,ami_id,scaledown_s,outcome,notes,kind
