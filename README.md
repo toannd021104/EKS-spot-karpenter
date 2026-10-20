@@ -2,7 +2,7 @@
 
 Bài nói 15 phút và demo nhỏ về FinOps trên EKS. Trọng tâm là **Karpenter**: chạy Spot, tự chọn máy vừa đủ, gom node (consolidation) và xử lý cảnh báo thu hồi. **Cluster Autoscaler** và **EKS Auto Mode** là hai mốc so sánh; **OpenCost** là công cụ đo chi phí.
 
-> Dự án học tập và demo cá nhân của Nguyễn Đức Toàn. Quan điểm là của tác giả, không liên kết với và không được Keyloop bảo trợ hay xác nhận.
+> Dự án học tập và demo cá nhân của Nguyễn Đức Toàn. Quan điểm là của cá nhân tác giả.
 
 **Trạng thái:** đã lint và test offline (terraform, helm, script, deck). Demo chưa chạy trên cluster thật nên mọi số đo và chi phí trong deck vẫn là placeholder (`Đo: ___`).
 
