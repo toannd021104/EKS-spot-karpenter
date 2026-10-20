@@ -1,0 +1,31 @@
+# Reference decks (not part of this project)
+FCJ - Template - Slide.pptx
+my_AI_training.pptx
+
+# Agent working files
+.agents/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+crash.log
+.terraform.lock.hcl.bak
+
+# Secrets
+.env
+*.pem
+
+# Live demo outputs (keep the templates, not raw runs)
+demo/results/*.csv
+!demo/results/*.template.csv
+
+# Rendered previews are rebuilt by deck/build_deck.py
+deck/preview/*.pdf
