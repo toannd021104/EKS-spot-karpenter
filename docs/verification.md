@@ -153,7 +153,7 @@ Tương phản: chữ tối `08041B` trên nền accent, chữ trắng/`E6E4F5` 
 ### Không kiểm chứng được offline
 - Hiển thị trên PowerPoint thật (chỉ xem qua LibreOffice/Liberation Sans, font Amazon Ember của template không dùng cho chữ thêm vào).
 - Mọi số đo benchmark/chi phí: chưa có; slide 10-12 mới chỉ kiểm được dạng placeholder và dạng synthetic.
-- Nội dung nói: con số "10-20%", sự cố "10+ node" và câu Enops dùng Spot 100% production lấy từ đề bài/diễn giả, chưa có nguồn công khai (đã ghi trong notes slide 2, 13, 14).
+- Nội dung nói: các tuyên bố về trải nghiệm cá nhân của diễn giả cũ (tỷ trọng chi phí cloud, sự cố nhiều node Spot bị thu hồi, công ty dùng Spot cho production) đã được viết lại trung lập hoặc dẫn nguồn công khai (notes slide 2, 4, 13, 14); chỗ cần kinh nghiệm thật để trống dạng `[Toàn: thêm kinh nghiệm thực tế tại Keyloop nếu có]`.
 
 ## FEAT-004: README và kiểm tra cuối
 Không có lệnh nào trong phần này gọi AWS, `kubectl`/`helm` vào cluster, `terraform apply/destroy` hay `eksctl`.
