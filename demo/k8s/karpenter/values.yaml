@@ -1,0 +1,24 @@
+# Karpenter 1.14.2 chart values (oci://public.ecr.aws/karpenter/karpenter).
+# Per-cluster values are NOT here; 02-deploy-apps.sh adds them with --set:
+#   settings.clusterName=$CLUSTER_NAME
+#   settings.interruptionQueue=<terraform output karpenter_queue_name>
+#   controller.env[0].name=AWS_REGION  controller.env[0].value=$AWS_REGION
+# Do not install the separate karpenter-crd chart. Never pass --force / --replace: with EKS Auto Mode the
+# CRDs nodepools.karpenter.sh and nodeclaims.karpenter.sh already exist and must keep a single owner.
+serviceAccount:
+  name: karpenter # must match the Pod Identity association created by Terraform
+replicas: 1 # demo only; the chart default is 2
+nodeSelector:
+  kubernetes.io/os: linux
+  role: system
+settings:
+  eksControlPlane: true
+  featureGates:
+    spotToSpotConsolidation: true
+controller:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+    limits:
+      memory: 512Mi

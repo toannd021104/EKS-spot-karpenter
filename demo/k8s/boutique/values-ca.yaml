@@ -1,0 +1,4 @@
+# Only namespace + scheduling. Everything else comes from values-common.yaml.
+namespace: boutique-ca
+scheduling:
+  scaler: ca

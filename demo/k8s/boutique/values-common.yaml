@@ -1,0 +1,26 @@
+# Identical for all three releases: this is how "same replicas / same requests" is guaranteed.
+# Registry: the google-samples registry denies anonymous pulls; this one is public (checked 2026-10-20).
+image:
+  registry: us-central1-docker.pkg.dev
+  repositoryPrefix: online-boutique-ci/microservices-demo
+  tag: v0.10.7
+
+commonEnv: []
+
+defaultResources:
+  limits:
+    cpu: "500m"
+    memory: "512Mi"
+  requests:
+    cpu: "100m"
+    memory: "128Mi"
+
+services:
+  frontend:
+    replicas: 2
+  productcatalogservice:
+    replicas: 2
+  currencyservice:
+    replicas: 2
+  shoppingassistantservice:
+    enabled: false

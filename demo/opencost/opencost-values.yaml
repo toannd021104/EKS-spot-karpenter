@@ -1,0 +1,28 @@
+# OpenCost chart 2.5.33 (appVersion 1.121.3), namespace opencost.
+# Install: helm upgrade --install opencost opencost --repo https://opencost.github.io/opencost-helm-chart \
+#   --version 2.5.33 -n opencost --create-namespace -f opencost-values.yaml
+# The UI has NO authentication: ClusterIP only, use `kubectl port-forward` (UI 9090, API 9003). Do not expose it.
+# Costs are estimates at list prices; Spot rates come from OpenCost defaults (no Spot data feed).
+opencost:
+  exporter:
+    defaultClusterId: finops-spot-demo
+  prometheus:
+    internal:
+      enabled: true
+      serviceName: prometheus-server
+      namespaceName: prometheus-system
+      port: 80
+  ui:
+    enabled: true
+  metrics:
+    serviceMonitor:
+      enabled: false # no Prometheus operator; scraped by the static job in extraScrapeConfigs.yaml
+    kubeStateMetrics:
+      emitKsmV1Metrics: false
+      emitKsmV1MetricsOnly: false
+  customPricing:
+    enabled: false
+  nodeSelector:
+    role: system
+service:
+  type: ClusterIP

@@ -1,0 +1,15 @@
+# Vendored from https://raw.githubusercontent.com/opencost/opencost/develop/kubernetes/prometheus/extraScrapeConfigs.yaml
+# (referenced by https://opencost.io/docs/installation/prometheus), retrieved 2026-10-20.
+# Vendored so the install does not depend on raw.githubusercontent.com at demo time.
+extraScrapeConfigs: |
+  - job_name: opencost
+    honor_labels: true
+    scrape_interval: 1m
+    scrape_timeout: 10s
+    metrics_path: /metrics
+    scheme: http
+    dns_sd_configs:
+    - names:
+      - opencost.opencost
+      type: 'A'
+      port: 9003

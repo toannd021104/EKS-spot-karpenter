@@ -1,0 +1,7 @@
+# Derived from boutique-eks-argocd@446ed56 deploy/helm/boutique/Chart.yaml; modified for finops-spot-demo
+apiVersion: v2
+name: boutique-demo
+description: Online Boutique microservices for the Spot + Karpenter FinOps demo (one release per node autoscaler)
+type: application
+version: 0.2.0
+appVersion: "v0.10.7"

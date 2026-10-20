@@ -1,0 +1,102 @@
+{{/* Derived from boutique-eks-argocd@446ed56 deploy/helm/boutique/templates/deployment.yaml; modified for finops-spot-demo
+     (scaler label/nodeSelector/toleration, topology spread for replicas >= 2, explicit securityContext) */}}
+{{- $scaler := include "boutique.scaler" . -}}
+{{- range $svcName, $svc := .Values.services }}
+{{- if $svc.enabled }}
+{{- $svcImage := default (dict) $svc.image -}}
+{{- $defaultRepo := include "boutique.imageRepo" (dict "root" $ "svcName" $svcName) -}}
+{{- $repo := default $defaultRepo $svcImage.repository -}}
+{{- $tag := default $.Values.image.tag $svcImage.tag -}}
+{{- $envs := concat (default (list) $.Values.commonEnv) (default (list) $svc.env) -}}
+{{- $resources := default $.Values.defaultResources $svc.resources -}}
+{{- $replicas := int (default 1 $svc.replicas) -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $svcName }}
+  namespace: {{ include "boutique.namespace" $ }}
+  labels:
+    app.kubernetes.io/name: {{ $svcName }}
+    scaler: {{ $scaler }}
+spec:
+  replicas: {{ $replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ $svcName }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ $svcName }}
+        scaler: {{ $scaler }}
+    spec:
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      nodeSelector:
+        scaler: {{ $scaler }}
+      tolerations:
+        - key: scaler
+          operator: Equal
+          value: {{ $scaler }}
+          effect: NoSchedule
+      {{- if ge $replicas 2 }}
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: topology.kubernetes.io/zone
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: {{ $svcName }}
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: {{ $svcName }}
+      {{- end }}
+      containers:
+        - name: {{ $svcName }}
+          image: "{{ $repo }}:{{ $tag }}"
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
+          ports:
+            - containerPort: {{ $svc.port }}
+          {{- if gt (len $envs) 0 }}
+          env:
+            {{- range $env := $envs }}
+            - name: {{ $env.name }}
+              {{- if hasKey $env "valueFrom" }}
+              valueFrom:
+                {{- toYaml $env.valueFrom | nindent 16 }}
+              {{- else }}
+              value: {{ tpl $env.value $ | quote }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
+          resources:
+            {{- toYaml $resources | nindent 12 }}
+          {{- if eq $svcName "frontend" }}
+          livenessProbe:
+            httpGet:
+              path: /_healthz
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /_healthz
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          {{- else }}
+          readinessProbe:
+            tcpSocket:
+              port: {{ $svc.port }}
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          {{- end }}
+---
+{{ end }}
+{{- end }}

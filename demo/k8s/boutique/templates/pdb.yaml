@@ -1,0 +1,19 @@
+{{/* New in finops-spot-demo: PodDisruptionBudget only for services with replicas >= 2 (cartservice has 1 replica by design). */}}
+{{- range $svcName, $svc := .Values.services }}
+{{- if and $svc.enabled (ge (int (default 1 $svc.replicas)) 2) }}
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ $svcName }}
+  namespace: {{ include "boutique.namespace" $ }}
+  labels:
+    app.kubernetes.io/name: {{ $svcName }}
+    scaler: {{ include "boutique.scaler" $ }}
+spec:
+  minAvailable: {{ $.Values.pdb.minAvailable }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ $svcName }}
+---
+{{ end }}
+{{- end }}
