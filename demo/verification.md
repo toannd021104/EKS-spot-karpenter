@@ -109,3 +109,67 @@ Kiểm thêm ngoài test (bỏ file tạm sau đó, không giữ lại): chạy 
 - JMESPath của các truy vấn `aws ... --query` (tag `eks:eks-cluster-name`, `describe-instances`) chưa chạy với AWS thật.
 - Vì kubectl cục bộ là 1.31.4 (< 1.34), preflight thật sẽ từ chối; test chỉ stub `kubectl version`.
 - Mọi số đo benchmark/chi phí: chưa có, mọi ô là placeholder; dữ liệu duy nhất có số là fixture `SYNTHETIC-*`.
+## FEAT-003: script.md, deck, verifier và test
+Không có lệnh nào trong phần này gọi AWS, `kubectl`/`helm`/`terraform` hay cluster. Chỉ chạy Python trong `deck/.venv` và Docker (`finops-deck-render`, `--network none`) để render. Deck dựng từ `demo/results/summary.json` (toàn placeholder), nên không ô nào có số đo; số duy nhất trong test là fixture `SYNTHETIC-summary.json`, chỉ dựng vào thư mục `/tmp` rồi xoá.
+### Lệnh đã chạy và kết quả
+| Lệnh | Kết quả |
+|---|---|
+| `deck/.venv/bin/python deck/build_deck.py` | exit 0, ghi `deck/karpenter-spot-finops.pptx` |
+| `bash deck/render.sh` | 14 PNG `deck/preview/slide-01..14.png` (80 dpi) |
+| `deck/.venv/bin/python deck/verify_deck.py` | `OK` (14 slide, notes >= 200 ký tự, layout, bảng 5x4, font, tương phản, số từng ô, placeholder) |
+| `deck/.venv/bin/python -m unittest discover deck/tests` | `Ran 12 tests ... OK` |
+| Kiểm tra bằng python-pptx | 14 slide, 12192000x6858000, layout chỉ `Title Slide`/`Contents`/`Section slide`, notes ngắn nhất 341 ký tự |
+| Parser script.md | 14 khối `notes:slide-NN`, tổng phút 15.0 (15:00), 12 câu Q&A, có "Cắt nếu thiếu giờ" và "Checklist trước giờ nói", 0 lần chữ `SYNTHETIC` |
+| grep 12 chữ số trong `deck/*.py`, `deck/script.md`, `deck/tests` | rỗng |
+### Bằng chứng cho acceptance criteria
+- Slide 10: bảng native 5x4 có `Đo: ___ s`, `Đo: ___ s, ___% lỗi` và `Ước tính (OpenCost, giá list): $___/giờ` (Auto Mode thêm `, chưa gồm phí`); không có từ so sánh bị cấm trong ô (ô chỉ nêu kiến trúc).
+- `verify_deck.py` trên deck chính: không có `SYNTHETIC` trong shape lẫn notes. `deck/tests/test_synthetic_guard.py` (12 test): từ chối `--out` ngoài `/tmp` và dưới `demo/results` (exit != 0, file không được tạo); dưới `/tmp` mọi ô số có tiền tố `SYNTHETIC `; verify fail khi có `SYNTHETIC` trừ khi `--allow-synthetic`; sửa số trong ô bảng, đặt placeholder khi metric có n >= 1, chèn từ cấm, `$` thiếu `ước tính`, notes ngắn, font nhỏ đều bị bắt.
+- Kiểm tra từng ô theo `n` của chính metric (design 8): slide 10 (hàng 1-3), slide 11 (`s11-<scaler>-prov/all`), slide 12 (`s12-<scaler>-rec/fail`). Deck synthetic dựng thử cho thấy ô có n >= 1 hiện số, ô n = 0 vẫn là placeholder (CA/Karpenter có số, Auto Mode vẫn `TARGET`).
+### Kiểm tra trực quan 14 PNG (đã mở từng ảnh)
+Vòng 1 phát hiện và đã sửa, vòng 2 render lại rồi xem lại các slide đã đổi:
+1. Slide 1: tiêu đề 36 pt hai dòng, tên/chức danh chuyển sang placeholder rộng hơn; sạch.
+2. Slide 2: số 10-20%, câu hỏi, 4 chip, nguồn; sạch.
+3. Slide 3: lưới 100 ô (70 On-Demand, 30 Spot), hai badge, footnote; sạch.
+4. Slide 4: hai thẻ trống nhiều, tăng chữ lên 28 pt; sạch.
+5. Slide 5: tiêu đề bị ngắt "Pod / Pending" giữa cụm, đổi thành hai dòng chủ động; sạch.
+6. Slide 6: thẻ quá cao so với nội dung, giảm chiều cao và tăng chữ lên 22 pt; sạch.
+7. Slide 7: 4 bước, YAML 14 pt (rút gọn từ `nodepool.yaml.tpl`), dải SQS; sạch.
+8. Slide 8: sơ đồ, nhãn >= 16 pt; mở rộng hai ô trên cùng để bớt ngắt dòng; sạch.
+9. Slide 9: ô cuối luồng ngắt "(ước / tính)", đổi thành ba dòng; sạch.
+10. Slide 10: bảng 14 pt ban đầu, nay 16 pt, kết thúc phía trên footnote; dấu tiếng Việt nguyên vẹn; sạch.
+11. Slide 11: ba thẻ placeholder `TARGET: ___ s (điền sau khi đo)`; bản synthetic (chỉ xem tạm ở `/tmp`, đã xoá) cho thấy biểu đồ cột + thẻ không tràn; sạch.
+12. Slide 12: dòng thời gian + 3 thẻ placeholder; sạch.
+13. Slide 13: 6 thẻ + banner + nguồn; sạch.
+14. Slide 14: 3 ý, danh sách tài liệu 16 pt, banner, nhắc xoá cluster; sạch.
+Tương phản: chữ tối `08041B` trên nền accent, chữ trắng/`E6E4F5` trên nền tối hoặc thẻ `17132E`; `verify_deck.py` kiểm tỉ lệ >= 4.5 cho mọi run có màu tường minh.
+### Sai lệch / quyết định (không mở lại thiết kế)
+1. Kiểm tra tràn chữ là ước lượng (độ rộng ký tự ~0.5 em, dòng 1.2); với bảng slide 10 hệ số hiệu chỉnh 0.9 vì ước lượng cao hơn khoảng 10% so với render LibreOffice (ước 6.25 in, render 5.7 in). Vì thế bước xem PNG vẫn bắt buộc.
+2. Tên shape quyết định font tối thiểu: `*footnote` 12 pt, `diagram-*` 16 pt, `s07-yaml` 14 pt, `s14-resources` 16 pt, ô bảng 14 pt, còn lại 20 pt. Code mono dùng `Courier New` (ngoài Arial) chỉ cho YAML.
+3. Từ so sánh bị cấm chỉ kiểm trong shape của slide 10, không kiểm trong notes (notes của slide 10 nêu chính các từ đó như quy tắc và được phép theo design 10.2).
+4. Placeholder `Contents` idx 10 dùng làm dòng dẫn (20 pt) trên các slide có dòng dẫn; slide 8 và 10 bỏ placeholder đó để lấy chỗ. Placeholder không dùng bị xoá để không còn ô rỗng.
+5. Chữ "kube net auto scaler = EKS Auto Mode" ghi ở footnote slide 6 (diễn giả cần xác nhận). Footer AWS/FCJ của template giữ nguyên (design A5).
+6. `build_deck.py` mặc định đọc `demo/results/summary.json`; thiếu file thì dùng placeholder. Cột ngoài thiết kế: `--template`, `--script`.
+### Không kiểm chứng được offline
+- Hiển thị trên PowerPoint thật (chỉ xem qua LibreOffice/Liberation Sans, font Amazon Ember của template không dùng cho chữ thêm vào).
+- Mọi số đo benchmark/chi phí: chưa có; slide 10-12 mới chỉ kiểm được dạng placeholder và dạng synthetic.
+- Nội dung nói: con số "10-20%", sự cố "10+ node" và câu Enops dùng Spot 100% production lấy từ đề bài/diễn giả, chưa có nguồn công khai (đã ghi trong notes slide 2, 13, 14).
+
+## FEAT-004: README và kiểm tra cuối
+Không có lệnh nào trong phần này gọi AWS, `kubectl`/`helm` vào cluster, `terraform apply/destroy` hay `eksctl`.
+Đã viết `demo/README.md` (khung DESTROY, quy tắc an toàn, quyết định một cluster + cổng go/no-go + phương án hai cluster, diễn giải Auto Mode, kubectl >= 1.34, biến môi trường, timeline rehearsal/ngày nói, chi phí, quay dự phòng, xử lý sự cố, câu "chưa chạy thử trên cluster thật") và `README.md` gốc (rebuild deck, luồng kết quả, bản đồ thư mục, DESTROY, an toàn).
+
+| Lệnh | Kết quả |
+|---|---|
+| grep 12 chữ số trong `demo deck README.md` (loại `0{11}[0-9]`, `sha256:`) | rỗng (AC10) |
+| grep `AKIA...` / `BEGIN (RSA\|OPENSSH\|EC) PRIVATE` | rỗng (AC10) |
+| `find demo` tìm `*.tfstate*`, `.terraform`, `.env`, `.git` | rỗng (AC13) |
+| sha256 nguồn sau so với `source-sha256.txt` | `diff` rỗng (`SOURCE_UNCHANGED`) |
+| `stat -c %Y ~/.kube/config` | `1779872505`, không đổi |
+| `bash demo/scripts/lint.sh` | `0 check(s) failed, 0 warning(s)` |
+| `test_guards.sh` / `test_confirm_pty.py` / `test_benchmark_preflight.sh` / `test_chart.sh` / `test_fill_results.py` | 100 pass / OK / 20 pass / 10 pass / OK |
+| `deck/.venv/bin/python deck/verify_deck.py` | OK |
+| `python -m unittest discover deck/tests` | OK |
+
+Dọn dẹp: đã xoá `__pycache__`, `demo/terraform/.terraform`, file tạm trong `/tmp`.
+
+Sai lệch: không có. Mục chưa kiểm chứng được offline: xem danh sách ở FEAT-001/002/003 phía trên; thêm rằng README chưa được người dùng đọc duyệt và timeline chỉ là ước tính, chưa đo.
