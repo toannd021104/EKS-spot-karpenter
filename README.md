@@ -1,44 +1,68 @@
-# Spot + Karpenter FinOps: bài nói 15 phút, deck và demo EKS
+# EKS Spot + Karpenter: bake-off với Cluster Autoscaler và EKS Auto Mode
 
-Gói gồm: deck 14 slide (`deck/`), kịch bản nói + speaker notes (`deck/script.md`), và demo tối thiểu EKS + Spot + Karpenter + OpenCost (`demo/`).
+Bài nói 15 phút và demo nhỏ về FinOps trên EKS. Trọng tâm là **Karpenter**: chạy Spot, tự chọn máy vừa đủ, gom node (consolidation) và xử lý cảnh báo thu hồi. **Cluster Autoscaler** và **EKS Auto Mode** là hai mốc so sánh; **OpenCost** là công cụ đo chi phí.
 
-**Trạng thái:** demo chưa chạy thử trên cluster thật. Chỉ mới lint/test offline. Mọi số đo và chi phí là placeholder cho đến khi rehearsal.
+> Dự án học tập và demo cá nhân của Nguyễn Đức Toàn. Quan điểm là của tác giả, không liên kết với và không được Keyloop bảo trợ hay xác nhận.
 
-**DESTROY:** cluster demo tốn khoảng $0.375/giờ (~$9/ngày) kể cả khi rảnh (ước tính theo giá list). Chạy xong phải chạy `demo/scripts/06-down.sh`. Chi tiết trong [demo/README.md](demo/README.md).
+**Trạng thái:** đã lint và test offline (terraform, helm, script, deck). Demo chưa chạy trên cluster thật nên mọi số đo và chi phí trong deck vẫn là placeholder (`Đo: ___`).
 
-**An toàn:** script chỉ chạy với cluster `finops-spot-demo*`, từ chối `boutique-dev-eks` và `frt-outbound-proxy`, bắt buộc `CLUSTER_NAME` + `EXPECTED_AWS_ACCOUNT_ID`, và `01`/`06` đòi gõ xác nhận từ terminal (không bypass được). Không ghi account id vào repo. Repo nguồn `boutique-eks-argocd` chỉ đọc.
+**Tốn tiền:** cluster demo khoảng $0.375/giờ (~$9/ngày) kể cả khi rảnh (ước tính theo giá list). Chạy xong phải chạy `scripts/06-down.sh`. Xem [docs/runbook.md](docs/runbook.md).
 
-## Dựng lại deck
+## Karpenter trong demo
 
-```bash
-cd deck && python3 -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt
-python build_deck.py && ./render.sh && python verify_deck.py
-```
+Một NodePool ưu tiên Spot, có On-Demand dự phòng, đa dạng loại máy, và consolidation:
 
-`render.sh` dùng Docker (LibreOffice) để tạo `deck/preview/slide-NN.png`. Kiểm tra bằng mắt cả 14 ảnh trước khi dùng.
+![Karpenter NodePool](docs/img/09-karpenter-nodepool.png)
 
-## Kết quả đi vào deck thế nào
+| | Cluster Autoscaler | **Karpenter** | EKS Auto Mode |
+|---|---|---|---|
+| Cách thêm node | Tăng Auto Scaling Group có loại máy cố định | Chọn loại máy theo Pod Pending, gọi EC2 Fleet | Karpenter do AWS vận hành |
+| Spot bị thu hồi | Capacity Rebalancing của node group | Nghe cảnh báo qua SQS, drain, chọn máy khác | AWS xử lý |
+| Gom node | Scale-down theo ngưỡng | `WhenEmptyOrUnderutilized` | Có |
+| Vận hành | Tự quản node group, AMI | Tự cài Helm + IAM + SQS | AWS quản lý, thêm phí ~12% giá On-Demand |
 
-`demo/scripts/03`, `04`, `05` ghi CSV thô vào `demo/results/` -> `python3 demo/scripts/fill_results.py` tạo `summary.json` + `RESULTS.md` -> `deck/build_deck.py` đọc `summary.json`. Ô chưa đo vẫn là placeholder.
+Bảng chỉ nêu khác biệt kiến trúc. Ai nhanh hơn, rẻ hơn thì chỉ kết luận sau khi có số đo (xem [docs/decisions.md](docs/decisions.md)).
 
-## Kiểm tra
-
-```bash
-bash demo/scripts/lint.sh
-deck/.venv/bin/python deck/verify_deck.py
-deck/.venv/bin/python -m unittest discover deck/tests
-```
-
-## Bản đồ thư mục
+## Cấu trúc
 
 | Đường dẫn | Nội dung |
 |---|---|
-| `Template - Remake.pptx` | template đầu vào (không sửa) |
-| `deck/` | `build_deck.py`, `verify_deck.py`, `render.sh`, `script.md`, `karpenter-spot-finops.pptx`, `preview/`, `tests/` |
-| `demo/terraform/` | VPC + EKS + IAM (Karpenter, CA, Auto Mode), `tests/` |
-| `demo/k8s/` | chart Boutique, manifest Karpenter / Auto Mode / CA, inflate, probe |
-| `demo/opencost/` | values Prometheus nhỏ + OpenCost |
-| `demo/scripts/` | `01-up` ... `06-down`, `fill_results.py`, `lint.sh`, `tests/` |
-| `demo/results/` | schema, template CSV, `summary.json`, `RESULTS.md`, bảng giá list |
-| `demo/verification.md` | lệnh đã chạy, kết quả, sai lệch, mục chưa kiểm chứng được |
-| `.agents/tasks/` | design, kế hoạch, artefact của quá trình build |
+| `terraform/` | VPC, EKS, IAM cho Karpenter / Cluster Autoscaler / Auto Mode, `tests/` |
+| `kubernetes/` | `karpenter/`, `cluster-autoscaler/`, `automode/`, `opencost/`, `boutique/` (Helm chart), `benchmark/` |
+| `scripts/` | `01-up.sh` ... `06-down.sh`, `fill_results.py`, `lint.sh`, `tests/` |
+| `results/` | schema, template CSV, `summary.json`, `RESULTS.md`, bảng giá list |
+| `docs/` | [architecture](docs/architecture.md), [decisions](docs/decisions.md), [runbook](docs/runbook.md), [verification](docs/verification.md), `img/` |
+| `presentation/` | deck 14 slide, `script.md` (kịch bản và speaker notes), build và verify |
+
+## Dùng nhanh
+
+```bash
+make help          # danh sách lệnh, tất cả chạy offline
+make lint test validate
+make deck deck-verify
+```
+
+Chạy demo thật (tạo tài nguyên AWS tính phí) chỉ làm theo [docs/runbook.md](docs/runbook.md). Các script chỉ chấp nhận cluster `finops-spot-demo*`, bắt buộc `CLUSTER_NAME` và `EXPECTED_AWS_ACCOUNT_ID`, và `01`/`06` đòi gõ xác nhận từ terminal.
+
+## Kiểm tra offline (ảnh chụp từ lệnh thật)
+
+Không có lệnh nào chạm AWS hay cluster. Chưa có ảnh nào từ cluster thật.
+
+| Lệnh | Ảnh |
+|---|---|
+| Guard từ chối thiếu biến, tên cluster lạ, account id sai | ![guard](docs/img/01-guard-refuses.png) |
+| Cảnh báo chi phí và gõ xác nhận (`aws`, `terraform` là stub của sandbox test) | ![confirm](docs/img/02-typed-confirmation.png) |
+| `terraform test`: 24 test validation biến | ![terraform test](docs/img/03-terraform-test.png) |
+| `terraform fmt` và `validate` | ![terraform validate](docs/img/04-terraform-validate.png) |
+| `helm template` cho từng scaler (10 Deployment, 3 PDB, nodeSelector riêng) | ![helm](docs/img/05-helm-per-scaler.png) |
+| Test guard bằng stub (100 assertion, lược phần giữa) | ![guard tests](docs/img/06-guard-tests.png) |
+| `fill_results.py` trên dữ liệu mẫu SYNTHETIC, **không phải số đo** | ![fill results](docs/img/07-fill-results-synthetic.png) |
+| `verify_deck.py` | ![verify deck](docs/img/08-deck-verify.png) |
+
+Tạo lại ảnh: `make screenshots`.
+
+**Còn thiếu (placeholder, chụp sau buổi demo thật):** node Karpenter xuất hiện lúc scale-up, chi phí theo namespace trên OpenCost UI, phục hồi khi mất node. Lệnh chụp nằm trong [docs/runbook.md](docs/runbook.md); che account id trước khi đưa ảnh vào repo.
+
+## Giấy phép
+
+Mã và tài liệu: [MIT](LICENSE). Thành phần bên thứ ba và template slide AWS FCJ (không thuộc MIT): xem [NOTICE.md](NOTICE.md). Đóng góp: [CONTRIBUTING.md](CONTRIBUTING.md). Bảo mật: [SECURITY.md](SECURITY.md).

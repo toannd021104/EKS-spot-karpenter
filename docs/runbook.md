@@ -122,6 +122,14 @@ python build_deck.py && ./render.sh && python verify_deck.py
 
 Ô nào chưa có số đo (n = 0) vẫn là placeholder. Số trong deck chỉ đến từ `summary.json`. Số chi phí luôn mang nhãn "ước tính".
 
+## Ảnh cần chụp sau buổi demo thật (chưa có, KHÔNG phải ảnh giả)
+Lưu vào `docs/img/` rồi thêm vào README. Luôn dùng kubeconfig `.kube/config` và context `finops-spot-demo`; không chụp cluster khác. Che account id trước khi đưa ảnh vào repo.
+| Ảnh | Lệnh (sau `01-up.sh` và `02-deploy-apps.sh`) |
+|---|---|
+| Node Karpenter xuất hiện lúc scale-up | `kubectl --kubeconfig .kube/config --context finops-spot-demo get nodes -L scaler,karpenter.sh/capacity-type -w` (chạy song song `03-benchmark-scaleup.sh`) |
+| Chi phí theo namespace trong OpenCost UI | `kubectl --kubeconfig .kube/config --context finops-spot-demo -n opencost port-forward svc/opencost 9090:9090`, mở http://localhost:9090, Allocations, aggregate theo Namespace |
+| Phục hồi khi mất node | `CLUSTER_NAME=finops-spot-demo EXPECTED_AWS_ACCOUNT_ID=<id của bạn> KUBE_CONTEXT=finops-spot-demo bash scripts/05-chaos-node-down.sh`, kèm `kubectl ... get pods -A -w` ở cửa sổ bên cạnh |
+Tên service/namespace lấy theo `kubernetes/opencost/` và `kubernetes/boutique/`; kiểm tra lại trước khi chụp.
 ## Kế hoạch quay dự phòng
 
 Quay trước (đừng chỉ dựa vào live): scale-up của từng scaler (`kubectl get nodes -L scaler` song song `kubectl get pods`), cảnh kill node và pod phục hồi (`05`), OpenCost UI với bảng allocation theo `scaler`. Cũng chụp bảng kết quả. Mặc định deck dùng kết quả đã đo + một lệnh `kubectl get nodes -L scaler` live ở slide 8; live scale-up chỉ khi cluster đang ấm và mạng ổn.
