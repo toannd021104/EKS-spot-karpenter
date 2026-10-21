@@ -1,0 +1,45 @@
+apiVersion: eks.amazonaws.com/v1
+kind: NodeClass
+metadata:
+  name: bench
+  labels: {project: eks-spot-karpenter-bench}
+spec:
+  role: AmazonEKSAutoNodeRole
+  subnetSelectorTerms:
+    - tags: {karpenter.sh/discovery: amazing-blues-outfit}
+  securityGroupSelectorTerms:
+    - id: sg-0fbed8d0599be1972
+  ephemeralStorage: {size: 80Gi, iops: 3000, throughput: 125}
+---
+apiVersion: karpenter.sh/v1
+kind: NodePool
+metadata:
+  name: bench-automode
+  labels: {project: eks-spot-karpenter-bench}
+spec:
+  limits:
+    cpu: "12"
+  disruption:
+    consolidationPolicy: WhenEmpty
+    consolidateAfter: 30s
+    budgets:
+      - nodes: "100%"
+  template:
+    metadata:
+      labels:
+        bench: automode
+    spec:
+      expireAfter: 24h
+      nodeClassRef:
+        group: eks.amazonaws.com
+        kind: NodeClass
+        name: bench
+      taints:
+        - key: bench
+          value: automode
+          effect: NoSchedule
+      requirements:
+        - {key: karpenter.sh/capacity-type, operator: In, values: [on-demand]}
+        - {key: kubernetes.io/arch, operator: In, values: [amd64]}
+        - {key: kubernetes.io/os, operator: In, values: [linux]}
+        - {key: node.kubernetes.io/instance-type, operator: In, values: [c6a.large,c6a.xlarge,c6a.2xlarge,c6i.large,c6i.xlarge,c6i.2xlarge,c7a.large,c7a.xlarge,c7a.2xlarge,c7i.large,c7i.xlarge,c7i.2xlarge,m6a.large,m6a.xlarge,m6a.2xlarge,m6i.large,m6i.xlarge,m6i.2xlarge,m7a.large,m7a.xlarge,m7a.2xlarge,m7i.large,m7i.xlarge,m7i.2xlarge]}

@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: bench-karpenter
+  labels: {project: eks-spot-karpenter-bench}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inflate
+  namespace: bench-karpenter
+spec:
+  replicas: 0
+  selector:
+    matchLabels: {app: inflate}
+  template:
+    metadata:
+      labels: {app: inflate}
+    spec:
+      terminationGracePeriodSeconds: 0
+      nodeSelector:
+        bench: karpenter
+      tolerations:
+        - {key: bench, operator: Equal, value: karpenter, effect: NoSchedule}
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: topology.kubernetes.io/zone
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels: {app: inflate}
+      containers:
+        - name: pause
+          image: registry.k8s.io/pause:3.10
+          resources:
+            requests: {cpu: 200m, memory: 256Mi}
+            limits: {memory: 256Mi}
