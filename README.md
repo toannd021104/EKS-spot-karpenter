@@ -4,7 +4,7 @@ Bài nói 15 phút và demo nhỏ về FinOps trên EKS. Trọng tâm là **Karp
 
 > Dự án học tập và demo cá nhân của Nguyễn Đức Toàn. Quan điểm là của cá nhân tác giả.
 
-**Trạng thái:** đã lint và test offline (terraform, helm, script, deck). Demo chưa chạy trên cluster thật nên mọi số đo và chi phí trong deck vẫn là placeholder (`Đo: ___`).
+**Trạng thái:** đã lint và test offline (terraform, helm, script, deck). Đã có một phép đo thật Auto Mode vs Karpenter (xem phần "Kết quả đo thật"). Bộ Terraform và demo đầy đủ (Cluster Autoscaler, OpenCost, chaos) chưa chạy trên cluster thật, và deck vẫn còn placeholder (`Đo: ___`).
 
 **Tốn tiền:** cluster demo khoảng $0.375/giờ (~$9/ngày) kể cả khi rảnh (ước tính theo giá list). Chạy xong phải chạy `scripts/06-down.sh`. Xem [docs/runbook.md](docs/runbook.md).
 
@@ -43,6 +43,30 @@ make deck deck-verify
 ```
 
 Chạy demo thật (tạo tài nguyên AWS tính phí) chỉ làm theo [docs/runbook.md](docs/runbook.md). Các script chỉ chấp nhận cluster `finops-spot-demo*`, bắt buộc `CLUSTER_NAME` và `EXPECTED_AWS_ACCOUNT_ID`, và `01`/`06` đòi gõ xác nhận từ terminal.
+
+## Kết quả đo thật: EKS Auto Mode vs Karpenter tự quản lý
+
+Đo trên một cluster EKS 1.36 thật (us-west-2), Karpenter 1.13.1, **On-Demand** (chưa đo Spot), image `pause`, mỗi ô lặp 3 lần xen kẽ thứ tự. Thời gian lấy từ API server (độ phân giải 1 s), mốc 0 là lúc Pod đầu tiên được tạo. Chi phí là ước tính theo giá list, chưa gồm phí quản lý của Auto Mode. Số liệu gốc: [results/live/runs.csv](results/live/runs.csv), tổng hợp: [results/live/SUMMARY.md](results/live/SUMMARY.md). Mỗi ô là trung vị (min đến max).
+
+| Replica | Chỉ số | Auto Mode | Karpenter |
+|---|---|---|---|
+| 5 | Node đầu tiên Ready (s) | 16 (16-18) | 25 (24-26) |
+| 5 | Tất cả Pod Ready (s) | 21 (20-23) | 27 (26-28) |
+| 15 | Node đầu tiên Ready (s) | 16 (15-17) | 24 (23-24) |
+| 15 | Tất cả Pod Ready (s) | 28 (23-29) | 28 (27-28) |
+| 30 | Node đầu tiên Ready (s) | 16 (15-20) | 24 (23-25) |
+| 30 | Tất cả Pod Ready (s) | 33 (32-40) | 41 (39-42) |
+| 5 / 15 / 30 | Giá ước tính ($/giờ) | 0.153 / 0.153 / 0.306 | 0.153 / 0.153 / 0.306 |
+
+**Đọc kết quả thẳng thắn:** Karpenter không nhanh hơn Auto Mode trong thí nghiệm này. Auto Mode có node Ready sớm hơn khoảng 8 đến 9 giây, hòa ở 15 replica, nhanh hơn ở 5 và 30 replica. Chi phí gần như bằng nhau vì cả hai đều ra 2 node (ràng buộc rải đều 2 AZ), nên thí nghiệm này chưa phân biệt được khả năng chọn máy vừa đủ. Lượt nguội đầu tiên của Auto Mode chậm (55 s), n=3 là ít. Giới hạn: 1 cluster, 1 region, không Spot, Pod chỉ xin 200m CPU và 256Mi, và hai bên chạy chung một cluster.
+
+![Thời gian scale-up Auto Mode vs Karpenter](docs/img/bench-scaleup.gif)
+
+| Auto Mode (15 replica) | Karpenter (15 replica) |
+|---|---|
+| ![terminal Auto Mode](docs/img/bench-terminal-automode.gif) | ![terminal Karpenter](docs/img/bench-terminal-karpenter.gif) |
+
+Hai GIF terminal quay từ một lượt chạy thật, đo bằng polling phía client (sai số khoảng 2 giây), khác với bảng đo từ API server ở trên. Harness đo: [scripts/live-bench.sh](scripts/live-bench.sh), manifest: [kubernetes/live-bench/](kubernetes/live-bench/). Chạy lại cần cluster EKS Auto Mode của riêng bạn, đặt `BENCH_CLUSTER` và `BENCH_REGION`; script tự lấy account id từ `aws sts get-caller-identity` và từ chối chạy nếu context kubectl không khớp.
 
 ## Kiểm tra offline (ảnh chụp từ lệnh thật)
 
