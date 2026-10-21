@@ -1,0 +1,126 @@
+{
+ "source": "AWS Pricing API (us-east-1 endpoint), Linux, Shared tenancy, On-Demand list price, us-west-2",
+ "fetched": "2026-10-21T16:24:07Z",
+ "prices": {
+  "c6a.large": {
+   "usd_per_hour": 0.0765,
+   "vcpu": 2,
+   "memory": "4 GiB"
+  },
+  "c6a.xlarge": {
+   "usd_per_hour": 0.153,
+   "vcpu": 4,
+   "memory": "8 GiB"
+  },
+  "c6a.2xlarge": {
+   "usd_per_hour": 0.306,
+   "vcpu": 8,
+   "memory": "16 GiB"
+  },
+  "c6i.large": {
+   "usd_per_hour": 0.085,
+   "vcpu": 2,
+   "memory": "4 GiB"
+  },
+  "c6i.xlarge": {
+   "usd_per_hour": 0.17,
+   "vcpu": 4,
+   "memory": "8 GiB"
+  },
+  "c6i.2xlarge": {
+   "usd_per_hour": 0.34,
+   "vcpu": 8,
+   "memory": "16 GiB"
+  },
+  "c7a.large": {
+   "usd_per_hour": 0.10264,
+   "vcpu": 2,
+   "memory": "4 GiB"
+  },
+  "c7a.xlarge": {
+   "usd_per_hour": 0.20528,
+   "vcpu": 4,
+   "memory": "8 GiB"
+  },
+  "c7a.2xlarge": {
+   "usd_per_hour": 0.41056,
+   "vcpu": 8,
+   "memory": "16 GiB"
+  },
+  "c7i.large": {
+   "usd_per_hour": 0.08925,
+   "vcpu": 2,
+   "memory": "4 GiB"
+  },
+  "c7i.xlarge": {
+   "usd_per_hour": 0.1785,
+   "vcpu": 4,
+   "memory": "8 GiB"
+  },
+  "c7i.2xlarge": {
+   "usd_per_hour": 0.357,
+   "vcpu": 8,
+   "memory": "16 GiB"
+  },
+  "m6a.large": {
+   "usd_per_hour": 0.0864,
+   "vcpu": 2,
+   "memory": "8 GiB"
+  },
+  "m6a.xlarge": {
+   "usd_per_hour": 0.1728,
+   "vcpu": 4,
+   "memory": "16 GiB"
+  },
+  "m6a.2xlarge": {
+   "usd_per_hour": 0.3456,
+   "vcpu": 8,
+   "memory": "32 GiB"
+  },
+  "m6i.large": {
+   "usd_per_hour": 0.096,
+   "vcpu": 2,
+   "memory": "8 GiB"
+  },
+  "m6i.xlarge": {
+   "usd_per_hour": 0.192,
+   "vcpu": 4,
+   "memory": "16 GiB"
+  },
+  "m6i.2xlarge": {
+   "usd_per_hour": 0.384,
+   "vcpu": 8,
+   "memory": "32 GiB"
+  },
+  "m7a.large": {
+   "usd_per_hour": 0.11592,
+   "vcpu": 2,
+   "memory": "8 GiB"
+  },
+  "m7a.xlarge": {
+   "usd_per_hour": 0.23184,
+   "vcpu": 4,
+   "memory": "16 GiB"
+  },
+  "m7a.2xlarge": {
+   "usd_per_hour": 0.46368,
+   "vcpu": 8,
+   "memory": "32 GiB"
+  },
+  "m7i.large": {
+   "usd_per_hour": 0.1008,
+   "vcpu": 2,
+   "memory": "8 GiB"
+  },
+  "m7i.xlarge": {
+   "usd_per_hour": 0.2016,
+   "vcpu": 4,
+   "memory": "16 GiB"
+  },
+  "m7i.2xlarge": {
+   "usd_per_hour": 0.4032,
+   "vcpu": 8,
+   "memory": "32 GiB"
+  }
+ }
+}

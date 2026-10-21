@@ -1,0 +1,7 @@
+scaler,replicas,runs_ok,runs_failed,t_nodeclaim_s_median,t_nodeclaim_s_min,t_nodeclaim_s_max,t_first_node_ready_s_median,t_first_node_ready_s_min,t_first_node_ready_s_max,t_all_nodes_ready_s_median,t_all_nodes_ready_s_min,t_all_nodes_ready_s_max,t_all_pods_ready_s_median,t_all_pods_ready_s_min,t_all_pods_ready_s_max,nodes_median,nodes_min,nodes_max,packing_pct_median,packing_pct_min,packing_pct_max,est_cost_per_hour_usd_median,est_cost_per_hour_usd_min,est_cost_per_hour_usd_max,instance_types_seen
+automode,5,3,0,2.0,1.0,2.0,16.0,16.0,18.0,18.0,16.0,19.0,21.0,20.0,23.0,2.0,2.0,2.0,28.1,28.1,28.1,0.153,0.153,0.153,c6a.largex2
+karpenter,5,3,0,2.0,1.0,2.0,25.0,24.0,26.0,26.0,25.0,28.0,27.0,26.0,28.0,2.0,2.0,2.0,25.9,25.9,25.9,0.153,0.153,0.153,c6a.largex2
+automode,15,3,0,1.0,1.0,2.0,16.0,15.0,17.0,22.0,17.0,24.0,28.0,23.0,29.0,2.0,2.0,2.0,84.3,84.3,84.3,0.153,0.153,0.153,c6a.largex2
+karpenter,15,3,0,2.0,1.0,2.0,24.0,23.0,24.0,25.0,24.0,26.0,28.0,27.0,28.0,2.0,2.0,2.0,77.7,77.7,77.7,0.153,0.153,0.153,c6a.largex2
+automode,30,3,0,2.0,1.0,2.0,16.0,15.0,20.0,21.0,17.0,24.0,33.0,32.0,40.0,2.0,2.0,2.0,79.6,79.6,79.6,0.306,0.306,0.323,c6a.xlargex1 c6i.xlargex1 | c6a.xlargex2
+karpenter,30,3,0,2.0,2.0,2.0,24.0,23.0,25.0,26.0,23.0,27.0,41.0,39.0,42.0,2.0,2.0,2.0,76.5,76.5,76.5,0.306,0.306,0.306,c6a.xlargex2

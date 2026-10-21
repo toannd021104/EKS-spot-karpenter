@@ -1,0 +1,3 @@
+scaler,replicas,rep,t_nodeclaim_s,t_first_node_ready_s,t_all_nodes_ready_s,t_all_pods_ready_s,nodes,instance_types,packing_pct,est_cost_per_hour_usd,cold,status,note
+automode,5,1,1,16,18,21,2,c6a.largex2,28.1,0.153,false,ok,
+karpenter,5,1,1,23,26,26,2,c6a.largex2,25.9,0.153,false,ok,

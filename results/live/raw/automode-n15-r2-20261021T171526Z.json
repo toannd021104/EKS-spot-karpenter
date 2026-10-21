@@ -1,0 +1,4800 @@
+{
+  "scaler": "automode",
+  "replicas": 15,
+  "rep": 2,
+  "cold": false,
+  "status": "ok",
+  "note": "",
+  "t0_client_epoch_ms": 1792602946619,
+  "clock_skew_server_minus_client_s": 1,
+  "pods": {
+    "apiVersion": "v1",
+    "items": [
+      {
+        "apiVersion": "v1",
+        "kind": "Pod",
+        "metadata": {
+          "creationTimestamp": "2026-10-21T17:15:48Z",
+          "generateName": "inflate-6b9545f49b-",
+          "generation": 1,
+          "labels": {
+            "app": "inflate",
+            "pod-template-hash": "6b9545f49b",
+            "topology.kubernetes.io/region": "us-west-2",
+            "topology.kubernetes.io/zone": "us-west-2a"
+          },
+          "name": "inflate-6b9545f49b-4tqjh",
+          "namespace": "bench-automode",
+          "ownerReferences": [
+            {
+              "apiVersion": "apps/v1",
+              "blockOwnerDeletion": true,
+              "controller": true,
+              "kind": "ReplicaSet",
+              "name": "inflate-6b9545f49b",
+              "uid": "c727a851-5413-4f15-b31b-c7073cebf610"
+            }
+          ],
+          "resourceVersion": "50888",
+          "uid": "c2bc2e8e-6a70-49a3-830c-bcb7652927e7"
+        },
+        "spec": {
+          "containers": [
+            {
+              "image": "registry.k8s.io/pause:3.10",
+              "imagePullPolicy": "IfNotPresent",
+              "name": "pause",
+              "resources": {
+                "limits": {
+                  "memory": "256Mi"
+                },
+                "requests": {
+                  "cpu": "200m",
+                  "memory": "256Mi"
+                }
+              },
+              "terminationMessagePath": "/dev/termination-log",
+              "terminationMessagePolicy": "File",
+              "volumeMounts": [
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-6jgbx",
+                  "readOnly": true
+                }
+              ]
+            }
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "enableServiceLinks": true,
+          "nodeName": "i-0ca6bf310e9c5aaf9",
+          "nodeSelector": {
+            "bench": "automode"
+          },
+          "preemptionPolicy": "PreemptLowerPriority",
+          "priority": 0,
+          "restartPolicy": "Always",
+          "schedulerName": "default-scheduler",
+          "securityContext": {},
+          "serviceAccount": "default",
+          "serviceAccountName": "default",
+          "terminationGracePeriodSeconds": 0,
+          "tolerations": [
+            {
+              "effect": "NoSchedule",
+              "key": "bench",
+              "operator": "Equal",
+              "value": "automode"
+            },
+            {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/not-ready",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+            },
+            {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/unreachable",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+            }
+          ],
+          "topologySpreadConstraints": [
+            {
+              "labelSelector": {
+                "matchLabels": {
+                  "app": "inflate"
+                }
+              },
+              "maxSkew": 1,
+              "topologyKey": "topology.kubernetes.io/zone",
+              "whenUnsatisfiable": "ScheduleAnyway"
+            }
+          ],
+          "volumes": [
+            {
+              "name": "kube-api-access-6jgbx",
+              "projected": {
+                "defaultMode": 420,
+                "sources": [
+                  {
+                    "serviceAccountToken": {
+                      "expirationSeconds": 3607,
+                      "path": "token"
+                    }
+                  },
+                  {
+                    "configMap": {
+                      "items": [
+                        {
+                          "key": "ca.crt",
+                          "path": "ca.crt"
+                        }
+                      ],
+                      "name": "kube-root-ca.crt"
+                    }
+                  },
+                  {
+                    "downwardAPI": {
+                      "items": [
+                        {
+                          "fieldRef": {
+                            "apiVersion": "v1",
+                            "fieldPath": "metadata.namespace"
+                          },
+                          "path": "namespace"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "status": {
+          "allocatedResources": {
+            "cpu": "200m",
+            "memory": "256Mi"
+          },
+          "conditions": [
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:15Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "PodReadyToStartContainers"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:10Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "Initialized"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:16Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "Ready"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:16Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "ContainersReady"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:10Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "PodScheduled"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "allocatedResources": {
+                "cpu": "200m",
+                "memory": "256Mi"
+              },
+              "containerID": "containerd://876b1074a350e51c28b095b95c37881ece61ef8ce81662cca6fc99635a09eaa5",
+              "image": "registry.k8s.io/pause:3.10",
+              "imageID": "registry.k8s.io/pause@sha256:ee6521f290b2168b6e0935a181d4cff9be1ac3f505666ef0e3c98fae8199917a",
+              "lastState": {},
+              "name": "pause",
+              "ready": true,
+              "resources": {
+                "limits": {
+                  "memory": "256Mi"
+                },
+                "requests": {
+                  "cpu": "200m",
+                  "memory": "256Mi"
+                }
+              },
+              "restartCount": 0,
+              "started": true,
+              "state": {
+                "running": {
+                  "startedAt": "2026-10-21T17:16:16Z"
+                }
+              },
+              "user": {
+                "linux": {
+                  "gid": 0,
+                  "supplementalGroups": [
+                    0
+                  ],
+                  "uid": 65535
+                }
+              },
+              "volumeMounts": [
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-6jgbx",
+                  "readOnly": true,
+                  "recursiveReadOnly": "Disabled"
+                }
+              ]
+            }
+          ],
+          "hostIP": "192.168.17.65",
+          "hostIPs": [
+            {
+              "ip": "192.168.17.65"
+            }
+          ],
+          "observedGeneration": 1,
+          "phase": "Running",
+          "podIP": "192.168.16.69",
+          "podIPs": [
+            {
+              "ip": "192.168.16.69"
+            }
+          ],
+          "qosClass": "Burstable",
+          "resources": {
+            "limits": {
+              "memory": "256Mi"
+            },
+            "requests": {
+              "cpu": "200m",
+              "memory": "256Mi"
+            }
+          },
+          "startTime": "2026-10-21T17:16:10Z"
+        }
+      },
+      {
+        "apiVersion": "v1",
+        "kind": "Pod",
+        "metadata": {
+          "creationTimestamp": "2026-10-21T17:15:48Z",
+          "generateName": "inflate-6b9545f49b-",
+          "generation": 1,
+          "labels": {
+            "app": "inflate",
+            "pod-template-hash": "6b9545f49b",
+            "topology.kubernetes.io/region": "us-west-2",
+            "topology.kubernetes.io/zone": "us-west-2a"
+          },
+          "name": "inflate-6b9545f49b-9mkjn",
+          "namespace": "bench-automode",
+          "ownerReferences": [
+            {
+              "apiVersion": "apps/v1",
+              "blockOwnerDeletion": true,
+              "controller": true,
+              "kind": "ReplicaSet",
+              "name": "inflate-6b9545f49b",
+              "uid": "c727a851-5413-4f15-b31b-c7073cebf610"
+            }
+          ],
+          "resourceVersion": "50875",
+          "uid": "3281dea0-0e27-4270-8d7e-873bc6624876"
+        },
+        "spec": {
+          "containers": [
+            {
+              "image": "registry.k8s.io/pause:3.10",
+              "imagePullPolicy": "IfNotPresent",
+              "name": "pause",
+              "resources": {
+                "limits": {
+                  "memory": "256Mi"
+                },
+                "requests": {
+                  "cpu": "200m",
+                  "memory": "256Mi"
+                }
+              },
+              "terminationMessagePath": "/dev/termination-log",
+              "terminationMessagePolicy": "File",
+              "volumeMounts": [
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-jcghn",
+                  "readOnly": true
+                }
+              ]
+            }
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "enableServiceLinks": true,
+          "nodeName": "i-0ca6bf310e9c5aaf9",
+          "nodeSelector": {
+            "bench": "automode"
+          },
+          "preemptionPolicy": "PreemptLowerPriority",
+          "priority": 0,
+          "restartPolicy": "Always",
+          "schedulerName": "default-scheduler",
+          "securityContext": {},
+          "serviceAccount": "default",
+          "serviceAccountName": "default",
+          "terminationGracePeriodSeconds": 0,
+          "tolerations": [
+            {
+              "effect": "NoSchedule",
+              "key": "bench",
+              "operator": "Equal",
+              "value": "automode"
+            },
+            {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/not-ready",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+            },
+            {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/unreachable",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+            }
+          ],
+          "topologySpreadConstraints": [
+            {
+              "labelSelector": {
+                "matchLabels": {
+                  "app": "inflate"
+                }
+              },
+              "maxSkew": 1,
+              "topologyKey": "topology.kubernetes.io/zone",
+              "whenUnsatisfiable": "ScheduleAnyway"
+            }
+          ],
+          "volumes": [
+            {
+              "name": "kube-api-access-jcghn",
+              "projected": {
+                "defaultMode": 420,
+                "sources": [
+                  {
+                    "serviceAccountToken": {
+                      "expirationSeconds": 3607,
+                      "path": "token"
+                    }
+                  },
+                  {
+                    "configMap": {
+                      "items": [
+                        {
+                          "key": "ca.crt",
+                          "path": "ca.crt"
+                        }
+                      ],
+                      "name": "kube-root-ca.crt"
+                    }
+                  },
+                  {
+                    "downwardAPI": {
+                      "items": [
+                        {
+                          "fieldRef": {
+                            "apiVersion": "v1",
+                            "fieldPath": "metadata.namespace"
+                          },
+                          "path": "namespace"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "status": {
+          "allocatedResources": {
+            "cpu": "200m",
+            "memory": "256Mi"
+          },
+          "conditions": [
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:15Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "PodReadyToStartContainers"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:10Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "Initialized"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:16Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "Ready"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:16Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "ContainersReady"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:10Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "PodScheduled"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "allocatedResources": {
+                "cpu": "200m",
+                "memory": "256Mi"
+              },
+              "containerID": "containerd://36dd200d39423f61ebcbca7b0c82e18f43361468b04f843dbdb3b159a58d5f0c",
+              "image": "registry.k8s.io/pause:3.10",
+              "imageID": "registry.k8s.io/pause@sha256:ee6521f290b2168b6e0935a181d4cff9be1ac3f505666ef0e3c98fae8199917a",
+              "lastState": {},
+              "name": "pause",
+              "ready": true,
+              "resources": {
+                "limits": {
+                  "memory": "256Mi"
+                },
+                "requests": {
+                  "cpu": "200m",
+                  "memory": "256Mi"
+                }
+              },
+              "restartCount": 0,
+              "started": true,
+              "state": {
+                "running": {
+                  "startedAt": "2026-10-21T17:16:16Z"
+                }
+              },
+              "user": {
+                "linux": {
+                  "gid": 0,
+                  "supplementalGroups": [
+                    0
+                  ],
+                  "uid": 65535
+                }
+              },
+              "volumeMounts": [
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-jcghn",
+                  "readOnly": true,
+                  "recursiveReadOnly": "Disabled"
+                }
+              ]
+            }
+          ],
+          "hostIP": "192.168.17.65",
+          "hostIPs": [
+            {
+              "ip": "192.168.17.65"
+            }
+          ],
+          "observedGeneration": 1,
+          "phase": "Running",
+          "podIP": "192.168.16.64",
+          "podIPs": [
+            {
+              "ip": "192.168.16.64"
+            }
+          ],
+          "qosClass": "Burstable",
+          "resources": {
+            "limits": {
+              "memory": "256Mi"
+            },
+            "requests": {
+              "cpu": "200m",
+              "memory": "256Mi"
+            }
+          },
+          "startTime": "2026-10-21T17:16:10Z"
+        }
+      },
+      {
+        "apiVersion": "v1",
+        "kind": "Pod",
+        "metadata": {
+          "creationTimestamp": "2026-10-21T17:15:48Z",
+          "generateName": "inflate-6b9545f49b-",
+          "generation": 1,
+          "labels": {
+            "app": "inflate",
+            "pod-template-hash": "6b9545f49b",
+            "topology.kubernetes.io/region": "us-west-2",
+            "topology.kubernetes.io/zone": "us-west-2a"
+          },
+          "name": "inflate-6b9545f49b-bw89z",
+          "namespace": "bench-automode",
+          "ownerReferences": [
+            {
+              "apiVersion": "apps/v1",
+              "blockOwnerDeletion": true,
+              "controller": true,
+              "kind": "ReplicaSet",
+              "name": "inflate-6b9545f49b",
+              "uid": "c727a851-5413-4f15-b31b-c7073cebf610"
+            }
+          ],
+          "resourceVersion": "50878",
+          "uid": "d8db4ed4-3d15-4109-8c99-0207f4a9287d"
+        },
+        "spec": {
+          "containers": [
+            {
+              "image": "registry.k8s.io/pause:3.10",
+              "imagePullPolicy": "IfNotPresent",
+              "name": "pause",
+              "resources": {
+                "limits": {
+                  "memory": "256Mi"
+                },
+                "requests": {
+                  "cpu": "200m",
+                  "memory": "256Mi"
+                }
+              },
+              "terminationMessagePath": "/dev/termination-log",
+              "terminationMessagePolicy": "File",
+              "volumeMounts": [
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-87bj4",
+                  "readOnly": true
+                }
+              ]
+            }
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "enableServiceLinks": true,
+          "nodeName": "i-0ca6bf310e9c5aaf9",
+          "nodeSelector": {
+            "bench": "automode"
+          },
+          "preemptionPolicy": "PreemptLowerPriority",
+          "priority": 0,
+          "restartPolicy": "Always",
+          "schedulerName": "default-scheduler",
+          "securityContext": {},
+          "serviceAccount": "default",
+          "serviceAccountName": "default",
+          "terminationGracePeriodSeconds": 0,
+          "tolerations": [
+            {
+              "effect": "NoSchedule",
+              "key": "bench",
+              "operator": "Equal",
+              "value": "automode"
+            },
+            {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/not-ready",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+            },
+            {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/unreachable",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+            }
+          ],
+          "topologySpreadConstraints": [
+            {
+              "labelSelector": {
+                "matchLabels": {
+                  "app": "inflate"
+                }
+              },
+              "maxSkew": 1,
+              "topologyKey": "topology.kubernetes.io/zone",
+              "whenUnsatisfiable": "ScheduleAnyway"
+            }
+          ],
+          "volumes": [
+            {
+              "name": "kube-api-access-87bj4",
+              "projected": {
+                "defaultMode": 420,
+                "sources": [
+                  {
+                    "serviceAccountToken": {
+                      "expirationSeconds": 3607,
+                      "path": "token"
+                    }
+                  },
+                  {
+                    "configMap": {
+                      "items": [
+                        {
+                          "key": "ca.crt",
+                          "path": "ca.crt"
+                        }
+                      ],
+                      "name": "kube-root-ca.crt"
+                    }
+                  },
+                  {
+                    "downwardAPI": {
+                      "items": [
+                        {
+                          "fieldRef": {
+                            "apiVersion": "v1",
+                            "fieldPath": "metadata.namespace"
+                          },
+                          "path": "namespace"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "status": {
+          "allocatedResources": {
+            "cpu": "200m",
+            "memory": "256Mi"
+          },
+          "conditions": [
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:15Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "PodReadyToStartContainers"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:10Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "Initialized"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:16Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "Ready"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:16Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "ContainersReady"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:10Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "PodScheduled"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "allocatedResources": {
+                "cpu": "200m",
+                "memory": "256Mi"
+              },
+              "containerID": "containerd://cc0994c74b4094307f5ee11a75a88ae35f0a7e9ba6a9ef917f6a2451c6747d3c",
+              "image": "registry.k8s.io/pause:3.10",
+              "imageID": "registry.k8s.io/pause@sha256:ee6521f290b2168b6e0935a181d4cff9be1ac3f505666ef0e3c98fae8199917a",
+              "lastState": {},
+              "name": "pause",
+              "ready": true,
+              "resources": {
+                "limits": {
+                  "memory": "256Mi"
+                },
+                "requests": {
+                  "cpu": "200m",
+                  "memory": "256Mi"
+                }
+              },
+              "restartCount": 0,
+              "started": true,
+              "state": {
+                "running": {
+                  "startedAt": "2026-10-21T17:16:16Z"
+                }
+              },
+              "user": {
+                "linux": {
+                  "gid": 0,
+                  "supplementalGroups": [
+                    0
+                  ],
+                  "uid": 65535
+                }
+              },
+              "volumeMounts": [
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-87bj4",
+                  "readOnly": true,
+                  "recursiveReadOnly": "Disabled"
+                }
+              ]
+            }
+          ],
+          "hostIP": "192.168.17.65",
+          "hostIPs": [
+            {
+              "ip": "192.168.17.65"
+            }
+          ],
+          "observedGeneration": 1,
+          "phase": "Running",
+          "podIP": "192.168.16.65",
+          "podIPs": [
+            {
+              "ip": "192.168.16.65"
+            }
+          ],
+          "qosClass": "Burstable",
+          "resources": {
+            "limits": {
+              "memory": "256Mi"
+            },
+            "requests": {
+              "cpu": "200m",
+              "memory": "256Mi"
+            }
+          },
+          "startTime": "2026-10-21T17:16:10Z"
+        }
+      },
+      {
+        "apiVersion": "v1",
+        "kind": "Pod",
+        "metadata": {
+          "creationTimestamp": "2026-10-21T17:15:48Z",
+          "generateName": "inflate-6b9545f49b-",
+          "generation": 1,
+          "labels": {
+            "app": "inflate",
+            "pod-template-hash": "6b9545f49b",
+            "topology.kubernetes.io/region": "us-west-2",
+            "topology.kubernetes.io/zone": "us-west-2a"
+          },
+          "name": "inflate-6b9545f49b-c69br",
+          "namespace": "bench-automode",
+          "ownerReferences": [
+            {
+              "apiVersion": "apps/v1",
+              "blockOwnerDeletion": true,
+              "controller": true,
+              "kind": "ReplicaSet",
+              "name": "inflate-6b9545f49b",
+              "uid": "c727a851-5413-4f15-b31b-c7073cebf610"
+            }
+          ],
+          "resourceVersion": "50896",
+          "uid": "2439d8d7-0e6c-4bcb-b67b-2e4a0a7cad0d"
+        },
+        "spec": {
+          "containers": [
+            {
+              "image": "registry.k8s.io/pause:3.10",
+              "imagePullPolicy": "IfNotPresent",
+              "name": "pause",
+              "resources": {
+                "limits": {
+                  "memory": "256Mi"
+                },
+                "requests": {
+                  "cpu": "200m",
+                  "memory": "256Mi"
+                }
+              },
+              "terminationMessagePath": "/dev/termination-log",
+              "terminationMessagePolicy": "File",
+              "volumeMounts": [
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-wrk7h",
+                  "readOnly": true
+                }
+              ]
+            }
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "enableServiceLinks": true,
+          "nodeName": "i-0ca6bf310e9c5aaf9",
+          "nodeSelector": {
+            "bench": "automode"
+          },
+          "preemptionPolicy": "PreemptLowerPriority",
+          "priority": 0,
+          "restartPolicy": "Always",
+          "schedulerName": "default-scheduler",
+          "securityContext": {},
+          "serviceAccount": "default",
+          "serviceAccountName": "default",
+          "terminationGracePeriodSeconds": 0,
+          "tolerations": [
+            {
+              "effect": "NoSchedule",
+              "key": "bench",
+              "operator": "Equal",
+              "value": "automode"
+            },
+            {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/not-ready",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+            },
+            {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/unreachable",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+            }
+          ],
+          "topologySpreadConstraints": [
+            {
+              "labelSelector": {
+                "matchLabels": {
+                  "app": "inflate"
+                }
+              },
+              "maxSkew": 1,
+              "topologyKey": "topology.kubernetes.io/zone",
+              "whenUnsatisfiable": "ScheduleAnyway"
+            }
+          ],
+          "volumes": [
+            {
+              "name": "kube-api-access-wrk7h",
+              "projected": {
+                "defaultMode": 420,
+                "sources": [
+                  {
+                    "serviceAccountToken": {
+                      "expirationSeconds": 3607,
+                      "path": "token"
+                    }
+                  },
+                  {
+                    "configMap": {
+                      "items": [
+                        {
+                          "key": "ca.crt",
+                          "path": "ca.crt"
+                        }
+                      ],
+                      "name": "kube-root-ca.crt"
+                    }
+                  },
+                  {
+                    "downwardAPI": {
+                      "items": [
+                        {
+                          "fieldRef": {
+                            "apiVersion": "v1",
+                            "fieldPath": "metadata.namespace"
+                          },
+                          "path": "namespace"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "status": {
+          "allocatedResources": {
+            "cpu": "200m",
+            "memory": "256Mi"
+          },
+          "conditions": [
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:15Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "PodReadyToStartContainers"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:10Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "Initialized"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:16Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "Ready"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:16Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "ContainersReady"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:10Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "PodScheduled"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "allocatedResources": {
+                "cpu": "200m",
+                "memory": "256Mi"
+              },
+              "containerID": "containerd://0dc8df0bfa552352a781d5a3c4a4edadf27d202c0e7e3b7155582b6231ea6578",
+              "image": "registry.k8s.io/pause:3.10",
+              "imageID": "registry.k8s.io/pause@sha256:ee6521f290b2168b6e0935a181d4cff9be1ac3f505666ef0e3c98fae8199917a",
+              "lastState": {},
+              "name": "pause",
+              "ready": true,
+              "resources": {
+                "limits": {
+                  "memory": "256Mi"
+                },
+                "requests": {
+                  "cpu": "200m",
+                  "memory": "256Mi"
+                }
+              },
+              "restartCount": 0,
+              "started": true,
+              "state": {
+                "running": {
+                  "startedAt": "2026-10-21T17:16:16Z"
+                }
+              },
+              "user": {
+                "linux": {
+                  "gid": 0,
+                  "supplementalGroups": [
+                    0
+                  ],
+                  "uid": 65535
+                }
+              },
+              "volumeMounts": [
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-wrk7h",
+                  "readOnly": true,
+                  "recursiveReadOnly": "Disabled"
+                }
+              ]
+            }
+          ],
+          "hostIP": "192.168.17.65",
+          "hostIPs": [
+            {
+              "ip": "192.168.17.65"
+            }
+          ],
+          "observedGeneration": 1,
+          "phase": "Running",
+          "podIP": "192.168.16.70",
+          "podIPs": [
+            {
+              "ip": "192.168.16.70"
+            }
+          ],
+          "qosClass": "Burstable",
+          "resources": {
+            "limits": {
+              "memory": "256Mi"
+            },
+            "requests": {
+              "cpu": "200m",
+              "memory": "256Mi"
+            }
+          },
+          "startTime": "2026-10-21T17:16:10Z"
+        }
+      },
+      {
+        "apiVersion": "v1",
+        "kind": "Pod",
+        "metadata": {
+          "creationTimestamp": "2026-10-21T17:15:48Z",
+          "generateName": "inflate-6b9545f49b-",
+          "generation": 1,
+          "labels": {
+            "app": "inflate",
+            "pod-template-hash": "6b9545f49b",
+            "topology.kubernetes.io/region": "us-west-2",
+            "topology.kubernetes.io/zone": "us-west-2b"
+          },
+          "name": "inflate-6b9545f49b-dnt9g",
+          "namespace": "bench-automode",
+          "ownerReferences": [
+            {
+              "apiVersion": "apps/v1",
+              "blockOwnerDeletion": true,
+              "controller": true,
+              "kind": "ReplicaSet",
+              "name": "inflate-6b9545f49b",
+              "uid": "c727a851-5413-4f15-b31b-c7073cebf610"
+            }
+          ],
+          "resourceVersion": "50743",
+          "uid": "d9883b82-a507-48c0-a4f3-03b841cc7db1"
+        },
+        "spec": {
+          "containers": [
+            {
+              "image": "registry.k8s.io/pause:3.10",
+              "imagePullPolicy": "IfNotPresent",
+              "name": "pause",
+              "resources": {
+                "limits": {
+                  "memory": "256Mi"
+                },
+                "requests": {
+                  "cpu": "200m",
+                  "memory": "256Mi"
+                }
+              },
+              "terminationMessagePath": "/dev/termination-log",
+              "terminationMessagePolicy": "File",
+              "volumeMounts": [
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-nlxj6",
+                  "readOnly": true
+                }
+              ]
+            }
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "enableServiceLinks": true,
+          "nodeName": "i-094e6b20c9a1f641c",
+          "nodeSelector": {
+            "bench": "automode"
+          },
+          "preemptionPolicy": "PreemptLowerPriority",
+          "priority": 0,
+          "restartPolicy": "Always",
+          "schedulerName": "default-scheduler",
+          "securityContext": {},
+          "serviceAccount": "default",
+          "serviceAccountName": "default",
+          "terminationGracePeriodSeconds": 0,
+          "tolerations": [
+            {
+              "effect": "NoSchedule",
+              "key": "bench",
+              "operator": "Equal",
+              "value": "automode"
+            },
+            {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/not-ready",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+            },
+            {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/unreachable",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+            }
+          ],
+          "topologySpreadConstraints": [
+            {
+              "labelSelector": {
+                "matchLabels": {
+                  "app": "inflate"
+                }
+              },
+              "maxSkew": 1,
+              "topologyKey": "topology.kubernetes.io/zone",
+              "whenUnsatisfiable": "ScheduleAnyway"
+            }
+          ],
+          "volumes": [
+            {
+              "name": "kube-api-access-nlxj6",
+              "projected": {
+                "defaultMode": 420,
+                "sources": [
+                  {
+                    "serviceAccountToken": {
+                      "expirationSeconds": 3607,
+                      "path": "token"
+                    }
+                  },
+                  {
+                    "configMap": {
+                      "items": [
+                        {
+                          "key": "ca.crt",
+                          "path": "ca.crt"
+                        }
+                      ],
+                      "name": "kube-root-ca.crt"
+                    }
+                  },
+                  {
+                    "downwardAPI": {
+                      "items": [
+                        {
+                          "fieldRef": {
+                            "apiVersion": "v1",
+                            "fieldPath": "metadata.namespace"
+                          },
+                          "path": "namespace"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "status": {
+          "allocatedResources": {
+            "cpu": "200m",
+            "memory": "256Mi"
+          },
+          "conditions": [
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:08Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "PodReadyToStartContainers"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:03Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "Initialized"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:09Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "Ready"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:09Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "ContainersReady"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:04Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "PodScheduled"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "allocatedResources": {
+                "cpu": "200m",
+                "memory": "256Mi"
+              },
+              "containerID": "containerd://b77324fd433f05e4f8805ed6a1e1310545b42790d13f5956a391c35c3af3176e",
+              "image": "registry.k8s.io/pause:3.10",
+              "imageID": "registry.k8s.io/pause@sha256:ee6521f290b2168b6e0935a181d4cff9be1ac3f505666ef0e3c98fae8199917a",
+              "lastState": {},
+              "name": "pause",
+              "ready": true,
+              "resources": {
+                "limits": {
+                  "memory": "256Mi"
+                },
+                "requests": {
+                  "cpu": "200m",
+                  "memory": "256Mi"
+                }
+              },
+              "restartCount": 0,
+              "started": true,
+              "state": {
+                "running": {
+                  "startedAt": "2026-10-21T17:16:09Z"
+                }
+              },
+              "user": {
+                "linux": {
+                  "gid": 0,
+                  "supplementalGroups": [
+                    0
+                  ],
+                  "uid": 65535
+                }
+              },
+              "volumeMounts": [
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-nlxj6",
+                  "readOnly": true,
+                  "recursiveReadOnly": "Disabled"
+                }
+              ]
+            }
+          ],
+          "hostIP": "192.168.22.239",
+          "hostIPs": [
+            {
+              "ip": "192.168.22.239"
+            }
+          ],
+          "observedGeneration": 1,
+          "phase": "Running",
+          "podIP": "192.168.22.147",
+          "podIPs": [
+            {
+              "ip": "192.168.22.147"
+            }
+          ],
+          "qosClass": "Burstable",
+          "resources": {
+            "limits": {
+              "memory": "256Mi"
+            },
+            "requests": {
+              "cpu": "200m",
+              "memory": "256Mi"
+            }
+          },
+          "startTime": "2026-10-21T17:16:03Z"
+        }
+      },
+      {
+        "apiVersion": "v1",
+        "kind": "Pod",
+        "metadata": {
+          "creationTimestamp": "2026-10-21T17:15:48Z",
+          "generateName": "inflate-6b9545f49b-",
+          "generation": 1,
+          "labels": {
+            "app": "inflate",
+            "pod-template-hash": "6b9545f49b",
+            "topology.kubernetes.io/region": "us-west-2",
+            "topology.kubernetes.io/zone": "us-west-2a"
+          },
+          "name": "inflate-6b9545f49b-jwrlq",
+          "namespace": "bench-automode",
+          "ownerReferences": [
+            {
+              "apiVersion": "apps/v1",
+              "blockOwnerDeletion": true,
+              "controller": true,
+              "kind": "ReplicaSet",
+              "name": "inflate-6b9545f49b",
+              "uid": "c727a851-5413-4f15-b31b-c7073cebf610"
+            }
+          ],
+          "resourceVersion": "50891",
+          "uid": "fd8faab4-b50e-4e5e-9188-2b18df674805"
+        },
+        "spec": {
+          "containers": [
+            {
+              "image": "registry.k8s.io/pause:3.10",
+              "imagePullPolicy": "IfNotPresent",
+              "name": "pause",
+              "resources": {
+                "limits": {
+                  "memory": "256Mi"
+                },
+                "requests": {
+                  "cpu": "200m",
+                  "memory": "256Mi"
+                }
+              },
+              "terminationMessagePath": "/dev/termination-log",
+              "terminationMessagePolicy": "File",
+              "volumeMounts": [
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-wvsfv",
+                  "readOnly": true
+                }
+              ]
+            }
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "enableServiceLinks": true,
+          "nodeName": "i-0ca6bf310e9c5aaf9",
+          "nodeSelector": {
+            "bench": "automode"
+          },
+          "preemptionPolicy": "PreemptLowerPriority",
+          "priority": 0,
+          "restartPolicy": "Always",
+          "schedulerName": "default-scheduler",
+          "securityContext": {},
+          "serviceAccount": "default",
+          "serviceAccountName": "default",
+          "terminationGracePeriodSeconds": 0,
+          "tolerations": [
+            {
+              "effect": "NoSchedule",
+              "key": "bench",
+              "operator": "Equal",
+              "value": "automode"
+            },
+            {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/not-ready",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+            },
+            {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/unreachable",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+            }
+          ],
+          "topologySpreadConstraints": [
+            {
+              "labelSelector": {
+                "matchLabels": {
+                  "app": "inflate"
+                }
+              },
+              "maxSkew": 1,
+              "topologyKey": "topology.kubernetes.io/zone",
+              "whenUnsatisfiable": "ScheduleAnyway"
+            }
+          ],
+          "volumes": [
+            {
+              "name": "kube-api-access-wvsfv",
+              "projected": {
+                "defaultMode": 420,
+                "sources": [
+                  {
+                    "serviceAccountToken": {
+                      "expirationSeconds": 3607,
+                      "path": "token"
+                    }
+                  },
+                  {
+                    "configMap": {
+                      "items": [
+                        {
+                          "key": "ca.crt",
+                          "path": "ca.crt"
+                        }
+                      ],
+                      "name": "kube-root-ca.crt"
+                    }
+                  },
+                  {
+                    "downwardAPI": {
+                      "items": [
+                        {
+                          "fieldRef": {
+                            "apiVersion": "v1",
+                            "fieldPath": "metadata.namespace"
+                          },
+                          "path": "namespace"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "status": {
+          "allocatedResources": {
+            "cpu": "200m",
+            "memory": "256Mi"
+          },
+          "conditions": [
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:15Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "PodReadyToStartContainers"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:10Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "Initialized"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:16Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "Ready"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:16Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "ContainersReady"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:10Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "PodScheduled"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "allocatedResources": {
+                "cpu": "200m",
+                "memory": "256Mi"
+              },
+              "containerID": "containerd://5e33a061af6a71c35047d1a239c2db987c0232031d6b02e5793f49d2de8c7c0a",
+              "image": "registry.k8s.io/pause:3.10",
+              "imageID": "registry.k8s.io/pause@sha256:ee6521f290b2168b6e0935a181d4cff9be1ac3f505666ef0e3c98fae8199917a",
+              "lastState": {},
+              "name": "pause",
+              "ready": true,
+              "resources": {
+                "limits": {
+                  "memory": "256Mi"
+                },
+                "requests": {
+                  "cpu": "200m",
+                  "memory": "256Mi"
+                }
+              },
+              "restartCount": 0,
+              "started": true,
+              "state": {
+                "running": {
+                  "startedAt": "2026-10-21T17:16:16Z"
+                }
+              },
+              "user": {
+                "linux": {
+                  "gid": 0,
+                  "supplementalGroups": [
+                    0
+                  ],
+                  "uid": 65535
+                }
+              },
+              "volumeMounts": [
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-wvsfv",
+                  "readOnly": true,
+                  "recursiveReadOnly": "Disabled"
+                }
+              ]
+            }
+          ],
+          "hostIP": "192.168.17.65",
+          "hostIPs": [
+            {
+              "ip": "192.168.17.65"
+            }
+          ],
+          "observedGeneration": 1,
+          "phase": "Running",
+          "podIP": "192.168.16.68",
+          "podIPs": [
+            {
+              "ip": "192.168.16.68"
+            }
+          ],
+          "qosClass": "Burstable",
+          "resources": {
+            "limits": {
+              "memory": "256Mi"
+            },
+            "requests": {
+              "cpu": "200m",
+              "memory": "256Mi"
+            }
+          },
+          "startTime": "2026-10-21T17:16:10Z"
+        }
+      },
+      {
+        "apiVersion": "v1",
+        "kind": "Pod",
+        "metadata": {
+          "creationTimestamp": "2026-10-21T17:15:48Z",
+          "generateName": "inflate-6b9545f49b-",
+          "generation": 1,
+          "labels": {
+            "app": "inflate",
+            "pod-template-hash": "6b9545f49b",
+            "topology.kubernetes.io/region": "us-west-2",
+            "topology.kubernetes.io/zone": "us-west-2b"
+          },
+          "name": "inflate-6b9545f49b-kmd4p",
+          "namespace": "bench-automode",
+          "ownerReferences": [
+            {
+              "apiVersion": "apps/v1",
+              "blockOwnerDeletion": true,
+              "controller": true,
+              "kind": "ReplicaSet",
+              "name": "inflate-6b9545f49b",
+              "uid": "c727a851-5413-4f15-b31b-c7073cebf610"
+            }
+          ],
+          "resourceVersion": "50752",
+          "uid": "25bc855a-a852-46c5-a9ba-9fb47870987b"
+        },
+        "spec": {
+          "containers": [
+            {
+              "image": "registry.k8s.io/pause:3.10",
+              "imagePullPolicy": "IfNotPresent",
+              "name": "pause",
+              "resources": {
+                "limits": {
+                  "memory": "256Mi"
+                },
+                "requests": {
+                  "cpu": "200m",
+                  "memory": "256Mi"
+                }
+              },
+              "terminationMessagePath": "/dev/termination-log",
+              "terminationMessagePolicy": "File",
+              "volumeMounts": [
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-b8dz9",
+                  "readOnly": true
+                }
+              ]
+            }
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "enableServiceLinks": true,
+          "nodeName": "i-094e6b20c9a1f641c",
+          "nodeSelector": {
+            "bench": "automode"
+          },
+          "preemptionPolicy": "PreemptLowerPriority",
+          "priority": 0,
+          "restartPolicy": "Always",
+          "schedulerName": "default-scheduler",
+          "securityContext": {},
+          "serviceAccount": "default",
+          "serviceAccountName": "default",
+          "terminationGracePeriodSeconds": 0,
+          "tolerations": [
+            {
+              "effect": "NoSchedule",
+              "key": "bench",
+              "operator": "Equal",
+              "value": "automode"
+            },
+            {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/not-ready",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+            },
+            {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/unreachable",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+            }
+          ],
+          "topologySpreadConstraints": [
+            {
+              "labelSelector": {
+                "matchLabels": {
+                  "app": "inflate"
+                }
+              },
+              "maxSkew": 1,
+              "topologyKey": "topology.kubernetes.io/zone",
+              "whenUnsatisfiable": "ScheduleAnyway"
+            }
+          ],
+          "volumes": [
+            {
+              "name": "kube-api-access-b8dz9",
+              "projected": {
+                "defaultMode": 420,
+                "sources": [
+                  {
+                    "serviceAccountToken": {
+                      "expirationSeconds": 3607,
+                      "path": "token"
+                    }
+                  },
+                  {
+                    "configMap": {
+                      "items": [
+                        {
+                          "key": "ca.crt",
+                          "path": "ca.crt"
+                        }
+                      ],
+                      "name": "kube-root-ca.crt"
+                    }
+                  },
+                  {
+                    "downwardAPI": {
+                      "items": [
+                        {
+                          "fieldRef": {
+                            "apiVersion": "v1",
+                            "fieldPath": "metadata.namespace"
+                          },
+                          "path": "namespace"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "status": {
+          "allocatedResources": {
+            "cpu": "200m",
+            "memory": "256Mi"
+          },
+          "conditions": [
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:08Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "PodReadyToStartContainers"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:03Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "Initialized"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:09Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "Ready"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:09Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "ContainersReady"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:04Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "PodScheduled"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "allocatedResources": {
+                "cpu": "200m",
+                "memory": "256Mi"
+              },
+              "containerID": "containerd://5174de1ec27e26b9f2147c00f3cf3d832cc26b9ac1f6302f5177e73e50c6cabe",
+              "image": "registry.k8s.io/pause:3.10",
+              "imageID": "registry.k8s.io/pause@sha256:ee6521f290b2168b6e0935a181d4cff9be1ac3f505666ef0e3c98fae8199917a",
+              "lastState": {},
+              "name": "pause",
+              "ready": true,
+              "resources": {
+                "limits": {
+                  "memory": "256Mi"
+                },
+                "requests": {
+                  "cpu": "200m",
+                  "memory": "256Mi"
+                }
+              },
+              "restartCount": 0,
+              "started": true,
+              "state": {
+                "running": {
+                  "startedAt": "2026-10-21T17:16:09Z"
+                }
+              },
+              "user": {
+                "linux": {
+                  "gid": 0,
+                  "supplementalGroups": [
+                    0
+                  ],
+                  "uid": 65535
+                }
+              },
+              "volumeMounts": [
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-b8dz9",
+                  "readOnly": true,
+                  "recursiveReadOnly": "Disabled"
+                }
+              ]
+            }
+          ],
+          "hostIP": "192.168.22.239",
+          "hostIPs": [
+            {
+              "ip": "192.168.22.239"
+            }
+          ],
+          "observedGeneration": 1,
+          "phase": "Running",
+          "podIP": "192.168.22.149",
+          "podIPs": [
+            {
+              "ip": "192.168.22.149"
+            }
+          ],
+          "qosClass": "Burstable",
+          "resources": {
+            "limits": {
+              "memory": "256Mi"
+            },
+            "requests": {
+              "cpu": "200m",
+              "memory": "256Mi"
+            }
+          },
+          "startTime": "2026-10-21T17:16:03Z"
+        }
+      },
+      {
+        "apiVersion": "v1",
+        "kind": "Pod",
+        "metadata": {
+          "creationTimestamp": "2026-10-21T17:15:48Z",
+          "generateName": "inflate-6b9545f49b-",
+          "generation": 1,
+          "labels": {
+            "app": "inflate",
+            "pod-template-hash": "6b9545f49b",
+            "topology.kubernetes.io/region": "us-west-2",
+            "topology.kubernetes.io/zone": "us-west-2a"
+          },
+          "name": "inflate-6b9545f49b-lt2jj",
+          "namespace": "bench-automode",
+          "ownerReferences": [
+            {
+              "apiVersion": "apps/v1",
+              "blockOwnerDeletion": true,
+              "controller": true,
+              "kind": "ReplicaSet",
+              "name": "inflate-6b9545f49b",
+              "uid": "c727a851-5413-4f15-b31b-c7073cebf610"
+            }
+          ],
+          "resourceVersion": "50885",
+          "uid": "21a8f704-ce57-4bc6-88ab-189b6043f199"
+        },
+        "spec": {
+          "containers": [
+            {
+              "image": "registry.k8s.io/pause:3.10",
+              "imagePullPolicy": "IfNotPresent",
+              "name": "pause",
+              "resources": {
+                "limits": {
+                  "memory": "256Mi"
+                },
+                "requests": {
+                  "cpu": "200m",
+                  "memory": "256Mi"
+                }
+              },
+              "terminationMessagePath": "/dev/termination-log",
+              "terminationMessagePolicy": "File",
+              "volumeMounts": [
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-lzmx5",
+                  "readOnly": true
+                }
+              ]
+            }
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "enableServiceLinks": true,
+          "nodeName": "i-0ca6bf310e9c5aaf9",
+          "nodeSelector": {
+            "bench": "automode"
+          },
+          "preemptionPolicy": "PreemptLowerPriority",
+          "priority": 0,
+          "restartPolicy": "Always",
+          "schedulerName": "default-scheduler",
+          "securityContext": {},
+          "serviceAccount": "default",
+          "serviceAccountName": "default",
+          "terminationGracePeriodSeconds": 0,
+          "tolerations": [
+            {
+              "effect": "NoSchedule",
+              "key": "bench",
+              "operator": "Equal",
+              "value": "automode"
+            },
+            {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/not-ready",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+            },
+            {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/unreachable",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+            }
+          ],
+          "topologySpreadConstraints": [
+            {
+              "labelSelector": {
+                "matchLabels": {
+                  "app": "inflate"
+                }
+              },
+              "maxSkew": 1,
+              "topologyKey": "topology.kubernetes.io/zone",
+              "whenUnsatisfiable": "ScheduleAnyway"
+            }
+          ],
+          "volumes": [
+            {
+              "name": "kube-api-access-lzmx5",
+              "projected": {
+                "defaultMode": 420,
+                "sources": [
+                  {
+                    "serviceAccountToken": {
+                      "expirationSeconds": 3607,
+                      "path": "token"
+                    }
+                  },
+                  {
+                    "configMap": {
+                      "items": [
+                        {
+                          "key": "ca.crt",
+                          "path": "ca.crt"
+                        }
+                      ],
+                      "name": "kube-root-ca.crt"
+                    }
+                  },
+                  {
+                    "downwardAPI": {
+                      "items": [
+                        {
+                          "fieldRef": {
+                            "apiVersion": "v1",
+                            "fieldPath": "metadata.namespace"
+                          },
+                          "path": "namespace"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "status": {
+          "allocatedResources": {
+            "cpu": "200m",
+            "memory": "256Mi"
+          },
+          "conditions": [
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:15Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "PodReadyToStartContainers"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:10Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "Initialized"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:16Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "Ready"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:16Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "ContainersReady"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:10Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "PodScheduled"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "allocatedResources": {
+                "cpu": "200m",
+                "memory": "256Mi"
+              },
+              "containerID": "containerd://fc532f32294f4957bfe829b031ca380b0416e3b8df7a2e2f97502035d2fe8454",
+              "image": "registry.k8s.io/pause:3.10",
+              "imageID": "registry.k8s.io/pause@sha256:ee6521f290b2168b6e0935a181d4cff9be1ac3f505666ef0e3c98fae8199917a",
+              "lastState": {},
+              "name": "pause",
+              "ready": true,
+              "resources": {
+                "limits": {
+                  "memory": "256Mi"
+                },
+                "requests": {
+                  "cpu": "200m",
+                  "memory": "256Mi"
+                }
+              },
+              "restartCount": 0,
+              "started": true,
+              "state": {
+                "running": {
+                  "startedAt": "2026-10-21T17:16:16Z"
+                }
+              },
+              "user": {
+                "linux": {
+                  "gid": 0,
+                  "supplementalGroups": [
+                    0
+                  ],
+                  "uid": 65535
+                }
+              },
+              "volumeMounts": [
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-lzmx5",
+                  "readOnly": true,
+                  "recursiveReadOnly": "Disabled"
+                }
+              ]
+            }
+          ],
+          "hostIP": "192.168.17.65",
+          "hostIPs": [
+            {
+              "ip": "192.168.17.65"
+            }
+          ],
+          "observedGeneration": 1,
+          "phase": "Running",
+          "podIP": "192.168.16.67",
+          "podIPs": [
+            {
+              "ip": "192.168.16.67"
+            }
+          ],
+          "qosClass": "Burstable",
+          "resources": {
+            "limits": {
+              "memory": "256Mi"
+            },
+            "requests": {
+              "cpu": "200m",
+              "memory": "256Mi"
+            }
+          },
+          "startTime": "2026-10-21T17:16:10Z"
+        }
+      },
+      {
+        "apiVersion": "v1",
+        "kind": "Pod",
+        "metadata": {
+          "creationTimestamp": "2026-10-21T17:15:48Z",
+          "generateName": "inflate-6b9545f49b-",
+          "generation": 1,
+          "labels": {
+            "app": "inflate",
+            "pod-template-hash": "6b9545f49b",
+            "topology.kubernetes.io/region": "us-west-2",
+            "topology.kubernetes.io/zone": "us-west-2b"
+          },
+          "name": "inflate-6b9545f49b-mgbzm",
+          "namespace": "bench-automode",
+          "ownerReferences": [
+            {
+              "apiVersion": "apps/v1",
+              "blockOwnerDeletion": true,
+              "controller": true,
+              "kind": "ReplicaSet",
+              "name": "inflate-6b9545f49b",
+              "uid": "c727a851-5413-4f15-b31b-c7073cebf610"
+            }
+          ],
+          "resourceVersion": "50733",
+          "uid": "16a82529-507e-4dd6-aff5-5e1b828b37f7"
+        },
+        "spec": {
+          "containers": [
+            {
+              "image": "registry.k8s.io/pause:3.10",
+              "imagePullPolicy": "IfNotPresent",
+              "name": "pause",
+              "resources": {
+                "limits": {
+                  "memory": "256Mi"
+                },
+                "requests": {
+                  "cpu": "200m",
+                  "memory": "256Mi"
+                }
+              },
+              "terminationMessagePath": "/dev/termination-log",
+              "terminationMessagePolicy": "File",
+              "volumeMounts": [
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-mqtc7",
+                  "readOnly": true
+                }
+              ]
+            }
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "enableServiceLinks": true,
+          "nodeName": "i-094e6b20c9a1f641c",
+          "nodeSelector": {
+            "bench": "automode"
+          },
+          "preemptionPolicy": "PreemptLowerPriority",
+          "priority": 0,
+          "restartPolicy": "Always",
+          "schedulerName": "default-scheduler",
+          "securityContext": {},
+          "serviceAccount": "default",
+          "serviceAccountName": "default",
+          "terminationGracePeriodSeconds": 0,
+          "tolerations": [
+            {
+              "effect": "NoSchedule",
+              "key": "bench",
+              "operator": "Equal",
+              "value": "automode"
+            },
+            {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/not-ready",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+            },
+            {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/unreachable",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+            }
+          ],
+          "topologySpreadConstraints": [
+            {
+              "labelSelector": {
+                "matchLabels": {
+                  "app": "inflate"
+                }
+              },
+              "maxSkew": 1,
+              "topologyKey": "topology.kubernetes.io/zone",
+              "whenUnsatisfiable": "ScheduleAnyway"
+            }
+          ],
+          "volumes": [
+            {
+              "name": "kube-api-access-mqtc7",
+              "projected": {
+                "defaultMode": 420,
+                "sources": [
+                  {
+                    "serviceAccountToken": {
+                      "expirationSeconds": 3607,
+                      "path": "token"
+                    }
+                  },
+                  {
+                    "configMap": {
+                      "items": [
+                        {
+                          "key": "ca.crt",
+                          "path": "ca.crt"
+                        }
+                      ],
+                      "name": "kube-root-ca.crt"
+                    }
+                  },
+                  {
+                    "downwardAPI": {
+                      "items": [
+                        {
+                          "fieldRef": {
+                            "apiVersion": "v1",
+                            "fieldPath": "metadata.namespace"
+                          },
+                          "path": "namespace"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "status": {
+          "allocatedResources": {
+            "cpu": "200m",
+            "memory": "256Mi"
+          },
+          "conditions": [
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:08Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "PodReadyToStartContainers"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:03Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "Initialized"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:09Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "Ready"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:09Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "ContainersReady"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:04Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "PodScheduled"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "allocatedResources": {
+                "cpu": "200m",
+                "memory": "256Mi"
+              },
+              "containerID": "containerd://d3585b5249f9b1b9cefef18ae50833915b7af45f9b6fc67672ea509cece555ab",
+              "image": "registry.k8s.io/pause:3.10",
+              "imageID": "registry.k8s.io/pause@sha256:ee6521f290b2168b6e0935a181d4cff9be1ac3f505666ef0e3c98fae8199917a",
+              "lastState": {},
+              "name": "pause",
+              "ready": true,
+              "resources": {
+                "limits": {
+                  "memory": "256Mi"
+                },
+                "requests": {
+                  "cpu": "200m",
+                  "memory": "256Mi"
+                }
+              },
+              "restartCount": 0,
+              "started": true,
+              "state": {
+                "running": {
+                  "startedAt": "2026-10-21T17:16:09Z"
+                }
+              },
+              "user": {
+                "linux": {
+                  "gid": 0,
+                  "supplementalGroups": [
+                    0
+                  ],
+                  "uid": 65535
+                }
+              },
+              "volumeMounts": [
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-mqtc7",
+                  "readOnly": true,
+                  "recursiveReadOnly": "Disabled"
+                }
+              ]
+            }
+          ],
+          "hostIP": "192.168.22.239",
+          "hostIPs": [
+            {
+              "ip": "192.168.22.239"
+            }
+          ],
+          "observedGeneration": 1,
+          "phase": "Running",
+          "podIP": "192.168.22.150",
+          "podIPs": [
+            {
+              "ip": "192.168.22.150"
+            }
+          ],
+          "qosClass": "Burstable",
+          "resources": {
+            "limits": {
+              "memory": "256Mi"
+            },
+            "requests": {
+              "cpu": "200m",
+              "memory": "256Mi"
+            }
+          },
+          "startTime": "2026-10-21T17:16:03Z"
+        }
+      },
+      {
+        "apiVersion": "v1",
+        "kind": "Pod",
+        "metadata": {
+          "creationTimestamp": "2026-10-21T17:15:48Z",
+          "generateName": "inflate-6b9545f49b-",
+          "generation": 1,
+          "labels": {
+            "app": "inflate",
+            "pod-template-hash": "6b9545f49b",
+            "topology.kubernetes.io/region": "us-west-2",
+            "topology.kubernetes.io/zone": "us-west-2b"
+          },
+          "name": "inflate-6b9545f49b-mw5cf",
+          "namespace": "bench-automode",
+          "ownerReferences": [
+            {
+              "apiVersion": "apps/v1",
+              "blockOwnerDeletion": true,
+              "controller": true,
+              "kind": "ReplicaSet",
+              "name": "inflate-6b9545f49b",
+              "uid": "c727a851-5413-4f15-b31b-c7073cebf610"
+            }
+          ],
+          "resourceVersion": "50749",
+          "uid": "9780b833-3936-4bfe-9f77-5f42fbc808e8"
+        },
+        "spec": {
+          "containers": [
+            {
+              "image": "registry.k8s.io/pause:3.10",
+              "imagePullPolicy": "IfNotPresent",
+              "name": "pause",
+              "resources": {
+                "limits": {
+                  "memory": "256Mi"
+                },
+                "requests": {
+                  "cpu": "200m",
+                  "memory": "256Mi"
+                }
+              },
+              "terminationMessagePath": "/dev/termination-log",
+              "terminationMessagePolicy": "File",
+              "volumeMounts": [
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-nrpdj",
+                  "readOnly": true
+                }
+              ]
+            }
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "enableServiceLinks": true,
+          "nodeName": "i-094e6b20c9a1f641c",
+          "nodeSelector": {
+            "bench": "automode"
+          },
+          "preemptionPolicy": "PreemptLowerPriority",
+          "priority": 0,
+          "restartPolicy": "Always",
+          "schedulerName": "default-scheduler",
+          "securityContext": {},
+          "serviceAccount": "default",
+          "serviceAccountName": "default",
+          "terminationGracePeriodSeconds": 0,
+          "tolerations": [
+            {
+              "effect": "NoSchedule",
+              "key": "bench",
+              "operator": "Equal",
+              "value": "automode"
+            },
+            {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/not-ready",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+            },
+            {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/unreachable",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+            }
+          ],
+          "topologySpreadConstraints": [
+            {
+              "labelSelector": {
+                "matchLabels": {
+                  "app": "inflate"
+                }
+              },
+              "maxSkew": 1,
+              "topologyKey": "topology.kubernetes.io/zone",
+              "whenUnsatisfiable": "ScheduleAnyway"
+            }
+          ],
+          "volumes": [
+            {
+              "name": "kube-api-access-nrpdj",
+              "projected": {
+                "defaultMode": 420,
+                "sources": [
+                  {
+                    "serviceAccountToken": {
+                      "expirationSeconds": 3607,
+                      "path": "token"
+                    }
+                  },
+                  {
+                    "configMap": {
+                      "items": [
+                        {
+                          "key": "ca.crt",
+                          "path": "ca.crt"
+                        }
+                      ],
+                      "name": "kube-root-ca.crt"
+                    }
+                  },
+                  {
+                    "downwardAPI": {
+                      "items": [
+                        {
+                          "fieldRef": {
+                            "apiVersion": "v1",
+                            "fieldPath": "metadata.namespace"
+                          },
+                          "path": "namespace"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "status": {
+          "allocatedResources": {
+            "cpu": "200m",
+            "memory": "256Mi"
+          },
+          "conditions": [
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:08Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "PodReadyToStartContainers"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:03Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "Initialized"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:09Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "Ready"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:09Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "ContainersReady"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:04Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "PodScheduled"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "allocatedResources": {
+                "cpu": "200m",
+                "memory": "256Mi"
+              },
+              "containerID": "containerd://897a7677bfcc2f57b662af24e0470829e67dfb2f5abeb10e4c3434272e93752a",
+              "image": "registry.k8s.io/pause:3.10",
+              "imageID": "registry.k8s.io/pause@sha256:ee6521f290b2168b6e0935a181d4cff9be1ac3f505666ef0e3c98fae8199917a",
+              "lastState": {},
+              "name": "pause",
+              "ready": true,
+              "resources": {
+                "limits": {
+                  "memory": "256Mi"
+                },
+                "requests": {
+                  "cpu": "200m",
+                  "memory": "256Mi"
+                }
+              },
+              "restartCount": 0,
+              "started": true,
+              "state": {
+                "running": {
+                  "startedAt": "2026-10-21T17:16:09Z"
+                }
+              },
+              "user": {
+                "linux": {
+                  "gid": 0,
+                  "supplementalGroups": [
+                    0
+                  ],
+                  "uid": 65535
+                }
+              },
+              "volumeMounts": [
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-nrpdj",
+                  "readOnly": true,
+                  "recursiveReadOnly": "Disabled"
+                }
+              ]
+            }
+          ],
+          "hostIP": "192.168.22.239",
+          "hostIPs": [
+            {
+              "ip": "192.168.22.239"
+            }
+          ],
+          "observedGeneration": 1,
+          "phase": "Running",
+          "podIP": "192.168.22.144",
+          "podIPs": [
+            {
+              "ip": "192.168.22.144"
+            }
+          ],
+          "qosClass": "Burstable",
+          "resources": {
+            "limits": {
+              "memory": "256Mi"
+            },
+            "requests": {
+              "cpu": "200m",
+              "memory": "256Mi"
+            }
+          },
+          "startTime": "2026-10-21T17:16:03Z"
+        }
+      },
+      {
+        "apiVersion": "v1",
+        "kind": "Pod",
+        "metadata": {
+          "creationTimestamp": "2026-10-21T17:15:48Z",
+          "generateName": "inflate-6b9545f49b-",
+          "generation": 1,
+          "labels": {
+            "app": "inflate",
+            "pod-template-hash": "6b9545f49b",
+            "topology.kubernetes.io/region": "us-west-2",
+            "topology.kubernetes.io/zone": "us-west-2b"
+          },
+          "name": "inflate-6b9545f49b-pr5zd",
+          "namespace": "bench-automode",
+          "ownerReferences": [
+            {
+              "apiVersion": "apps/v1",
+              "blockOwnerDeletion": true,
+              "controller": true,
+              "kind": "ReplicaSet",
+              "name": "inflate-6b9545f49b",
+              "uid": "c727a851-5413-4f15-b31b-c7073cebf610"
+            }
+          ],
+          "resourceVersion": "50753",
+          "uid": "99119903-3974-49f8-94d6-4714de393364"
+        },
+        "spec": {
+          "containers": [
+            {
+              "image": "registry.k8s.io/pause:3.10",
+              "imagePullPolicy": "IfNotPresent",
+              "name": "pause",
+              "resources": {
+                "limits": {
+                  "memory": "256Mi"
+                },
+                "requests": {
+                  "cpu": "200m",
+                  "memory": "256Mi"
+                }
+              },
+              "terminationMessagePath": "/dev/termination-log",
+              "terminationMessagePolicy": "File",
+              "volumeMounts": [
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-6mfcz",
+                  "readOnly": true
+                }
+              ]
+            }
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "enableServiceLinks": true,
+          "nodeName": "i-094e6b20c9a1f641c",
+          "nodeSelector": {
+            "bench": "automode"
+          },
+          "preemptionPolicy": "PreemptLowerPriority",
+          "priority": 0,
+          "restartPolicy": "Always",
+          "schedulerName": "default-scheduler",
+          "securityContext": {},
+          "serviceAccount": "default",
+          "serviceAccountName": "default",
+          "terminationGracePeriodSeconds": 0,
+          "tolerations": [
+            {
+              "effect": "NoSchedule",
+              "key": "bench",
+              "operator": "Equal",
+              "value": "automode"
+            },
+            {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/not-ready",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+            },
+            {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/unreachable",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+            }
+          ],
+          "topologySpreadConstraints": [
+            {
+              "labelSelector": {
+                "matchLabels": {
+                  "app": "inflate"
+                }
+              },
+              "maxSkew": 1,
+              "topologyKey": "topology.kubernetes.io/zone",
+              "whenUnsatisfiable": "ScheduleAnyway"
+            }
+          ],
+          "volumes": [
+            {
+              "name": "kube-api-access-6mfcz",
+              "projected": {
+                "defaultMode": 420,
+                "sources": [
+                  {
+                    "serviceAccountToken": {
+                      "expirationSeconds": 3607,
+                      "path": "token"
+                    }
+                  },
+                  {
+                    "configMap": {
+                      "items": [
+                        {
+                          "key": "ca.crt",
+                          "path": "ca.crt"
+                        }
+                      ],
+                      "name": "kube-root-ca.crt"
+                    }
+                  },
+                  {
+                    "downwardAPI": {
+                      "items": [
+                        {
+                          "fieldRef": {
+                            "apiVersion": "v1",
+                            "fieldPath": "metadata.namespace"
+                          },
+                          "path": "namespace"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "status": {
+          "allocatedResources": {
+            "cpu": "200m",
+            "memory": "256Mi"
+          },
+          "conditions": [
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:08Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "PodReadyToStartContainers"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:03Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "Initialized"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:09Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "Ready"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:09Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "ContainersReady"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:04Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "PodScheduled"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "allocatedResources": {
+                "cpu": "200m",
+                "memory": "256Mi"
+              },
+              "containerID": "containerd://2c580fe3986e3cd7e87118986d37749552a0921bedfa01210589c7aa4276158e",
+              "image": "registry.k8s.io/pause:3.10",
+              "imageID": "registry.k8s.io/pause@sha256:ee6521f290b2168b6e0935a181d4cff9be1ac3f505666ef0e3c98fae8199917a",
+              "lastState": {},
+              "name": "pause",
+              "ready": true,
+              "resources": {
+                "limits": {
+                  "memory": "256Mi"
+                },
+                "requests": {
+                  "cpu": "200m",
+                  "memory": "256Mi"
+                }
+              },
+              "restartCount": 0,
+              "started": true,
+              "state": {
+                "running": {
+                  "startedAt": "2026-10-21T17:16:09Z"
+                }
+              },
+              "user": {
+                "linux": {
+                  "gid": 0,
+                  "supplementalGroups": [
+                    0
+                  ],
+                  "uid": 65535
+                }
+              },
+              "volumeMounts": [
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-6mfcz",
+                  "readOnly": true,
+                  "recursiveReadOnly": "Disabled"
+                }
+              ]
+            }
+          ],
+          "hostIP": "192.168.22.239",
+          "hostIPs": [
+            {
+              "ip": "192.168.22.239"
+            }
+          ],
+          "observedGeneration": 1,
+          "phase": "Running",
+          "podIP": "192.168.22.146",
+          "podIPs": [
+            {
+              "ip": "192.168.22.146"
+            }
+          ],
+          "qosClass": "Burstable",
+          "resources": {
+            "limits": {
+              "memory": "256Mi"
+            },
+            "requests": {
+              "cpu": "200m",
+              "memory": "256Mi"
+            }
+          },
+          "startTime": "2026-10-21T17:16:03Z"
+        }
+      },
+      {
+        "apiVersion": "v1",
+        "kind": "Pod",
+        "metadata": {
+          "creationTimestamp": "2026-10-21T17:15:48Z",
+          "generateName": "inflate-6b9545f49b-",
+          "generation": 1,
+          "labels": {
+            "app": "inflate",
+            "pod-template-hash": "6b9545f49b",
+            "topology.kubernetes.io/region": "us-west-2",
+            "topology.kubernetes.io/zone": "us-west-2b"
+          },
+          "name": "inflate-6b9545f49b-slnrg",
+          "namespace": "bench-automode",
+          "ownerReferences": [
+            {
+              "apiVersion": "apps/v1",
+              "blockOwnerDeletion": true,
+              "controller": true,
+              "kind": "ReplicaSet",
+              "name": "inflate-6b9545f49b",
+              "uid": "c727a851-5413-4f15-b31b-c7073cebf610"
+            }
+          ],
+          "resourceVersion": "50736",
+          "uid": "25787d70-9690-4508-821c-4aecbb1a2540"
+        },
+        "spec": {
+          "containers": [
+            {
+              "image": "registry.k8s.io/pause:3.10",
+              "imagePullPolicy": "IfNotPresent",
+              "name": "pause",
+              "resources": {
+                "limits": {
+                  "memory": "256Mi"
+                },
+                "requests": {
+                  "cpu": "200m",
+                  "memory": "256Mi"
+                }
+              },
+              "terminationMessagePath": "/dev/termination-log",
+              "terminationMessagePolicy": "File",
+              "volumeMounts": [
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-976d9",
+                  "readOnly": true
+                }
+              ]
+            }
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "enableServiceLinks": true,
+          "nodeName": "i-094e6b20c9a1f641c",
+          "nodeSelector": {
+            "bench": "automode"
+          },
+          "preemptionPolicy": "PreemptLowerPriority",
+          "priority": 0,
+          "restartPolicy": "Always",
+          "schedulerName": "default-scheduler",
+          "securityContext": {},
+          "serviceAccount": "default",
+          "serviceAccountName": "default",
+          "terminationGracePeriodSeconds": 0,
+          "tolerations": [
+            {
+              "effect": "NoSchedule",
+              "key": "bench",
+              "operator": "Equal",
+              "value": "automode"
+            },
+            {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/not-ready",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+            },
+            {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/unreachable",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+            }
+          ],
+          "topologySpreadConstraints": [
+            {
+              "labelSelector": {
+                "matchLabels": {
+                  "app": "inflate"
+                }
+              },
+              "maxSkew": 1,
+              "topologyKey": "topology.kubernetes.io/zone",
+              "whenUnsatisfiable": "ScheduleAnyway"
+            }
+          ],
+          "volumes": [
+            {
+              "name": "kube-api-access-976d9",
+              "projected": {
+                "defaultMode": 420,
+                "sources": [
+                  {
+                    "serviceAccountToken": {
+                      "expirationSeconds": 3607,
+                      "path": "token"
+                    }
+                  },
+                  {
+                    "configMap": {
+                      "items": [
+                        {
+                          "key": "ca.crt",
+                          "path": "ca.crt"
+                        }
+                      ],
+                      "name": "kube-root-ca.crt"
+                    }
+                  },
+                  {
+                    "downwardAPI": {
+                      "items": [
+                        {
+                          "fieldRef": {
+                            "apiVersion": "v1",
+                            "fieldPath": "metadata.namespace"
+                          },
+                          "path": "namespace"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "status": {
+          "allocatedResources": {
+            "cpu": "200m",
+            "memory": "256Mi"
+          },
+          "conditions": [
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:08Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "PodReadyToStartContainers"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:03Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "Initialized"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:09Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "Ready"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:09Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "ContainersReady"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:04Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "PodScheduled"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "allocatedResources": {
+                "cpu": "200m",
+                "memory": "256Mi"
+              },
+              "containerID": "containerd://9a15dfe2187821a6cbd9b4ac03ceeb30a27cd17f9e6d112ceae034f21f4eb516",
+              "image": "registry.k8s.io/pause:3.10",
+              "imageID": "registry.k8s.io/pause@sha256:ee6521f290b2168b6e0935a181d4cff9be1ac3f505666ef0e3c98fae8199917a",
+              "lastState": {},
+              "name": "pause",
+              "ready": true,
+              "resources": {
+                "limits": {
+                  "memory": "256Mi"
+                },
+                "requests": {
+                  "cpu": "200m",
+                  "memory": "256Mi"
+                }
+              },
+              "restartCount": 0,
+              "started": true,
+              "state": {
+                "running": {
+                  "startedAt": "2026-10-21T17:16:09Z"
+                }
+              },
+              "user": {
+                "linux": {
+                  "gid": 0,
+                  "supplementalGroups": [
+                    0
+                  ],
+                  "uid": 65535
+                }
+              },
+              "volumeMounts": [
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-976d9",
+                  "readOnly": true,
+                  "recursiveReadOnly": "Disabled"
+                }
+              ]
+            }
+          ],
+          "hostIP": "192.168.22.239",
+          "hostIPs": [
+            {
+              "ip": "192.168.22.239"
+            }
+          ],
+          "observedGeneration": 1,
+          "phase": "Running",
+          "podIP": "192.168.22.151",
+          "podIPs": [
+            {
+              "ip": "192.168.22.151"
+            }
+          ],
+          "qosClass": "Burstable",
+          "resources": {
+            "limits": {
+              "memory": "256Mi"
+            },
+            "requests": {
+              "cpu": "200m",
+              "memory": "256Mi"
+            }
+          },
+          "startTime": "2026-10-21T17:16:03Z"
+        }
+      },
+      {
+        "apiVersion": "v1",
+        "kind": "Pod",
+        "metadata": {
+          "creationTimestamp": "2026-10-21T17:15:48Z",
+          "generateName": "inflate-6b9545f49b-",
+          "generation": 1,
+          "labels": {
+            "app": "inflate",
+            "pod-template-hash": "6b9545f49b",
+            "topology.kubernetes.io/region": "us-west-2",
+            "topology.kubernetes.io/zone": "us-west-2a"
+          },
+          "name": "inflate-6b9545f49b-tb8jm",
+          "namespace": "bench-automode",
+          "ownerReferences": [
+            {
+              "apiVersion": "apps/v1",
+              "blockOwnerDeletion": true,
+              "controller": true,
+              "kind": "ReplicaSet",
+              "name": "inflate-6b9545f49b",
+              "uid": "c727a851-5413-4f15-b31b-c7073cebf610"
+            }
+          ],
+          "resourceVersion": "50870",
+          "uid": "b9d93bd9-1710-4a8d-9396-a7c7453d2a7e"
+        },
+        "spec": {
+          "containers": [
+            {
+              "image": "registry.k8s.io/pause:3.10",
+              "imagePullPolicy": "IfNotPresent",
+              "name": "pause",
+              "resources": {
+                "limits": {
+                  "memory": "256Mi"
+                },
+                "requests": {
+                  "cpu": "200m",
+                  "memory": "256Mi"
+                }
+              },
+              "terminationMessagePath": "/dev/termination-log",
+              "terminationMessagePolicy": "File",
+              "volumeMounts": [
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-sxq6j",
+                  "readOnly": true
+                }
+              ]
+            }
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "enableServiceLinks": true,
+          "nodeName": "i-0ca6bf310e9c5aaf9",
+          "nodeSelector": {
+            "bench": "automode"
+          },
+          "preemptionPolicy": "PreemptLowerPriority",
+          "priority": 0,
+          "restartPolicy": "Always",
+          "schedulerName": "default-scheduler",
+          "securityContext": {},
+          "serviceAccount": "default",
+          "serviceAccountName": "default",
+          "terminationGracePeriodSeconds": 0,
+          "tolerations": [
+            {
+              "effect": "NoSchedule",
+              "key": "bench",
+              "operator": "Equal",
+              "value": "automode"
+            },
+            {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/not-ready",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+            },
+            {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/unreachable",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+            }
+          ],
+          "topologySpreadConstraints": [
+            {
+              "labelSelector": {
+                "matchLabels": {
+                  "app": "inflate"
+                }
+              },
+              "maxSkew": 1,
+              "topologyKey": "topology.kubernetes.io/zone",
+              "whenUnsatisfiable": "ScheduleAnyway"
+            }
+          ],
+          "volumes": [
+            {
+              "name": "kube-api-access-sxq6j",
+              "projected": {
+                "defaultMode": 420,
+                "sources": [
+                  {
+                    "serviceAccountToken": {
+                      "expirationSeconds": 3607,
+                      "path": "token"
+                    }
+                  },
+                  {
+                    "configMap": {
+                      "items": [
+                        {
+                          "key": "ca.crt",
+                          "path": "ca.crt"
+                        }
+                      ],
+                      "name": "kube-root-ca.crt"
+                    }
+                  },
+                  {
+                    "downwardAPI": {
+                      "items": [
+                        {
+                          "fieldRef": {
+                            "apiVersion": "v1",
+                            "fieldPath": "metadata.namespace"
+                          },
+                          "path": "namespace"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "status": {
+          "allocatedResources": {
+            "cpu": "200m",
+            "memory": "256Mi"
+          },
+          "conditions": [
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:15Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "PodReadyToStartContainers"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:10Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "Initialized"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:16Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "Ready"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:16Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "ContainersReady"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:10Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "PodScheduled"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "allocatedResources": {
+                "cpu": "200m",
+                "memory": "256Mi"
+              },
+              "containerID": "containerd://64385a29ebe4dbecb17b0ce1ac7541762fe616baef4d5e73d5da05d0a5ee367e",
+              "image": "registry.k8s.io/pause:3.10",
+              "imageID": "registry.k8s.io/pause@sha256:ee6521f290b2168b6e0935a181d4cff9be1ac3f505666ef0e3c98fae8199917a",
+              "lastState": {},
+              "name": "pause",
+              "ready": true,
+              "resources": {
+                "limits": {
+                  "memory": "256Mi"
+                },
+                "requests": {
+                  "cpu": "200m",
+                  "memory": "256Mi"
+                }
+              },
+              "restartCount": 0,
+              "started": true,
+              "state": {
+                "running": {
+                  "startedAt": "2026-10-21T17:16:16Z"
+                }
+              },
+              "user": {
+                "linux": {
+                  "gid": 0,
+                  "supplementalGroups": [
+                    0
+                  ],
+                  "uid": 65535
+                }
+              },
+              "volumeMounts": [
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-sxq6j",
+                  "readOnly": true,
+                  "recursiveReadOnly": "Disabled"
+                }
+              ]
+            }
+          ],
+          "hostIP": "192.168.17.65",
+          "hostIPs": [
+            {
+              "ip": "192.168.17.65"
+            }
+          ],
+          "observedGeneration": 1,
+          "phase": "Running",
+          "podIP": "192.168.16.66",
+          "podIPs": [
+            {
+              "ip": "192.168.16.66"
+            }
+          ],
+          "qosClass": "Burstable",
+          "resources": {
+            "limits": {
+              "memory": "256Mi"
+            },
+            "requests": {
+              "cpu": "200m",
+              "memory": "256Mi"
+            }
+          },
+          "startTime": "2026-10-21T17:16:10Z"
+        }
+      },
+      {
+        "apiVersion": "v1",
+        "kind": "Pod",
+        "metadata": {
+          "creationTimestamp": "2026-10-21T17:15:48Z",
+          "generateName": "inflate-6b9545f49b-",
+          "generation": 1,
+          "labels": {
+            "app": "inflate",
+            "pod-template-hash": "6b9545f49b",
+            "topology.kubernetes.io/region": "us-west-2",
+            "topology.kubernetes.io/zone": "us-west-2b"
+          },
+          "name": "inflate-6b9545f49b-v7dvk",
+          "namespace": "bench-automode",
+          "ownerReferences": [
+            {
+              "apiVersion": "apps/v1",
+              "blockOwnerDeletion": true,
+              "controller": true,
+              "kind": "ReplicaSet",
+              "name": "inflate-6b9545f49b",
+              "uid": "c727a851-5413-4f15-b31b-c7073cebf610"
+            }
+          ],
+          "resourceVersion": "50757",
+          "uid": "1ac9c33c-e3a5-42ed-ab81-83c669a87286"
+        },
+        "spec": {
+          "containers": [
+            {
+              "image": "registry.k8s.io/pause:3.10",
+              "imagePullPolicy": "IfNotPresent",
+              "name": "pause",
+              "resources": {
+                "limits": {
+                  "memory": "256Mi"
+                },
+                "requests": {
+                  "cpu": "200m",
+                  "memory": "256Mi"
+                }
+              },
+              "terminationMessagePath": "/dev/termination-log",
+              "terminationMessagePolicy": "File",
+              "volumeMounts": [
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-d599x",
+                  "readOnly": true
+                }
+              ]
+            }
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "enableServiceLinks": true,
+          "nodeName": "i-094e6b20c9a1f641c",
+          "nodeSelector": {
+            "bench": "automode"
+          },
+          "preemptionPolicy": "PreemptLowerPriority",
+          "priority": 0,
+          "restartPolicy": "Always",
+          "schedulerName": "default-scheduler",
+          "securityContext": {},
+          "serviceAccount": "default",
+          "serviceAccountName": "default",
+          "terminationGracePeriodSeconds": 0,
+          "tolerations": [
+            {
+              "effect": "NoSchedule",
+              "key": "bench",
+              "operator": "Equal",
+              "value": "automode"
+            },
+            {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/not-ready",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+            },
+            {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/unreachable",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+            }
+          ],
+          "topologySpreadConstraints": [
+            {
+              "labelSelector": {
+                "matchLabels": {
+                  "app": "inflate"
+                }
+              },
+              "maxSkew": 1,
+              "topologyKey": "topology.kubernetes.io/zone",
+              "whenUnsatisfiable": "ScheduleAnyway"
+            }
+          ],
+          "volumes": [
+            {
+              "name": "kube-api-access-d599x",
+              "projected": {
+                "defaultMode": 420,
+                "sources": [
+                  {
+                    "serviceAccountToken": {
+                      "expirationSeconds": 3607,
+                      "path": "token"
+                    }
+                  },
+                  {
+                    "configMap": {
+                      "items": [
+                        {
+                          "key": "ca.crt",
+                          "path": "ca.crt"
+                        }
+                      ],
+                      "name": "kube-root-ca.crt"
+                    }
+                  },
+                  {
+                    "downwardAPI": {
+                      "items": [
+                        {
+                          "fieldRef": {
+                            "apiVersion": "v1",
+                            "fieldPath": "metadata.namespace"
+                          },
+                          "path": "namespace"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "status": {
+          "allocatedResources": {
+            "cpu": "200m",
+            "memory": "256Mi"
+          },
+          "conditions": [
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:08Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "PodReadyToStartContainers"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:03Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "Initialized"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:09Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "Ready"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:09Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "ContainersReady"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:04Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "PodScheduled"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "allocatedResources": {
+                "cpu": "200m",
+                "memory": "256Mi"
+              },
+              "containerID": "containerd://f3aa19f15046b44d0f448718dea4251720f0e087f7d6633579ecd7bba245cfd9",
+              "image": "registry.k8s.io/pause:3.10",
+              "imageID": "registry.k8s.io/pause@sha256:ee6521f290b2168b6e0935a181d4cff9be1ac3f505666ef0e3c98fae8199917a",
+              "lastState": {},
+              "name": "pause",
+              "ready": true,
+              "resources": {
+                "limits": {
+                  "memory": "256Mi"
+                },
+                "requests": {
+                  "cpu": "200m",
+                  "memory": "256Mi"
+                }
+              },
+              "restartCount": 0,
+              "started": true,
+              "state": {
+                "running": {
+                  "startedAt": "2026-10-21T17:16:09Z"
+                }
+              },
+              "user": {
+                "linux": {
+                  "gid": 0,
+                  "supplementalGroups": [
+                    0
+                  ],
+                  "uid": 65535
+                }
+              },
+              "volumeMounts": [
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-d599x",
+                  "readOnly": true,
+                  "recursiveReadOnly": "Disabled"
+                }
+              ]
+            }
+          ],
+          "hostIP": "192.168.22.239",
+          "hostIPs": [
+            {
+              "ip": "192.168.22.239"
+            }
+          ],
+          "observedGeneration": 1,
+          "phase": "Running",
+          "podIP": "192.168.22.145",
+          "podIPs": [
+            {
+              "ip": "192.168.22.145"
+            }
+          ],
+          "qosClass": "Burstable",
+          "resources": {
+            "limits": {
+              "memory": "256Mi"
+            },
+            "requests": {
+              "cpu": "200m",
+              "memory": "256Mi"
+            }
+          },
+          "startTime": "2026-10-21T17:16:03Z"
+        }
+      },
+      {
+        "apiVersion": "v1",
+        "kind": "Pod",
+        "metadata": {
+          "creationTimestamp": "2026-10-21T17:15:48Z",
+          "generateName": "inflate-6b9545f49b-",
+          "generation": 1,
+          "labels": {
+            "app": "inflate",
+            "pod-template-hash": "6b9545f49b",
+            "topology.kubernetes.io/region": "us-west-2",
+            "topology.kubernetes.io/zone": "us-west-2b"
+          },
+          "name": "inflate-6b9545f49b-zphnz",
+          "namespace": "bench-automode",
+          "ownerReferences": [
+            {
+              "apiVersion": "apps/v1",
+              "blockOwnerDeletion": true,
+              "controller": true,
+              "kind": "ReplicaSet",
+              "name": "inflate-6b9545f49b",
+              "uid": "c727a851-5413-4f15-b31b-c7073cebf610"
+            }
+          ],
+          "resourceVersion": "50741",
+          "uid": "c33cf2d9-cf73-45e2-bbad-a6d594f38287"
+        },
+        "spec": {
+          "containers": [
+            {
+              "image": "registry.k8s.io/pause:3.10",
+              "imagePullPolicy": "IfNotPresent",
+              "name": "pause",
+              "resources": {
+                "limits": {
+                  "memory": "256Mi"
+                },
+                "requests": {
+                  "cpu": "200m",
+                  "memory": "256Mi"
+                }
+              },
+              "terminationMessagePath": "/dev/termination-log",
+              "terminationMessagePolicy": "File",
+              "volumeMounts": [
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-7q4lx",
+                  "readOnly": true
+                }
+              ]
+            }
+          ],
+          "dnsPolicy": "ClusterFirst",
+          "enableServiceLinks": true,
+          "nodeName": "i-094e6b20c9a1f641c",
+          "nodeSelector": {
+            "bench": "automode"
+          },
+          "preemptionPolicy": "PreemptLowerPriority",
+          "priority": 0,
+          "restartPolicy": "Always",
+          "schedulerName": "default-scheduler",
+          "securityContext": {},
+          "serviceAccount": "default",
+          "serviceAccountName": "default",
+          "terminationGracePeriodSeconds": 0,
+          "tolerations": [
+            {
+              "effect": "NoSchedule",
+              "key": "bench",
+              "operator": "Equal",
+              "value": "automode"
+            },
+            {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/not-ready",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+            },
+            {
+              "effect": "NoExecute",
+              "key": "node.kubernetes.io/unreachable",
+              "operator": "Exists",
+              "tolerationSeconds": 300
+            }
+          ],
+          "topologySpreadConstraints": [
+            {
+              "labelSelector": {
+                "matchLabels": {
+                  "app": "inflate"
+                }
+              },
+              "maxSkew": 1,
+              "topologyKey": "topology.kubernetes.io/zone",
+              "whenUnsatisfiable": "ScheduleAnyway"
+            }
+          ],
+          "volumes": [
+            {
+              "name": "kube-api-access-7q4lx",
+              "projected": {
+                "defaultMode": 420,
+                "sources": [
+                  {
+                    "serviceAccountToken": {
+                      "expirationSeconds": 3607,
+                      "path": "token"
+                    }
+                  },
+                  {
+                    "configMap": {
+                      "items": [
+                        {
+                          "key": "ca.crt",
+                          "path": "ca.crt"
+                        }
+                      ],
+                      "name": "kube-root-ca.crt"
+                    }
+                  },
+                  {
+                    "downwardAPI": {
+                      "items": [
+                        {
+                          "fieldRef": {
+                            "apiVersion": "v1",
+                            "fieldPath": "metadata.namespace"
+                          },
+                          "path": "namespace"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "status": {
+          "allocatedResources": {
+            "cpu": "200m",
+            "memory": "256Mi"
+          },
+          "conditions": [
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:08Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "PodReadyToStartContainers"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:03Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "Initialized"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:09Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "Ready"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:09Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "ContainersReady"
+            },
+            {
+              "lastProbeTime": null,
+              "lastTransitionTime": "2026-10-21T17:16:04Z",
+              "observedGeneration": 1,
+              "status": "True",
+              "type": "PodScheduled"
+            }
+          ],
+          "containerStatuses": [
+            {
+              "allocatedResources": {
+                "cpu": "200m",
+                "memory": "256Mi"
+              },
+              "containerID": "containerd://4dfc2263de4114107ab85ac144e879ec81cb4768cde66e02bd40286ffb52bdf3",
+              "image": "registry.k8s.io/pause:3.10",
+              "imageID": "registry.k8s.io/pause@sha256:ee6521f290b2168b6e0935a181d4cff9be1ac3f505666ef0e3c98fae8199917a",
+              "lastState": {},
+              "name": "pause",
+              "ready": true,
+              "resources": {
+                "limits": {
+                  "memory": "256Mi"
+                },
+                "requests": {
+                  "cpu": "200m",
+                  "memory": "256Mi"
+                }
+              },
+              "restartCount": 0,
+              "started": true,
+              "state": {
+                "running": {
+                  "startedAt": "2026-10-21T17:16:09Z"
+                }
+              },
+              "user": {
+                "linux": {
+                  "gid": 0,
+                  "supplementalGroups": [
+                    0
+                  ],
+                  "uid": 65535
+                }
+              },
+              "volumeMounts": [
+                {
+                  "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                  "name": "kube-api-access-7q4lx",
+                  "readOnly": true,
+                  "recursiveReadOnly": "Disabled"
+                }
+              ]
+            }
+          ],
+          "hostIP": "192.168.22.239",
+          "hostIPs": [
+            {
+              "ip": "192.168.22.239"
+            }
+          ],
+          "observedGeneration": 1,
+          "phase": "Running",
+          "podIP": "192.168.22.148",
+          "podIPs": [
+            {
+              "ip": "192.168.22.148"
+            }
+          ],
+          "qosClass": "Burstable",
+          "resources": {
+            "limits": {
+              "memory": "256Mi"
+            },
+            "requests": {
+              "cpu": "200m",
+              "memory": "256Mi"
+            }
+          },
+          "startTime": "2026-10-21T17:16:03Z"
+        }
+      }
+    ],
+    "kind": "List",
+    "metadata": {
+      "resourceVersion": ""
+    }
+  },
+  "nodes": {
+    "apiVersion": "v1",
+    "items": [
+      {
+        "apiVersion": "v1",
+        "kind": "Node",
+        "metadata": {
+          "annotations": {
+            "alpha.kubernetes.io/provided-node-ip": "192.168.22.239",
+            "csi.volume.kubernetes.io/nodeid": "{\"ebs.csi.eks.amazonaws.com\":\"i-094e6b20c9a1f641c\"}",
+            "eks.amazonaws.com/ca-bundle-hash": "10264614815243784651",
+            "eks.amazonaws.com/kubelet-version": "1.36",
+            "eks.amazonaws.com/nodeclass-hash": "17638971277352118168",
+            "eks.amazonaws.com/nodeclass-hash-version": "v2",
+            "karpenter.sh/nodeclaim-min-values-relaxed": "false",
+            "karpenter.sh/nodepool-hash": "16807303028649523644",
+            "karpenter.sh/nodepool-hash-version": "v3",
+            "node.alpha.kubernetes.io/ttl": "0",
+            "volumes.kubernetes.io/controller-managed-attach-detach": "true"
+          },
+          "creationTimestamp": "2026-10-21T17:16:03Z",
+          "finalizers": [
+            "karpenter.sh/termination"
+          ],
+          "labels": {
+            "app.kubernetes.io/managed-by": "eks",
+            "bench": "automode",
+            "beta.kubernetes.io/arch": "amd64",
+            "beta.kubernetes.io/instance-type": "c6a.large",
+            "beta.kubernetes.io/os": "linux",
+            "eks.amazonaws.com/compute-type": "auto",
+            "eks.amazonaws.com/instance-capability-flex": "false",
+            "eks.amazonaws.com/instance-category": "c",
+            "eks.amazonaws.com/instance-cpu": "2",
+            "eks.amazonaws.com/instance-cpu-manufacturer": "amd",
+            "eks.amazonaws.com/instance-cpu-sustained-clock-speed-mhz": "3600",
+            "eks.amazonaws.com/instance-ebs-bandwidth": "10000",
+            "eks.amazonaws.com/instance-encryption-in-transit-supported": "true",
+            "eks.amazonaws.com/instance-family": "c6a",
+            "eks.amazonaws.com/instance-generation": "6",
+            "eks.amazonaws.com/instance-hypervisor": "nitro",
+            "eks.amazonaws.com/instance-memory": "4096",
+            "eks.amazonaws.com/instance-min-cpus-per-numa": "2",
+            "eks.amazonaws.com/instance-min-memory-per-numa": "3768",
+            "eks.amazonaws.com/instance-network-bandwidth": "781",
+            "eks.amazonaws.com/instance-numa-nodes": "1",
+            "eks.amazonaws.com/instance-size": "large",
+            "eks.amazonaws.com/nitro-sandbox": "false",
+            "eks.amazonaws.com/nodeclass": "bench",
+            "failure-domain.beta.kubernetes.io/region": "us-west-2",
+            "failure-domain.beta.kubernetes.io/zone": "us-west-2b",
+            "k8s.io/cloud-provider-aws": "5b5006b9653eeeb19a5125f8b6acbdb4",
+            "karpenter.k8s.aws/instance-tenancy": "default",
+            "karpenter.sh/capacity-type": "on-demand",
+            "karpenter.sh/do-not-sync-taints": "true",
+            "karpenter.sh/initialized": "true",
+            "karpenter.sh/nodepool": "bench-automode",
+            "karpenter.sh/registered": "true",
+            "kubernetes.io/arch": "amd64",
+            "kubernetes.io/hostname": "i-094e6b20c9a1f641c",
+            "kubernetes.io/os": "linux",
+            "node.kubernetes.io/instance-type": "c6a.large",
+            "topology.ebs.csi.eks.amazonaws.com/zone": "us-west-2b",
+            "topology.k8s.aws/zone-id": "usw2-az2",
+            "topology.kubernetes.io/region": "us-west-2",
+            "topology.kubernetes.io/zone": "us-west-2b"
+          },
+          "name": "i-094e6b20c9a1f641c",
+          "ownerReferences": [
+            {
+              "apiVersion": "karpenter.sh/v1",
+              "blockOwnerDeletion": true,
+              "kind": "NodeClaim",
+              "name": "bench-automode-ncq4b",
+              "uid": "6ada04d5-14e1-44f9-9e94-64c0e9a3ffca"
+            }
+          ],
+          "resourceVersion": "50912",
+          "uid": "e5403778-bd44-4841-866b-436d0f641b04"
+        },
+        "spec": {
+          "providerID": "aws:///us-west-2b/i-094e6b20c9a1f641c",
+          "taints": [
+            {
+              "effect": "NoSchedule",
+              "key": "bench",
+              "value": "automode"
+            }
+          ]
+        },
+        "status": {
+          "addresses": [
+            {
+              "address": "192.168.22.239",
+              "type": "InternalIP"
+            },
+            {
+              "address": "ip-192-168-22-239.us-west-2.compute.internal",
+              "type": "InternalDNS"
+            },
+            {
+              "address": "ip-192-168-22-239.us-west-2.compute.internal",
+              "type": "Hostname"
+            }
+          ],
+          "allocatable": {
+            "cpu": "1780m",
+            "ephemeral-storage": "76173383962",
+            "hugepages-1Gi": "0",
+            "hugepages-2Mi": "0",
+            "memory": "3138172Ki",
+            "pods": "27"
+          },
+          "capacity": {
+            "cpu": "2",
+            "ephemeral-storage": "81854Mi",
+            "hugepages-1Gi": "0",
+            "hugepages-2Mi": "0",
+            "memory": "3882620Ki",
+            "pods": "27"
+          },
+          "conditions": [
+            {
+              "lastHeartbeatTime": "2026-10-21T17:16:03Z",
+              "lastTransitionTime": "2026-10-21T17:16:01Z",
+              "message": "kubelet has sufficient memory available",
+              "reason": "KubeletHasSufficientMemory",
+              "status": "False",
+              "type": "MemoryPressure"
+            },
+            {
+              "lastHeartbeatTime": "2026-10-21T17:16:03Z",
+              "lastTransitionTime": "2026-10-21T17:16:01Z",
+              "message": "kubelet has no disk pressure",
+              "reason": "KubeletHasNoDiskPressure",
+              "status": "False",
+              "type": "DiskPressure"
+            },
+            {
+              "lastHeartbeatTime": "2026-10-21T17:16:03Z",
+              "lastTransitionTime": "2026-10-21T17:16:01Z",
+              "message": "kubelet has sufficient PID available",
+              "reason": "KubeletHasSufficientPID",
+              "status": "False",
+              "type": "PIDPressure"
+            },
+            {
+              "lastHeartbeatTime": "2026-10-21T17:16:03Z",
+              "lastTransitionTime": "2026-10-21T17:16:03Z",
+              "message": "kubelet is posting ready status",
+              "reason": "KubeletReady",
+              "status": "True",
+              "type": "Ready"
+            },
+            {
+              "lastHeartbeatTime": "2026-10-21T17:16:02Z",
+              "lastTransitionTime": "2026-10-21T17:16:02Z",
+              "message": "Monitoring for the Kernel system is active",
+              "reason": "KernelIsReady",
+              "status": "True",
+              "type": "KernelReady"
+            },
+            {
+              "lastHeartbeatTime": "2026-10-21T17:16:02Z",
+              "lastTransitionTime": "2026-10-21T17:16:02Z",
+              "message": "Monitoring for the Disk system is active",
+              "reason": "DiskIsReady",
+              "status": "True",
+              "type": "StorageReady"
+            },
+            {
+              "lastHeartbeatTime": "2026-10-21T17:16:02Z",
+              "lastTransitionTime": "2026-10-21T17:16:02Z",
+              "message": "Monitoring for the ContainerRuntime system is active",
+              "reason": "ContainerRuntimeIsReady",
+              "status": "True",
+              "type": "ContainerRuntimeReady"
+            },
+            {
+              "lastHeartbeatTime": "2026-10-21T17:16:02Z",
+              "lastTransitionTime": "2026-10-21T17:16:02Z",
+              "message": "Monitoring for the Networking system is active",
+              "reason": "NetworkingIsReady",
+              "status": "True",
+              "type": "NetworkingReady"
+            }
+          ],
+          "daemonEndpoints": {
+            "kubeletEndpoint": {
+              "Port": 10250
+            }
+          },
+          "declaredFeatures": [
+            "ExtendWebSocketsToKubelet",
+            "InPlacePodLevelResourcesVerticalScaling",
+            "InPlacePodVerticalScalingInitContainers",
+            "RestartAllContainersOnContainerExits"
+          ],
+          "features": {
+            "supplementalGroupsPolicy": true
+          },
+          "images": [
+            {
+              "names": [
+                "localhost/kubernetes/pause:0.1.0"
+              ],
+              "sizeBytes": 92951
+            }
+          ],
+          "nodeInfo": {
+            "architecture": "amd64",
+            "bootID": "ea9e1a0b-22e0-4c64-95bb-884a0ffcf39d",
+            "containerRuntimeVersion": "containerd://2.2.9+bottlerocket",
+            "kernelVersion": "6.18.51",
+            "kubeProxyVersion": "",
+            "kubeletVersion": "v1.36.2-eks-bca9cf6",
+            "machineID": "ec2a004ba8d52eb66c343727aa2730a7",
+            "operatingSystem": "linux",
+            "osImage": "Bottlerocket (EKS Auto, Standard) 2026.10.9 (aws-k8s-1.36-standard)",
+            "swap": {
+              "capacity": 1073737728
+            },
+            "systemUUID": "ec2a004b-a8d5-2eb6-6c34-3727aa2730a7"
+          },
+          "runtimeHandlers": [
+            {
+              "features": {
+                "recursiveReadOnlyMounts": true,
+                "userNamespaces": true
+              },
+              "name": ""
+            },
+            {
+              "features": {
+                "recursiveReadOnlyMounts": false,
+                "userNamespaces": false
+              },
+              "name": "confidential-sandbox"
+            },
+            {
+              "features": {
+                "recursiveReadOnlyMounts": false,
+                "userNamespaces": false
+              },
+              "name": "isolated-sandbox"
+            },
+            {
+              "features": {
+                "recursiveReadOnlyMounts": true,
+                "userNamespaces": true
+              },
+              "name": "runc"
+            }
+          ]
+        }
+      },
+      {
+        "apiVersion": "v1",
+        "kind": "Node",
+        "metadata": {
+          "annotations": {
+            "alpha.kubernetes.io/provided-node-ip": "192.168.17.65",
+            "csi.volume.kubernetes.io/nodeid": "{\"ebs.csi.eks.amazonaws.com\":\"i-0ca6bf310e9c5aaf9\"}",
+            "eks.amazonaws.com/ca-bundle-hash": "10264614815243784651",
+            "eks.amazonaws.com/kubelet-version": "1.36",
+            "eks.amazonaws.com/nodeclass-hash": "17638971277352118168",
+            "eks.amazonaws.com/nodeclass-hash-version": "v2",
+            "karpenter.sh/nodeclaim-min-values-relaxed": "false",
+            "karpenter.sh/nodepool-hash": "16807303028649523644",
+            "karpenter.sh/nodepool-hash-version": "v3",
+            "node.alpha.kubernetes.io/ttl": "0",
+            "volumes.kubernetes.io/controller-managed-attach-detach": "true"
+          },
+          "creationTimestamp": "2026-10-21T17:16:08Z",
+          "finalizers": [
+            "karpenter.sh/termination"
+          ],
+          "labels": {
+            "app.kubernetes.io/managed-by": "eks",
+            "bench": "automode",
+            "beta.kubernetes.io/arch": "amd64",
+            "beta.kubernetes.io/instance-type": "c6a.large",
+            "beta.kubernetes.io/os": "linux",
+            "eks.amazonaws.com/compute-type": "auto",
+            "eks.amazonaws.com/instance-capability-flex": "false",
+            "eks.amazonaws.com/instance-category": "c",
+            "eks.amazonaws.com/instance-cpu": "2",
+            "eks.amazonaws.com/instance-cpu-manufacturer": "amd",
+            "eks.amazonaws.com/instance-cpu-sustained-clock-speed-mhz": "3600",
+            "eks.amazonaws.com/instance-ebs-bandwidth": "10000",
+            "eks.amazonaws.com/instance-encryption-in-transit-supported": "true",
+            "eks.amazonaws.com/instance-family": "c6a",
+            "eks.amazonaws.com/instance-generation": "6",
+            "eks.amazonaws.com/instance-hypervisor": "nitro",
+            "eks.amazonaws.com/instance-memory": "4096",
+            "eks.amazonaws.com/instance-min-cpus-per-numa": "2",
+            "eks.amazonaws.com/instance-min-memory-per-numa": "3768",
+            "eks.amazonaws.com/instance-network-bandwidth": "781",
+            "eks.amazonaws.com/instance-numa-nodes": "1",
+            "eks.amazonaws.com/instance-size": "large",
+            "eks.amazonaws.com/nitro-sandbox": "false",
+            "eks.amazonaws.com/nodeclass": "bench",
+            "failure-domain.beta.kubernetes.io/region": "us-west-2",
+            "failure-domain.beta.kubernetes.io/zone": "us-west-2a",
+            "k8s.io/cloud-provider-aws": "5b5006b9653eeeb19a5125f8b6acbdb4",
+            "karpenter.k8s.aws/instance-tenancy": "default",
+            "karpenter.sh/capacity-type": "on-demand",
+            "karpenter.sh/do-not-sync-taints": "true",
+            "karpenter.sh/initialized": "true",
+            "karpenter.sh/nodepool": "bench-automode",
+            "karpenter.sh/registered": "true",
+            "kubernetes.io/arch": "amd64",
+            "kubernetes.io/hostname": "i-0ca6bf310e9c5aaf9",
+            "kubernetes.io/os": "linux",
+            "node.kubernetes.io/instance-type": "c6a.large",
+            "topology.ebs.csi.eks.amazonaws.com/zone": "us-west-2a",
+            "topology.k8s.aws/zone-id": "usw2-az1",
+            "topology.kubernetes.io/region": "us-west-2",
+            "topology.kubernetes.io/zone": "us-west-2a"
+          },
+          "name": "i-0ca6bf310e9c5aaf9",
+          "ownerReferences": [
+            {
+              "apiVersion": "karpenter.sh/v1",
+              "blockOwnerDeletion": true,
+              "kind": "NodeClaim",
+              "name": "bench-automode-qts7k",
+              "uid": "9272895c-5d25-4023-bec6-527c1fed51ef"
+            }
+          ],
+          "resourceVersion": "50802",
+          "uid": "0cb0d880-321c-4b72-b504-223ab9d478a7"
+        },
+        "spec": {
+          "providerID": "aws:///us-west-2a/i-0ca6bf310e9c5aaf9",
+          "taints": [
+            {
+              "effect": "NoSchedule",
+              "key": "bench",
+              "value": "automode"
+            }
+          ]
+        },
+        "status": {
+          "addresses": [
+            {
+              "address": "192.168.17.65",
+              "type": "InternalIP"
+            },
+            {
+              "address": "ip-192-168-17-65.us-west-2.compute.internal",
+              "type": "InternalDNS"
+            },
+            {
+              "address": "ip-192-168-17-65.us-west-2.compute.internal",
+              "type": "Hostname"
+            }
+          ],
+          "allocatable": {
+            "cpu": "1780m",
+            "ephemeral-storage": "76173383962",
+            "hugepages-1Gi": "0",
+            "hugepages-2Mi": "0",
+            "memory": "3138172Ki",
+            "pods": "27"
+          },
+          "capacity": {
+            "cpu": "2",
+            "ephemeral-storage": "81854Mi",
+            "hugepages-1Gi": "0",
+            "hugepages-2Mi": "0",
+            "memory": "3882620Ki",
+            "pods": "27"
+          },
+          "conditions": [
+            {
+              "lastHeartbeatTime": "2026-10-21T17:16:10Z",
+              "lastTransitionTime": "2026-10-21T17:16:07Z",
+              "message": "kubelet has sufficient memory available",
+              "reason": "KubeletHasSufficientMemory",
+              "status": "False",
+              "type": "MemoryPressure"
+            },
+            {
+              "lastHeartbeatTime": "2026-10-21T17:16:10Z",
+              "lastTransitionTime": "2026-10-21T17:16:07Z",
+              "message": "kubelet has no disk pressure",
+              "reason": "KubeletHasNoDiskPressure",
+              "status": "False",
+              "type": "DiskPressure"
+            },
+            {
+              "lastHeartbeatTime": "2026-10-21T17:16:10Z",
+              "lastTransitionTime": "2026-10-21T17:16:07Z",
+              "message": "kubelet has sufficient PID available",
+              "reason": "KubeletHasSufficientPID",
+              "status": "False",
+              "type": "PIDPressure"
+            },
+            {
+              "lastHeartbeatTime": "2026-10-21T17:16:10Z",
+              "lastTransitionTime": "2026-10-21T17:16:10Z",
+              "message": "kubelet is posting ready status",
+              "reason": "KubeletReady",
+              "status": "True",
+              "type": "Ready"
+            }
+          ],
+          "daemonEndpoints": {
+            "kubeletEndpoint": {
+              "Port": 10250
+            }
+          },
+          "declaredFeatures": [
+            "ExtendWebSocketsToKubelet",
+            "InPlacePodLevelResourcesVerticalScaling",
+            "InPlacePodVerticalScalingInitContainers",
+            "RestartAllContainersOnContainerExits"
+          ],
+          "features": {
+            "supplementalGroupsPolicy": true
+          },
+          "images": [
+            {
+              "names": [
+                "localhost/kubernetes/pause:0.1.0"
+              ],
+              "sizeBytes": 92951
+            }
+          ],
+          "nodeInfo": {
+            "architecture": "amd64",
+            "bootID": "839836d9-a9a7-4327-8529-98542f8cb678",
+            "containerRuntimeVersion": "containerd://2.2.9+bottlerocket",
+            "kernelVersion": "6.18.51",
+            "kubeProxyVersion": "",
+            "kubeletVersion": "v1.36.2-eks-bca9cf6",
+            "machineID": "ec24be662bf57932234fe1907ed27a79",
+            "operatingSystem": "linux",
+            "osImage": "Bottlerocket (EKS Auto, Standard) 2026.10.9 (aws-k8s-1.36-standard)",
+            "swap": {
+              "capacity": 1073737728
+            },
+            "systemUUID": "ec24be66-2bf5-7932-234f-e1907ed27a79"
+          },
+          "runtimeHandlers": [
+            {
+              "features": {
+                "recursiveReadOnlyMounts": true,
+                "userNamespaces": true
+              },
+              "name": ""
+            },
+            {
+              "features": {
+                "recursiveReadOnlyMounts": false,
+                "userNamespaces": false
+              },
+              "name": "confidential-sandbox"
+            },
+            {
+              "features": {
+                "recursiveReadOnlyMounts": false,
+                "userNamespaces": false
+              },
+              "name": "isolated-sandbox"
+            },
+            {
+              "features": {
+                "recursiveReadOnlyMounts": true,
+                "userNamespaces": true
+              },
+              "name": "runc"
+            }
+          ]
+        }
+      }
+    ],
+    "kind": "List",
+    "metadata": {
+      "resourceVersion": ""
+    }
+  },
+  "nodeclaims": {
+    "apiVersion": "v1",
+    "items": [
+      {
+        "apiVersion": "karpenter.sh/v1",
+        "kind": "NodeClaim",
+        "metadata": {
+          "annotations": {
+            "eks.amazonaws.com/ca-bundle-hash": "10264614815243784651",
+            "eks.amazonaws.com/kubelet-version": "1.36",
+            "eks.amazonaws.com/nodeclass-hash": "17638971277352118168",
+            "eks.amazonaws.com/nodeclass-hash-version": "v2",
+            "karpenter.sh/nodeclaim-min-values-relaxed": "false",
+            "karpenter.sh/nodepool-hash": "16807303028649523644",
+            "karpenter.sh/nodepool-hash-version": "v3"
+          },
+          "creationTimestamp": "2026-10-21T17:15:49Z",
+          "finalizers": [
+            "karpenter.sh/termination"
+          ],
+          "generateName": "bench-automode-",
+          "generation": 1,
+          "labels": {
+            "app.kubernetes.io/managed-by": "eks",
+            "bench": "automode",
+            "eks.amazonaws.com/compute-type": "auto",
+            "eks.amazonaws.com/instance-capability-flex": "false",
+            "eks.amazonaws.com/instance-category": "c",
+            "eks.amazonaws.com/instance-cpu": "2",
+            "eks.amazonaws.com/instance-cpu-manufacturer": "amd",
+            "eks.amazonaws.com/instance-cpu-sustained-clock-speed-mhz": "3600",
+            "eks.amazonaws.com/instance-ebs-bandwidth": "10000",
+            "eks.amazonaws.com/instance-encryption-in-transit-supported": "true",
+            "eks.amazonaws.com/instance-family": "c6a",
+            "eks.amazonaws.com/instance-generation": "6",
+            "eks.amazonaws.com/instance-hypervisor": "nitro",
+            "eks.amazonaws.com/instance-memory": "4096",
+            "eks.amazonaws.com/instance-min-cpus-per-numa": "2",
+            "eks.amazonaws.com/instance-min-memory-per-numa": "3768",
+            "eks.amazonaws.com/instance-network-bandwidth": "781",
+            "eks.amazonaws.com/instance-numa-nodes": "1",
+            "eks.amazonaws.com/instance-size": "large",
+            "eks.amazonaws.com/nitro-sandbox": "false",
+            "eks.amazonaws.com/nodeclass": "bench",
+            "karpenter.k8s.aws/instance-tenancy": "default",
+            "karpenter.sh/capacity-type": "on-demand",
+            "karpenter.sh/nodepool": "bench-automode",
+            "kubernetes.io/arch": "amd64",
+            "kubernetes.io/os": "linux",
+            "node.kubernetes.io/instance-type": "c6a.large",
+            "topology.k8s.aws/zone-id": "usw2-az2",
+            "topology.kubernetes.io/region": "us-west-2",
+            "topology.kubernetes.io/zone": "us-west-2b"
+          },
+          "name": "bench-automode-ncq4b",
+          "ownerReferences": [
+            {
+              "apiVersion": "karpenter.sh/v1",
+              "blockOwnerDeletion": true,
+              "kind": "NodePool",
+              "name": "bench-automode",
+              "uid": "20f9476d-6c72-4db4-9369-95ce4b8080c7"
+            }
+          ],
+          "resourceVersion": "50615",
+          "uid": "6ada04d5-14e1-44f9-9e94-64c0e9a3ffca"
+        },
+        "spec": {
+          "expireAfter": "24h",
+          "nodeClassRef": {
+            "group": "eks.amazonaws.com",
+            "kind": "NodeClass",
+            "name": "bench"
+          },
+          "requirements": [
+            {
+              "key": "node.kubernetes.io/instance-type",
+              "operator": "In",
+              "values": [
+                "c6a.2xlarge",
+                "c6a.large",
+                "c6a.xlarge",
+                "c6i.2xlarge",
+                "c6i.large",
+                "c6i.xlarge",
+                "c7a.2xlarge",
+                "c7a.large",
+                "c7a.xlarge",
+                "c7i.2xlarge",
+                "c7i.large",
+                "c7i.xlarge",
+                "m6a.2xlarge",
+                "m6a.large",
+                "m6a.xlarge",
+                "m6i.2xlarge",
+                "m6i.large",
+                "m6i.xlarge",
+                "m7a.2xlarge",
+                "m7a.large",
+                "m7a.xlarge",
+                "m7i.2xlarge",
+                "m7i.large",
+                "m7i.xlarge"
+              ]
+            },
+            {
+              "key": "karpenter.sh/nodepool",
+              "operator": "In",
+              "values": [
+                "bench-automode"
+              ]
+            },
+            {
+              "key": "karpenter.sh/capacity-type",
+              "operator": "In",
+              "values": [
+                "on-demand"
+              ]
+            },
+            {
+              "key": "kubernetes.io/os",
+              "operator": "In",
+              "values": [
+                "linux"
+              ]
+            },
+            {
+              "key": "topology.kubernetes.io/zone",
+              "operator": "In",
+              "values": [
+                "us-west-2b"
+              ]
+            },
+            {
+              "key": "bench",
+              "operator": "In",
+              "values": [
+                "automode"
+              ]
+            },
+            {
+              "key": "kubernetes.io/arch",
+              "operator": "In",
+              "values": [
+                "amd64"
+              ]
+            },
+            {
+              "key": "eks.amazonaws.com/nodeclass",
+              "operator": "In",
+              "values": [
+                "bench"
+              ]
+            }
+          ],
+          "resources": {
+            "requests": {
+              "cpu": "1600m",
+              "memory": "2Gi",
+              "pods": "8"
+            }
+          },
+          "taints": [
+            {
+              "effect": "NoSchedule",
+              "key": "bench",
+              "value": "automode"
+            }
+          ],
+          "terminationGracePeriod": "24h0m0s"
+        },
+        "status": {
+          "allocatable": {
+            "cpu": "1780m",
+            "ephemeral-storage": "71Gi",
+            "memory": "3114224Ki",
+            "pods": "27"
+          },
+          "capacity": {
+            "cpu": "2",
+            "ephemeral-storage": "80Gi",
+            "memory": "3858672Ki",
+            "pods": "27"
+          },
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-10-21T17:15:52Z",
+              "message": "",
+              "observedGeneration": 1,
+              "reason": "Launched",
+              "status": "True",
+              "type": "Launched"
+            },
+            {
+              "lastTransitionTime": "2026-10-21T17:16:03Z",
+              "message": "",
+              "observedGeneration": 1,
+              "reason": "Registered",
+              "status": "True",
+              "type": "Registered"
+            },
+            {
+              "lastTransitionTime": "2026-10-21T17:16:05Z",
+              "message": "",
+              "observedGeneration": 1,
+              "reason": "Initialized",
+              "status": "True",
+              "type": "Initialized"
+            },
+            {
+              "lastTransitionTime": "2026-10-21T17:16:05Z",
+              "message": "",
+              "observedGeneration": 1,
+              "reason": "Ready",
+              "status": "True",
+              "type": "Ready"
+            }
+          ],
+          "imageID": "ami-03bca7e8d3eedabda",
+          "lastPodEventTime": "2026-10-21T17:16:04Z",
+          "nodeName": "i-094e6b20c9a1f641c",
+          "providerID": "aws:///us-west-2b/i-094e6b20c9a1f641c"
+        }
+      },
+      {
+        "apiVersion": "karpenter.sh/v1",
+        "kind": "NodeClaim",
+        "metadata": {
+          "annotations": {
+            "eks.amazonaws.com/ca-bundle-hash": "10264614815243784651",
+            "eks.amazonaws.com/kubelet-version": "1.36",
+            "eks.amazonaws.com/nodeclass-hash": "17638971277352118168",
+            "eks.amazonaws.com/nodeclass-hash-version": "v2",
+            "karpenter.sh/nodeclaim-min-values-relaxed": "false",
+            "karpenter.sh/nodepool-hash": "16807303028649523644",
+            "karpenter.sh/nodepool-hash-version": "v3"
+          },
+          "creationTimestamp": "2026-10-21T17:15:49Z",
+          "finalizers": [
+            "karpenter.sh/termination"
+          ],
+          "generateName": "bench-automode-",
+          "generation": 1,
+          "labels": {
+            "app.kubernetes.io/managed-by": "eks",
+            "bench": "automode",
+            "eks.amazonaws.com/compute-type": "auto",
+            "eks.amazonaws.com/instance-capability-flex": "false",
+            "eks.amazonaws.com/instance-category": "c",
+            "eks.amazonaws.com/instance-cpu": "2",
+            "eks.amazonaws.com/instance-cpu-manufacturer": "amd",
+            "eks.amazonaws.com/instance-cpu-sustained-clock-speed-mhz": "3600",
+            "eks.amazonaws.com/instance-ebs-bandwidth": "10000",
+            "eks.amazonaws.com/instance-encryption-in-transit-supported": "true",
+            "eks.amazonaws.com/instance-family": "c6a",
+            "eks.amazonaws.com/instance-generation": "6",
+            "eks.amazonaws.com/instance-hypervisor": "nitro",
+            "eks.amazonaws.com/instance-memory": "4096",
+            "eks.amazonaws.com/instance-min-cpus-per-numa": "2",
+            "eks.amazonaws.com/instance-min-memory-per-numa": "3768",
+            "eks.amazonaws.com/instance-network-bandwidth": "781",
+            "eks.amazonaws.com/instance-numa-nodes": "1",
+            "eks.amazonaws.com/instance-size": "large",
+            "eks.amazonaws.com/nitro-sandbox": "false",
+            "eks.amazonaws.com/nodeclass": "bench",
+            "karpenter.k8s.aws/instance-tenancy": "default",
+            "karpenter.sh/capacity-type": "on-demand",
+            "karpenter.sh/nodepool": "bench-automode",
+            "kubernetes.io/arch": "amd64",
+            "kubernetes.io/os": "linux",
+            "node.kubernetes.io/instance-type": "c6a.large",
+            "topology.k8s.aws/zone-id": "usw2-az1",
+            "topology.kubernetes.io/region": "us-west-2",
+            "topology.kubernetes.io/zone": "us-west-2a"
+          },
+          "name": "bench-automode-qts7k",
+          "ownerReferences": [
+            {
+              "apiVersion": "karpenter.sh/v1",
+              "blockOwnerDeletion": true,
+              "kind": "NodePool",
+              "name": "bench-automode",
+              "uid": "20f9476d-6c72-4db4-9369-95ce4b8080c7"
+            }
+          ],
+          "resourceVersion": "50804",
+          "uid": "9272895c-5d25-4023-bec6-527c1fed51ef"
+        },
+        "spec": {
+          "expireAfter": "24h",
+          "nodeClassRef": {
+            "group": "eks.amazonaws.com",
+            "kind": "NodeClass",
+            "name": "bench"
+          },
+          "requirements": [
+            {
+              "key": "topology.kubernetes.io/zone",
+              "operator": "In",
+              "values": [
+                "us-west-2a"
+              ]
+            },
+            {
+              "key": "bench",
+              "operator": "In",
+              "values": [
+                "automode"
+              ]
+            },
+            {
+              "key": "node.kubernetes.io/instance-type",
+              "operator": "In",
+              "values": [
+                "c6a.large",
+                "c6a.xlarge",
+                "c6i.large",
+                "c6i.xlarge",
+                "c7a.large",
+                "c7a.xlarge",
+                "c7i.large",
+                "c7i.xlarge",
+                "m6a.large",
+                "m6a.xlarge",
+                "m6i.large",
+                "m6i.xlarge",
+                "m7a.large",
+                "m7a.xlarge",
+                "m7i.large",
+                "m7i.xlarge"
+              ]
+            },
+            {
+              "key": "karpenter.sh/nodepool",
+              "operator": "In",
+              "values": [
+                "bench-automode"
+              ]
+            },
+            {
+              "key": "kubernetes.io/os",
+              "operator": "In",
+              "values": [
+                "linux"
+              ]
+            },
+            {
+              "key": "karpenter.sh/capacity-type",
+              "operator": "In",
+              "values": [
+                "on-demand"
+              ]
+            },
+            {
+              "key": "eks.amazonaws.com/nodeclass",
+              "operator": "In",
+              "values": [
+                "bench"
+              ]
+            },
+            {
+              "key": "kubernetes.io/arch",
+              "operator": "In",
+              "values": [
+                "amd64"
+              ]
+            }
+          ],
+          "resources": {
+            "requests": {
+              "cpu": "1400m",
+              "memory": "1792Mi",
+              "pods": "7"
+            }
+          },
+          "taints": [
+            {
+              "effect": "NoSchedule",
+              "key": "bench",
+              "value": "automode"
+            }
+          ],
+          "terminationGracePeriod": "24h0m0s"
+        },
+        "status": {
+          "allocatable": {
+            "cpu": "1780m",
+            "ephemeral-storage": "71Gi",
+            "memory": "3114224Ki",
+            "pods": "27"
+          },
+          "capacity": {
+            "cpu": "2",
+            "ephemeral-storage": "80Gi",
+            "memory": "3858672Ki",
+            "pods": "27"
+          },
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-10-21T17:15:52Z",
+              "message": "",
+              "observedGeneration": 1,
+              "reason": "Launched",
+              "status": "True",
+              "type": "Launched"
+            },
+            {
+              "lastTransitionTime": "2026-10-21T17:16:08Z",
+              "message": "",
+              "observedGeneration": 1,
+              "reason": "Registered",
+              "status": "True",
+              "type": "Registered"
+            },
+            {
+              "lastTransitionTime": "2026-10-21T17:16:11Z",
+              "message": "",
+              "observedGeneration": 1,
+              "reason": "Initialized",
+              "status": "True",
+              "type": "Initialized"
+            },
+            {
+              "lastTransitionTime": "2026-10-21T17:16:11Z",
+              "message": "",
+              "observedGeneration": 1,
+              "reason": "Ready",
+              "status": "True",
+              "type": "Ready"
+            }
+          ],
+          "imageID": "ami-03bca7e8d3eedabda",
+          "lastPodEventTime": "2026-10-21T17:16:10Z",
+          "nodeName": "i-0ca6bf310e9c5aaf9",
+          "providerID": "aws:///us-west-2a/i-0ca6bf310e9c5aaf9"
+        }
+      }
+    ],
+    "kind": "List",
+    "metadata": {
+      "resourceVersion": ""
+    }
+  }
+}
